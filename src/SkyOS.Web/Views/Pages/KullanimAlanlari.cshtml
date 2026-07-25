@@ -1,0 +1,61 @@
+@{
+    ViewData["Title"] = L["UseCases.Title"];
+    ViewData["Description"] = L["UseCases.Description"];
+}
+
+<section class="page-intro">
+    <div class="container">
+        <div class="section-head mb-0" data-reveal>
+            <span class="eyebrow">@L["UseCases.Eyebrow"]</span>
+            <h1>@L["UseCases.Heading"]</h1>
+            <p class="lead">@L["UseCases.Lead"]</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+    <div class="container">
+        <div class="sector-grid">
+            <article class="sector-tile" data-reveal>
+                <span class="card-kicker">01</span>
+                <h3>@L["UseCases.Case1Title"]</h3>
+                <p>@L["UseCases.Case1Text"]</p>
+            </article>
+            <article class="sector-tile" data-reveal>
+                <span class="card-kicker">02</span>
+                <h3>@L["UseCases.Case2Title"]</h3>
+                <p>@L["UseCases.Case2Text"]</p>
+            </article>
+            <article class="sector-tile" data-reveal>
+                <span class="card-kicker">03</span>
+                <h3>@L["UseCases.Case3Title"]</h3>
+                <p>@L["UseCases.Case3Text"]</p>
+            </article>
+            <article class="sector-tile" data-reveal>
+                <span class="card-kicker">04</span>
+                <h3>@L["UseCases.Case4Title"]</h3>
+                <p>@L["UseCases.Case4Text"]</p>
+            </article>
+            <article class="sector-tile" data-reveal>
+                <span class="card-kicker">05</span>
+                <h3>@L["UseCases.Case5Title"]</h3>
+                <p>@L["UseCases.Case5Text"]</p>
+            </article>
+        </div>
+
+        <article class="feature-strip feature-strip--amber" data-reveal style="margin-top:clamp(40px,5vw,56px);">
+            <div class="feature-strip-media">
+                <img src="~/img/banners/banner-swarm.webp" width="720" height="480" alt="" loading="lazy" decoding="async" asp-append-version="true" />
+            </div>
+            <div class="feature-strip-body">
+                <span class="eyebrow mb-0">@L["UseCases.Eyebrow"]</span>
+                <h2>@L["Nav.Achievements"]</h2>
+                <p>@L["Achievements.Lead"]</p>
+                <div class="hero-actions" style="margin-top:8px;">
+                    <a class="btn btn-primary" href="/basarilar">@L["Nav.Achievements"]</a>
+                    <a class="btn btn-ghost" href="/iletisim">@L["Nav.Contact"]</a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>

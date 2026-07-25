@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = L["Privacy.Title"];
+    ViewData["Description"] = L["Privacy.Description"];
+}
+
+<section class="page-intro">
+    <div class="container">
+        <div class="section-head mb-0" data-reveal>
+            <span class="eyebrow">@L["Privacy.Eyebrow"]</span>
+            <h1>@L["Privacy.Heading"]</h1>
+        </div>
+    </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+    <div class="container">
+        <article class="legal-doc" data-reveal>
+            <div class="notice-panel" style="margin-top:0;margin-bottom:28px;">
+                <p>@Html.Raw(L["Privacy.DraftNotice"])</p>
+            </div>
+
+            <h2>@L["Privacy.Section1Title"]</h2>
+            <p>@L["Privacy.Section1Text"]</p>
+
+            <h2>@L["Privacy.Section2Title"]</h2>
+            <p>@L["Privacy.Section2Text"]</p>
+
+            <h2>@L["Privacy.Section3Title"]</h2>
+            <p>@L["Privacy.Section3Text"]</p>
+
+            <h2>@L["Privacy.Section4Title"]</h2>
+            <p>@L["Privacy.Section4Text"]</p>
+
+            <h2>@L["Privacy.Section5Title"]</h2>
+            <p>@L["Privacy.Section5Text"]</p>
+
+            <h2>@L["Privacy.Section6Title"]</h2>
+            <p>@Html.Raw(L["Privacy.Section6Text"])</p>
+        </article>
+    </div>
+</section>

@@ -1,0 +1,136 @@
+@model PartnersPageViewModel
+@{
+    ViewData["Title"] = L["Partners.Title"];
+    ViewData["Description"] = L["Partners.Description"];
+
+    static string Initials(string name)
+    {
+        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return parts.Length == 0 ? "?" : parts[0][..Math.Min(2, parts[0].Length)].ToUpperInvariant();
+    }
+
+    static string? ResolveLogo(PartnerDto partner)
+    {
+        if (!string.IsNullOrWhiteSpace(partner.LogoUrl))
+        {
+            return partner.LogoUrl;
+        }
+
+        return partner.Name.Contains("HAVELSAN", StringComparison.OrdinalIgnoreCase)
+            ? "/img/partners/havelsan.svg"
+            : partner.Name.Contains("TEKNOFEST", StringComparison.OrdinalIgnoreCase)
+                ? "/img/partners/teknofest.png"
+                : null;
+    }
+}
+
+<section class="page-intro page-intro--partners page-intro--compact">
+    <div class="container">
+        <div class="section-head mb-0" data-reveal>
+            <span class="eyebrow">@L["Partners.Eyebrow"]</span>
+            <h1>@L["Partners.Heading"]</h1>
+            <p class="lead">@L["Partners.Lead"]</p>
+        </div>
+    </div>
+</section>
+
+<section class="section section-tight" style="padding-top:0;">
+    <div class="container partners-page">
+        @if (Model.VerifiedPartners.Count > 0)
+        {
+            <div class="partner-feature-list">
+                @foreach (var partner in Model.VerifiedPartners)
+                {
+                    var logo = ResolveLogo(partner);
+                    var isHavelsan = partner.Name.Contains("HAVELSAN", StringComparison.OrdinalIgnoreCase);
+                    <article class="partner-feature@(isHavelsan ? " partner-feature--havelsan" : "")" data-reveal>
+                        <div class="partner-feature-visual">
+                            @if (logo is not null)
+                            {
+                                <img src="@logo" width="200" height="64" alt="@L["Partners.LogoAlt", partner.Name]" loading="lazy" asp-append-version="true" />
+                            }
+                            else
+                            {
+                                <span class="partner-logo" aria-hidden="true">@Initials(partner.Name)</span>
+                            }
+                        </div>
+                        <div class="partner-feature-body">
+                            <span class="verified-tag">@L["Partners.VerifiedTag"]</span>
+                            <h2>@partner.Name</h2>
+                            @if (!string.IsNullOrWhiteSpace(partner.Description))
+                            {
+                                <p>@partner.Description</p>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(partner.Address) || !string.IsNullOrWhiteSpace(partner.Phone))
+                            {
+                                <div class="partner-contact-details">
+                                    @if (!string.IsNullOrWhiteSpace(partner.Address))
+                                    {
+                                        <div class="partner-detail-item">
+                                            <span class="detail-icon">📍</span>
+                                            <span><strong>@L["Partners.Address"]:</strong> @partner.Address</span>
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(partner.Phone))
+                                    {
+                                        <div class="partner-detail-item">
+                                            <span class="detail-icon">📞</span>
+                                            <span><strong>@L["Partners.Phone"]:</strong> <a href="tel:@partner.Phone.Replace(" ", string.Empty).Replace("(", string.Empty).Replace(")", string.Empty)">@partner.Phone</a></span>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(partner.WebsiteUrl))
+                            {
+                                <a class="btn btn-ghost btn-sm" href="@partner.WebsiteUrl" rel="noopener noreferrer" target="_blank">@L["Common.Website"]</a>
+                            }
+                        </div>
+                    </article>
+                }
+            </div>
+        }
+
+        <article class="feature-strip feature-strip--amber feature-strip--compact" data-reveal>
+            <div class="feature-strip-media">
+                <img src="~/img/banners/banner-swarm.webp" width="720" height="480" alt="" loading="lazy" decoding="async" asp-append-version="true" />
+            </div>
+            <div class="feature-strip-body">
+                <span class="eyebrow mb-0">@L["Partners.FieldTag"]</span>
+                <h2>@L["Partners.FieldTitle"]</h2>
+                <p>@L["Partners.FieldText"]</p>
+                <div class="hero-actions" style="margin-top:4px;">
+                    <a class="btn btn-primary" href="/basarilar">@L["Partners.FieldCta"]</a>
+                </div>
+            </div>
+        </article>
+
+        @if (Model.OtherPartners.Count > 0)
+        {
+            <div class="section-head section-head--tight" data-reveal>
+                <h2>@L["Partners.OthersHeading"]</h2>
+            </div>
+            <div class="partner-grid">
+                @foreach (var partner in Model.OtherPartners)
+                {
+                    <article class="partner-card" data-reveal>
+                        @if (!string.IsNullOrWhiteSpace(partner.LogoUrl))
+                        {
+                            <img class="partner-logo" src="@partner.LogoUrl" width="56" height="56" loading="lazy" decoding="async" alt="@L["Partners.LogoAlt", partner.Name]" />
+                        }
+                        else
+                        {
+                            <span class="partner-logo" aria-hidden="true">@Initials(partner.Name)</span>
+                        }
+                        <div>
+                            <h3 style="margin:0 0 6px;">@partner.Name</h3>
+                            @if (!string.IsNullOrWhiteSpace(partner.Description))
+                            {
+                                <p class="muted mb-0">@partner.Description</p>
+                            }
+                        </div>
+                    </article>
+                }
+            </div>
+        }
+    </div>
+</section>

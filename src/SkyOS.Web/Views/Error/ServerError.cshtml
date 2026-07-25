@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = L["Errors.ServerTitle"];
+    ViewData["Description"] = L["Errors.ServerDescription"];
+}
+
+<section class="error-page">
+    <div class="container" style="max-width:560px;">
+        <div class="error-code">500</div>
+        <h1>@L["Errors.ServerHeading"]</h1>
+        <p class="lead">@L["Errors.ServerLead"]</p>
+        <div class="hero-actions" style="justify-content:center;">
+            <a class="btn btn-primary" href="/">@L["Common.BackHome"]</a>
+            <a class="btn btn-ghost" href="/iletisim">@L["Common.Contact"]</a>
+        </div>
+    </div>
+</section>

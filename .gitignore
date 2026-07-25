@@ -1,0 +1,38 @@
+## .NET / Visual Studio
+bin/
+obj/
+out/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+[Bb]uild/
+artifacts/
+
+## Rider / ReSharper
+.idea/
+*.DotSettings.user
+
+## Secrets & local config
+appsettings.*.local.json
+*.env
+secrets.json
+
+## Logs
+logs/
+*.log
+
+## SQLite dev database
+*.db
+*.db-shm
+*.db-wal
+
+## OS files
+Thumbs.db
+.DS_Store

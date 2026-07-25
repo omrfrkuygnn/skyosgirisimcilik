@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = L["Investors.Title"];
+    ViewData["Description"] = L["Investors.Description"];
+}
+
+<section class="page-intro">
+    <div class="container">
+        <div class="section-head mb-0" data-reveal>
+            <span class="eyebrow">@L["Investors.Eyebrow"]</span>
+            <h1>@L["Investors.Heading"]</h1>
+            <p class="lead">@L["Investors.Lead"]</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+    <div class="container">
+        <div class="timeline-block" style="margin-top:0;" data-reveal>
+            <div class="timeline-head">
+                <span class="eyebrow mb-0">@L["Investors.PriorityEyebrow"]</span>
+                <h2 style="margin:8px 0 0;">@L["Investors.PriorityTitle"]</h2>
+            </div>
+            <ol class="timeline-list">
+                <li class="timeline-item">
+                    <span class="timeline-marker" aria-hidden="true"></span>
+                    <div class="timeline-card">
+                        <h3>@L["Investors.Priority1"]</h3>
+                        <p>@L["Investors.Priority1Note"]</p>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <span class="timeline-marker" aria-hidden="true"></span>
+                    <div class="timeline-card">
+                        <h3>@L["Investors.Priority2"]</h3>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <span class="timeline-marker" aria-hidden="true"></span>
+                    <div class="timeline-card">
+                        <h3>@L["Investors.Priority3"]</h3>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <span class="timeline-marker" aria-hidden="true"></span>
+                    <div class="timeline-card">
+                        <h3>@L["Investors.Priority4"]</h3>
+                        <p>@L["Investors.Priority4Note"]</p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section-head" style="margin-top:clamp(44px,6vw,64px);" data-reveal>
+            <span class="eyebrow">@L["Investors.ImpactEyebrow"]</span>
+            <h2>@L["Investors.ImpactTitle"]</h2>
+        </div>
+        <ul class="roadmap-list" style="margin-bottom:clamp(40px,5vw,56px);" data-reveal>
+            <li class="roadmap-row"><span>@L["Investors.Row1Area"]</span><span class="muted">@L["Investors.Row1Effect"]</span></li>
+            <li class="roadmap-row"><span>@L["Investors.Row2Area"]</span><span class="muted">@L["Investors.Row2Effect"]</span></li>
+            <li class="roadmap-row"><span>@L["Investors.Row3Area"]</span><span class="muted">@L["Investors.Row3Effect"]</span></li>
+            <li class="roadmap-row"><span>@L["Investors.Row4Area"]</span><span class="muted">@L["Investors.Row4Effect"]</span></li>
+            <li class="roadmap-row"><span>@L["Investors.Row5Area"]</span><span class="muted">@L["Investors.Row5Effect"]</span></li>
+        </ul>
+
+        <div class="sector-grid" style="margin-bottom:clamp(40px,5vw,56px);">
+            <article class="sector-tile" data-reveal>
+                <span class="card-kicker">@L["Investors.MarketKicker"]</span>
+                <h3>@L["Investors.Market1Title"]</h3>
+                <p>@L["Investors.Market1Text"]</p>
+            </article>
+            <article class="sector-tile" data-reveal>
+                <span class="card-kicker">@L["Investors.MarketKicker"]</span>
+                <h3>@L["Investors.Market2Title"]</h3>
+                <p>@L["Investors.Market2Text"]</p>
+            </article>
+            <article class="sector-tile" data-reveal>
+                <span class="card-kicker">@L["Investors.MarketKicker"]</span>
+                <h3>@L["Investors.Market3Title"]</h3>
+                <p>@L["Investors.Market3Text"]</p>
+            </article>
+        </div>
+
+        <article class="feature-strip" data-reveal>
+            <div class="feature-strip-media">
+                <img src="~/img/banners/banner-swarm.webp" width="720" height="480" alt="" loading="lazy" decoding="async" asp-append-version="true" />
+            </div>
+            <div class="feature-strip-body">
+                <span class="eyebrow mb-0">@L["Investors.Eyebrow"]</span>
+                <h2>@L["Investors.CtaTitle"]</h2>
+                <p>@L["Investors.CtaLead"]</p>
+                <div class="hero-actions" style="margin-top:8px;">
+                    <a class="btn btn-primary" href="/iletisim?ilgi=yatirimci">@L["Investors.CtaButton"]</a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>

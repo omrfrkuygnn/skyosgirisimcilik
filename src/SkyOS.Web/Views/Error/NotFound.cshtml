@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = L["Errors.NotFoundTitle"];
+    ViewData["Description"] = L["Errors.NotFoundDescription"];
+}
+
+<section class="error-page">
+    <div class="container" style="max-width:560px;">
+        <div class="error-code">404</div>
+        <h1>@L["Errors.NotFoundHeading"]</h1>
+        <p class="lead">@L["Errors.NotFoundLead"]</p>
+        <div class="hero-actions" style="justify-content:center;">
+            <a class="btn btn-primary" href="/">@L["Common.BackHome"]</a>
+            <a class="btn btn-ghost" href="/iletisim">@L["Common.Contact"]</a>
+        </div>
+    </div>
+</section>

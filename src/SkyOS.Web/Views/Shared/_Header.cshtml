@@ -1,0 +1,49 @@
+@{
+    var path = Context.Request.Path.Value?.ToLowerInvariant() ?? "/";
+    var isHome = path == "/" || path.Length == 0;
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+    string Active(string prefix, bool exact = false) =>
+        (exact ? path == prefix : path.StartsWith(prefix, StringComparison.Ordinal)) ? "active" : string.Empty;
+    var culture = L.Culture;
+}
+<header class="site-header@(isHome ? " site-header--overlay" : string.Empty)" data-header>
+    <div class="header-shell header-inner">
+        <a class="brand" href="/" aria-label="@L["Nav.BrandHome"]">
+            <svg class="brand-mark" width="34" height="34" viewBox="0 0 48 48" fill="none" aria-hidden="true" focusable="false">
+                <path d="M24 3 6 13v22l18 10 18-10V13L24 3Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+                <path d="M24 14v20M15 19l18 10M33 19 15 29" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <span class="brand-text">Sky<span class="brand-accent">OS</span></span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-label="@L["Nav.Toggle"]" aria-expanded="false" aria-controls="primary-nav" data-nav-toggle>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+        </button>
+
+        <nav id="primary-nav" class="site-nav" aria-label="@L["Nav.Primary"]" data-nav>
+            <ul class="nav-list">
+                <li><a class="nav-link @Active("/", exact: true)" href="/">@L["Nav.Home"]</a></li>
+                <li><a class="nav-link @Active("/hakkimizda")" href="/hakkimizda">@L["Nav.About"]</a></li>
+                <li><a class="nav-link @Active("/urun")" href="/urun">@L["Nav.Product"]</a></li>
+                <li><a class="nav-link @Active("/kullanim-alanlari")" href="/kullanim-alanlari">@L["Nav.UseCases"]</a></li>
+                <li><a class="nav-link @Active("/basarilar")" href="/basarilar">@L["Nav.Achievements"]</a></li>
+                <li><a class="nav-link @Active("/yatirimcilar")" href="/yatirimcilar">@L["Nav.Investors"]</a></li>
+                <li><a class="nav-link @Active("/destekcilerimiz")" href="/destekcilerimiz">@L["Nav.Partners"]</a></li>
+                <li><a class="nav-link @Active("/iletisim")" href="/iletisim">@L["Nav.Contact"]</a></li>
+            </ul>
+        </nav>
+
+        <div class="lang-switch" role="navigation" aria-label="@L["Nav.LangSwitch"]">
+            <a class="lang-opt@(culture == "tr" ? " is-active" : "")" href="/dil/tr?returnUrl=@Uri.EscapeDataString(returnUrl)" hreflang="tr" lang="tr">
+                <span class="lang-flag" aria-hidden="true">TR</span>
+                <span class="lang-name">Türkçe</span>
+            </a>
+            <a class="lang-opt@(culture == "en" ? " is-active" : "")" href="/dil/en?returnUrl=@Uri.EscapeDataString(returnUrl)" hreflang="en" lang="en">
+                <span class="lang-flag" aria-hidden="true">EN</span>
+                <span class="lang-name">English</span>
+            </a>
+        </div>
+    </div>
+</header>

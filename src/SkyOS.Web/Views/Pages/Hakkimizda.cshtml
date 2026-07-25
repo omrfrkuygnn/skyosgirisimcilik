@@ -1,0 +1,66 @@
+@{
+    ViewData["Title"] = L["About.Title"];
+    ViewData["Description"] = L["About.Description"];
+}
+
+<section class="page-intro">
+    <div class="container">
+        <div class="section-head mb-0" data-reveal>
+            <span class="eyebrow">@L["About.Eyebrow"]</span>
+            <h1>@L["About.Heading"]</h1>
+            <p class="lead">@Html.Raw(L["About.Lead"])</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+    <div class="container">
+        <div class="quote-panel" data-reveal="scale" style="margin-top:0;margin-bottom:clamp(36px,5vw,52px);">
+            <blockquote>@L["About.Quote"]</blockquote>
+            <cite>@L["About.Cite"]</cite>
+        </div>
+
+        <div class="split-compare" data-reveal>
+            <article class="split-card split-card--problem">
+                <span class="card-kicker">@L["About.ProblemKicker"]</span>
+                <h3>@L["About.ProblemTitle"]</h3>
+                <p>@L["About.ProblemText"]</p>
+            </article>
+            <article class="split-card split-card--solution">
+                <span class="card-kicker">@L["About.SolutionKicker"]</span>
+                <h3>@L["About.SolutionTitle"]</h3>
+                <p>@L["About.SolutionText"]</p>
+            </article>
+        </div>
+
+        <div class="metric-strip" data-reveal>
+            <div class="metric-tile">
+                <div class="stat-value">4+</div>
+                <p class="muted mb-0">@L["About.StatYears"]</p>
+            </div>
+            <div class="metric-tile">
+                <div class="stat-value">15</div>
+                <p class="muted mb-0">@L["About.StatTeam"]</p>
+            </div>
+            <div class="metric-tile">
+                <div class="stat-value">40–60</div>
+                <p class="muted mb-0">@L["About.StatTarget"]</p>
+            </div>
+        </div>
+
+        <article class="feature-strip" data-reveal>
+            <div class="feature-strip-media">
+                <img src="~/img/banners/banner-platform.webp" width="720" height="480" alt="" loading="lazy" decoding="async" asp-append-version="true" />
+            </div>
+            <div class="feature-strip-body">
+                <span class="eyebrow mb-0">@L["About.Eyebrow"]</span>
+                <h2>@L["About.CtaTitle"]</h2>
+                <p>@L["About.CtaLead"]</p>
+                <div class="hero-actions" style="margin-top:8px;">
+                    <a class="btn btn-primary" href="/ekip">@L["About.CtaTeam"]</a>
+                    <a class="btn btn-ghost" href="/basarilar">@L["About.CtaAchievements"]</a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>

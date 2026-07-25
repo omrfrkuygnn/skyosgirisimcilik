@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = L["ContactSuccess.Title"];
+    ViewData["Description"] = L["ContactSuccess.Description"];
+}
+
+<section class="section">
+    <div class="container" style="max-width:640px;">
+        <div class="quote-panel" style="margin-top:0;text-align:center;" data-reveal="scale">
+            <span class="card-icon mx-auto" aria-hidden="true" style="width:64px;height:64px;margin-bottom:8px;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="m8 12 3 3 5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <h1 style="margin:12px 0 8px;font-size:clamp(1.5rem,2.5vw,2rem);">@L["ContactSuccess.Heading"]</h1>
+            <p class="lead" style="margin:0 auto 20px;">@L["ContactSuccess.Lead"]</p>
+            <div class="hero-actions" style="justify-content:center;">
+                <a class="btn btn-primary" href="/">@L["Common.BackHome"]</a>
+                <a class="btn btn-ghost" href="/urun">@L["Common.ViewProduct"]</a>
+            </div>
+        </div>
+    </div>
+</section>

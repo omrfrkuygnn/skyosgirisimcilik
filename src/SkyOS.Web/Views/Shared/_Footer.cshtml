@@ -1,0 +1,108 @@
+@inject IOptions<SiteContactOptions> SiteContact
+@{
+    var c = SiteContact.Value;
+    var year = DateTime.UtcNow.Year;
+}
+<div class="footer-cta-wrapper container">
+    <div class="footer-cta-card">
+        <div class="footer-cta-text">
+            <h2>@L["Footer.CtaTitle"]</h2>
+            <p>@L["Footer.CtaText"]</p>
+        </div>
+        <div class="footer-cta-actions">
+            <a class="btn btn-primary" href="/iletisim">@L["Footer.CtaContact"]</a>
+            <a class="btn btn-outline" href="/yatirimcilar">@L["Footer.CtaInvestors"]</a>
+        </div>
+    </div>
+</div>
+
+<footer class="site-footer">
+
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <span class="brand-text">Sky<span class="brand-accent">OS</span></span>
+            <p class="footer-tagline">@L["Footer.Tagline"]</p>
+            <p class="footer-team">@c.TeamName</p>
+            <div class="footer-social">
+                @if (c.Social.LinkedIn.HasValue())
+                {
+                    <a href="@c.Social.LinkedIn" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" class="social-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.72a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26Z"/></svg>
+                    </a>
+                }
+                @if (c.Social.X.HasValue())
+                {
+                    <a href="@c.Social.X" rel="noopener noreferrer" target="_blank" aria-label="X" class="social-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                }
+                @if (c.Social.GitHub.HasValue())
+                {
+                    <a href="@c.Social.GitHub" rel="noopener noreferrer" target="_blank" aria-label="GitHub" class="social-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg>
+                    </a>
+                }
+                @if (c.Social.YouTube.HasValue())
+                {
+                    <a href="@c.Social.YouTube" rel="noopener noreferrer" target="_blank" aria-label="YouTube" class="social-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="m10 15 5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-7-.16-8.03-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L1.8 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 7 .16 8.03.44.9.25 1.48.83 1.73 1.73Z"/></svg>
+                    </a>
+                }
+                @if (c.Social.Instagram.HasValue())
+                {
+                    <a href="@c.Social.Instagram" rel="noopener noreferrer" target="_blank" aria-label="Instagram" class="social-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    </a>
+                }
+            </div>
+        </div>
+
+        <nav class="footer-col" aria-label="@L["Footer.Sitemap"]">
+            <h3 class="footer-heading">@L["Footer.Corporate"]</h3>
+            <ul>
+                <li><a href="/hakkimizda">@L["Nav.About"]</a></li>
+                <li><a href="/urun">@L["Nav.Product"]</a></li>
+                <li><a href="/kullanim-alanlari">@L["Nav.UseCases"]</a></li>
+                <li><a href="/basarilar">@L["Nav.Achievements"]</a></li>
+            </ul>
+        </nav>
+
+        <nav class="footer-col" aria-label="@L["Footer.ConnectNav"]">
+            <h3 class="footer-heading">@L["Footer.Connect"]</h3>
+            <ul>
+                <li><a href="/yatirimcilar">@L["Footer.InvestorRelations"]</a></li>
+                <li><a href="/iletisim">@L["Common.Contact"]</a></li>
+                <li><a href="/destekcilerimiz">@L["Nav.Partners"]</a></li>
+                <li><a href="/gizlilik-politikasi">@L["Footer.PrivacyPolicy"]</a></li>
+            </ul>
+        </nav>
+
+        <div class="footer-col footer-contact">
+            <h3 class="footer-heading">@L["Footer.ContactHeading"]</h3>
+            <ul>
+                @if (!string.IsNullOrWhiteSpace(c.Email))
+                {
+                    <li><a href="mailto:@c.Email">@c.Email</a></li>
+                }
+                @if (!string.IsNullOrWhiteSpace(c.PhonePrimary))
+                {
+                    <li><a href="tel:@c.PhonePrimary.Replace(" ", string.Empty)">@c.PhonePrimary</a></li>
+                }
+                @if (!string.IsNullOrWhiteSpace(c.PhoneSecondary))
+                {
+                    <li><a href="tel:@c.PhoneSecondary.Replace(" ", string.Empty)">@c.PhoneSecondary</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="container">
+            <p>@L["Footer.Copyright", year, c.CompanyName, c.TeamName]</p>
+            <div class="footer-bottom-links">
+                <a href="/gizlilik-politikasi">@L["Footer.PrivacyShort"]</a>
+                <a href="/iletisim">@L["Footer.ContactShort"]</a>
+            </div>
+        </div>
+    </div>
+</footer>

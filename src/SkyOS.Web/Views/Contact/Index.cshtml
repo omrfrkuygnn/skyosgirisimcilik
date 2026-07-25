@@ -1,0 +1,133 @@
+@model ContactPageViewModel
+@inject IOptions<SiteContactOptions> SiteContact
+@{
+    ViewData["Title"] = L["Contact.Title"];
+    ViewData["Description"] = L["Contact.Description"];
+    var c = SiteContact.Value;
+    var nonce = Context.GetCspNonce();
+}
+
+<section class="page-intro">
+    <div class="container">
+        <div class="section-head mb-0" data-reveal>
+            <span class="eyebrow">@L["Contact.Eyebrow"]</span>
+            <h1>@(Model.InvestorVariant ? L["Contact.HeadingInvestor"] : L["Contact.Heading"])</h1>
+            <p class="lead">@L["Contact.Lead"]</p>
+        </div>
+    </div>
+</section>
+
+<section class="section section--no-pt">
+    <div class="container">
+        <div class="contact-layout">
+            <div class="form-card" data-reveal>
+                @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty]?.Errors.Count > 0)
+                {
+                    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+                }
+
+                <form method="post" action="/iletisim" novalidate
+                      data-contact-form
+                      data-recaptcha-key="@(Model.RecaptchaEnabled ? Model.RecaptchaSiteKey : string.Empty)">
+                    @Html.AntiForgeryToken()
+
+                    @* Honeypot: hidden from humans, tempting for bots. Must stay empty. *@
+                    <div class="honeypot" aria-hidden="true">
+                        <label for="Form_Website">@L["Contact.Honeypot"]</label>
+                        <input type="text" id="Form_Website" name="Form.Website" tabindex="-1" autocomplete="off" />
+                    </div>
+
+                    <input type="hidden" asp-for="Form.RecaptchaToken" data-recaptcha-token />
+
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label asp-for="Form.FullName">@L["Contact.FullName"] <span class="required-mark">*</span></label>
+                            <input asp-for="Form.FullName" autocomplete="name" />
+                            <span asp-validation-for="Form.FullName" class="field-validation-error"></span>
+                        </div>
+
+                        <div class="form-field">
+                            <label asp-for="Form.Company">@L["Contact.Company"]</label>
+                            <input asp-for="Form.Company" autocomplete="organization" />
+                            <span asp-validation-for="Form.Company" class="field-validation-error"></span>
+                        </div>
+
+                        <div class="form-field">
+                            <label asp-for="Form.Email">@L["Contact.Email"] <span class="required-mark">*</span></label>
+                            <input asp-for="Form.Email" type="email" autocomplete="email" />
+                            <span asp-validation-for="Form.Email" class="field-validation-error"></span>
+                        </div>
+
+                        <div class="form-field">
+                            <label asp-for="Form.Phone">@L["Contact.Phone"]</label>
+                            <div class="phone-input-group">
+                                <select asp-for="Form.PhoneCountryCode" asp-items="@Model.CountryCodeOptions" class="phone-country-select"></select>
+                                <input asp-for="Form.Phone" type="tel" autocomplete="tel" placeholder="5XX XXX XX XX" />
+                            </div>
+                            <span asp-validation-for="Form.Phone" class="field-validation-error"></span>
+                        </div>
+
+                        <div class="form-field span-2">
+                            <label asp-for="Form.InterestType">@L["Contact.Interest"] <span class="required-mark">*</span></label>
+                            <select asp-for="Form.InterestType" asp-items="@(new SelectList(Model.InterestOptions, "Value", "Text", ((int)Model.Form.InterestType).ToString()))"></select>
+                            <span asp-validation-for="Form.InterestType" class="field-validation-error"></span>
+                        </div>
+
+                        <div class="form-field span-2">
+                            <label asp-for="Form.Message">@L["Contact.Message"] <span class="required-mark">*</span></label>
+                            <textarea asp-for="Form.Message" rows="6"></textarea>
+                            <span asp-validation-for="Form.Message" class="field-validation-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-submit-wrap">
+                        <button type="submit" class="btn btn-primary btn-block">@L["Contact.Submit"]</button>
+                    </div>
+
+                    @if (Model.RecaptchaEnabled)
+                    {
+                        <p class="form-note form-note--recaptcha">@Html.Raw(L["Contact.RecaptchaNote"])</p>
+                    }
+                    <p class="form-note">@Html.Raw(L["Contact.PrivacyAccept"])</p>
+                </form>
+            </div>
+
+            <aside class="contact-info" data-reveal>
+                <h2>@L["Contact.InfoHeading"]</h2>
+                <ul class="contact-meta">
+                    @if (!string.IsNullOrWhiteSpace(c.Email))
+                    {
+                        <li>
+                            <span class="contact-meta-label">@L["Contact.InfoEmail"]</span>
+                            <a href="mailto:@c.Email">@c.Email</a>
+                        </li>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(c.PhonePrimary))
+                    {
+                        <li>
+                            <span class="contact-meta-label">@L["Contact.InfoPhone"]</span>
+                            <a href="tel:@c.PhonePrimary.Replace(" ", string.Empty)">@c.PhonePrimary</a>
+                        </li>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(c.PhoneSecondary))
+                    {
+                        <li>
+                            <a href="tel:@c.PhoneSecondary.Replace(" ", string.Empty)">@c.PhoneSecondary</a>
+                        </li>
+                    }
+                </ul>
+                <div class="notice-panel notice-panel--spaced">
+                    <p>@Html.Raw(L["Contact.InvestorHint"])</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    @if (Model.RecaptchaEnabled && !string.IsNullOrWhiteSpace(Model.RecaptchaSiteKey))
+    {
+        <script src="https://www.google.com/recaptcha/api.js?render=@Model.RecaptchaSiteKey" async defer></script>
+    }
+}

@@ -1,0 +1,26 @@
+<Project>
+
+  <!-- Centralized build configuration for every project in the SkyOS solution. -->
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Code quality / analyzers -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+
+    <!-- Deterministic, reproducible builds -->
+    <Deterministic>true</Deterministic>
+    <NeutralLanguage>tr</NeutralLanguage>
+    <InvariantGlobalization>false</InvariantGlobalization>
+
+    <!-- Warnings we deliberately silence solution-wide:
+         CS1591 = missing XML doc; CA1848 = LoggerMessage delegates (overkill for a marketing site). -->
+    <NoWarn>$(NoWarn);CS1591;CA1848</NoWarn>
+  </PropertyGroup>
+
+</Project>

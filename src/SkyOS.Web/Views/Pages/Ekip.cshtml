@@ -1,0 +1,80 @@
+@model TeamPageViewModel
+@{
+    ViewData["Title"] = L["Team.Title"];
+    ViewData["Description"] = L["Team.Description"];
+
+    static string Initials(string name)
+    {
+        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return parts.Length == 0 ? "?" : string.Concat(parts.Take(2).Select(p => char.ToUpperInvariant(p[0])));
+    }
+}
+
+<section class="page-intro">
+    <div class="container">
+        <div class="section-head mb-0" data-reveal>
+            <span class="eyebrow">@L["Team.Eyebrow"]</span>
+            <h1>@L["Team.Heading"]</h1>
+            <p class="lead">@L["Team.Lead", Model.CurrentHeadcount, Model.TargetHeadcountLow, Model.TargetHeadcountHigh]</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+    <div class="container">
+        <div class="section-head" data-reveal>
+            <h2>@L["Team.LeadersHeading"]</h2>
+        </div>
+        <div class="sector-grid" style="margin-bottom:clamp(40px,5vw,56px);">
+            @foreach (var leader in Model.Leaders)
+            {
+                <article class="sector-tile member-card" data-reveal>
+                    @if (!string.IsNullOrWhiteSpace(leader.PhotoUrl))
+                    {
+                        <img class="member-photo" src="@leader.PhotoUrl" width="72" height="72" loading="lazy" decoding="async" alt="@leader.FullName" />
+                    }
+                    else
+                    {
+                        <div class="member-photo member-photo-fallback" aria-hidden="true">@Initials(leader.FullName)</div>
+                    }
+                    <h3 style="margin-bottom:2px;">@leader.FullName<span class="leader-tag">@L["Common.LeaderTag"]</span></h3>
+                    <div class="member-role">@leader.Role</div>
+                    @if (!string.IsNullOrWhiteSpace(leader.Bio))
+                    {
+                        <p style="margin-top:10px;">@leader.Bio</p>
+                    }
+                </article>
+            }
+        </div>
+
+        @if (Model.Members.Count > 0)
+        {
+            <div class="section-head" data-reveal>
+                <h2>@L["Team.MembersHeading"]</h2>
+            </div>
+            <div class="sector-grid">
+                @foreach (var member in Model.Members)
+                {
+                    <article class="sector-tile member-card" data-reveal>
+                        @if (!string.IsNullOrWhiteSpace(member.PhotoUrl))
+                        {
+                            <img class="member-photo" src="@member.PhotoUrl" width="72" height="72" loading="lazy" decoding="async" alt="@member.FullName" />
+                        }
+                        else
+                        {
+                            <div class="member-photo member-photo-fallback" aria-hidden="true">@Initials(member.FullName)</div>
+                        }
+                        <h3 style="margin-bottom:2px;">@member.FullName</h3>
+                        <div class="member-role">@member.Role</div>
+                    </article>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state" data-reveal>
+                <p class="mb-0">@L["Team.Empty"]</p>
+            </div>
+        }
+    </div>
+</section>

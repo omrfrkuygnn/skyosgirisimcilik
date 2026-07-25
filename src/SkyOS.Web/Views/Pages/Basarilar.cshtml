@@ -1,0 +1,119 @@
+@model AchievementsPageViewModel
+@{
+    ViewData["Title"] = L["Achievements.Title"];
+    ViewData["Description"] = L["Achievements.Description"];
+
+    var order = new[] { MilestoneCategory.Kurumsal, MilestoneCategory.Teknofest, MilestoneCategory.Teknik };
+}
+
+<section class="page-intro page-intro--proof">
+    <div class="container">
+        <div class="section-head mb-0" data-reveal>
+            <span class="eyebrow">@L["Achievements.Eyebrow"]</span>
+            <h1>@L["Achievements.Heading"]</h1>
+            <p class="lead">@L["Achievements.Lead"]</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+    <div class="container">
+        @* HAVELSAN — açık kurumsal şerit *@
+        <article class="proof-partner" data-reveal>
+            <div class="proof-partner-brand">
+                <span class="proof-partner-tag">@L["Achievements.CorporateTag"]</span>
+                <img src="~/img/partners/havelsan.svg" width="220" height="64" alt="HAVELSAN" loading="lazy" asp-append-version="true" />
+            </div>
+            <div class="proof-partner-copy">
+                <h2>HAVELSAN Jet Cube</h2>
+                @if (Model.MilestonesByCategory.TryGetValue(MilestoneCategory.Kurumsal, out var corporate))
+                {
+                    foreach (var m in corporate)
+                    {
+                        <p>@m.Description</p>
+                    }
+                }
+                else
+                {
+                    <p>@L["Achievements.CorporateFallback"]</p>
+                }
+            </div>
+            <div class="proof-partner-actions">
+                <a class="btn btn-ghost" href="/destekcilerimiz">@L["Nav.Partners"]</a>
+            </div>
+        </article>
+
+        @* TEKNOFEST kategorileri *@
+        <div class="proof-grid" style="margin-top: clamp(28px, 4vw, 40px);">
+            <article class="proof-panel" data-reveal>
+                <div class="proof-panel-media">
+                    <img src="~/img/banners/banner-swarm.webp" width="800" height="500" alt="@L["Achievements.SwarmAlt"]" loading="lazy" decoding="async" asp-append-version="true" />
+                    <img class="proof-panel-logo" src="~/img/partners/teknofest.png" width="140" height="48" alt="TEKNOFEST" loading="lazy" asp-append-version="true" />
+                </div>
+                <div class="proof-panel-copy">
+                    <h3>@L["Achievements.SwarmTitle"]</h3>
+                    <p>@L["Achievements.SwarmText"]</p>
+                </div>
+            </article>
+            <article class="proof-panel" data-reveal>
+                <div class="proof-panel-media">
+                    <img src="~/img/banners/banner-combat.webp" width="800" height="500" alt="@L["Achievements.CombatAlt"]" loading="lazy" decoding="async" asp-append-version="true" />
+                    <img class="proof-panel-logo" src="~/img/partners/teknofest.png" width="140" height="48" alt="TEKNOFEST" loading="lazy" asp-append-version="true" />
+                </div>
+                <div class="proof-panel-copy">
+                    <h3>@L["Achievements.CombatTitle"]</h3>
+                    <p>@L["Achievements.CombatText"]</p>
+                </div>
+            </article>
+        </div>
+
+        @* TEKNOFEST katılım özeti *@
+        <article class="feature-strip feature-strip--amber" data-reveal>
+            <div class="feature-strip-media">
+                <img src="~/img/banners/banner-swarm.webp" width="720" height="480" alt="" loading="lazy" decoding="async" asp-append-version="true" />
+            </div>
+            <div class="feature-strip-body">
+                <span class="eyebrow mb-0">@L["Achievements.TeknofestTag"]</span>
+                <img class="feature-strip-logo" src="~/img/partners/teknofest.png" width="180" height="54" alt="TEKNOFEST" loading="lazy" asp-append-version="true" />
+                <h2>@L["Achievements.TeknofestTitle"]</h2>
+                <p>@L["Achievements.TeknofestText"]</p>
+                <div class="proof-tags">
+                    <span>@L["Achievements.RibbonSwarm"]</span>
+                    <span>@L["Achievements.RibbonCombat"]</span>
+                    <span>@L["Achievements.RibbonGround"]</span>
+                    <span>@L["Achievements.RibbonHumanity"]</span>
+                </div>
+            </div>
+        </article>
+
+        @* Milestone timeline *@
+        @foreach (var category in order)
+        {
+            if (category == MilestoneCategory.Kurumsal) { continue; }
+            if (!Model.MilestonesByCategory.TryGetValue(category, out var items) || items.Count == 0) { continue; }
+
+            <div class="timeline-block" data-reveal>
+                <div class="timeline-head">
+                    <span class="eyebrow mb-0">@category.Label(L)</span>
+                </div>
+                <ol class="timeline-list">
+                    @foreach (var m in items)
+                    {
+                        <li class="timeline-item">
+                            <span class="timeline-marker" aria-hidden="true"></span>
+                            <div class="timeline-card">
+                                <h3>@m.Title</h3>
+                                <p>@m.Description</p>
+                            </div>
+                        </li>
+                    }
+                </ol>
+            </div>
+        }
+
+        <div class="quote-panel" data-reveal="scale">
+            <blockquote>@Model.MarketProjection</blockquote>
+            <cite>@L["Achievements.MarketCite"]</cite>
+        </div>
+    </div>
+</section>
