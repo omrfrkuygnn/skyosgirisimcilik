@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 120" width="460" height="120">
+  <g transform="translate(10, 15)">
+    <!-- Falcon / Defense Wings Emblem -->
+    <path d="M 10 30 Q 40 10 65 30 Q 80 45 90 20 Q 75 60 45 75 Q 25 80 10 70 Q 30 55 10 30 Z" fill="#0f172a"/>
+    <path d="M 30 40 Q 55 25 75 42 Q 60 70 30 40 Z" fill="#0284c7"/>
+  </g>
+  <text x="125" y="50" font-family="'Syne', 'Inter', sans-serif" font-size="22" font-weight="900" fill="#0f172a" letter-spacing="0.08em">ULU DOĞAN</text>
+  <text x="125" y="72" font-family="'IBM Plex Sans', sans-serif" font-size="11" font-weight="700" fill="#0284c7" letter-spacing="0.1em">SAVUNMA SANAYİ TEKNOLOJİ A.Ş.</text>
+  <text x="125" y="88" font-family="'IBM Plex Sans', sans-serif" font-size="9" font-weight="500" fill="#64748b" letter-spacing="0.04em">Stratejik Savunma &amp; Pilot Test Partneri</text>
+</svg>

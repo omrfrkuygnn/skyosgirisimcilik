@@ -16,6 +16,8 @@ public class Partner : BaseEntity
 
     public string? WebsiteUrl { get; set; }
 
+    public string? SupportLetterUrl { get; set; }
+
     public int DisplayOrder { get; set; }
 
     /// <summary>

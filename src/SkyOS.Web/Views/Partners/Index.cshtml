@@ -80,9 +80,21 @@
                                     }
                                 </div>
                             }
-                            @if (!string.IsNullOrWhiteSpace(partner.WebsiteUrl))
+                            @if (!string.IsNullOrWhiteSpace(partner.WebsiteUrl) || !string.IsNullOrWhiteSpace(partner.SupportLetterUrl))
                             {
-                                <a class="btn btn-ghost btn-sm" href="@partner.WebsiteUrl" rel="noopener noreferrer" target="_blank">@L["Common.Website"]</a>
+                                <div class="partner-actions" style="display:flex; gap:12px; flex-wrap:wrap; margin-top:16px;">
+                                    @if (!string.IsNullOrWhiteSpace(partner.SupportLetterUrl))
+                                    {
+                                        <a class="btn btn-primary btn-sm support-letter-btn" href="@partner.SupportLetterUrl" target="_blank" rel="noopener noreferrer">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                            @L["Partners.ViewSupportLetter"]
+                                        </a>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(partner.WebsiteUrl))
+                                    {
+                                        <a class="btn btn-ghost btn-sm" href="@partner.WebsiteUrl" rel="noopener noreferrer" target="_blank">@L["Common.Website"]</a>
+                                    }
+                                </div>
                             }
                         </div>
                     </article>
@@ -103,6 +115,61 @@
                 </div>
             </div>
         </article>
+
+        <div class="support-letters-section" style="margin-top: 64px;" data-reveal>
+            <div class="section-head text-center mb-4">
+                <span class="eyebrow">@L["Partners.SupportLettersEyebrow"]</span>
+                <h2>@L["Partners.SupportLettersHeading"]</h2>
+                <p class="lead" style="max-width:680px; margin:0 auto;">@L["Partners.SupportLettersLead"]</p>
+            </div>
+            <div class="support-letters-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px; margin-top:32px;">
+                <div class="support-letter-card">
+                    <div class="support-card-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <img src="~/img/partners/harven-logo.png" style="height:38px; width:auto; object-fit:contain;" alt="Harven Mühendislik" />
+                        <span class="verified-tag">@L["Partners.TagTechnical"]</span>
+                    </div>
+                    <h3 style="font-size:1.15rem; margin-bottom:8px;">Harven Mühendislik</h3>
+                    <p style="font-size:0.9rem; color:#475569; line-height:1.5; margin-bottom:20px;">Otonom sistemler ve robotik teknolojilerinde modüler tasarım ve donanım bağımsız mimari üzerine teknik danışmanlık ve destek mektubu.</p>
+                    <a class="btn btn-primary btn-sm" style="width:100%; text-align:center; justify-content:center;" href="/docs/destek-mektubu-harven.pdf" target="_blank" rel="noopener noreferrer">@L["Partners.ViewSupportLetter"]</a>
+                </div>
+                <div class="support-letter-card">
+                    <div class="support-card-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <img src="~/img/partners/uludogan-logo.png" style="height:44px; width:auto; object-fit:contain;" alt="Uludoğan Savunma" />
+                        <span class="verified-tag">@L["Partners.TagDefense"]</span>
+                    </div>
+                    <h3 style="font-size:1.15rem; margin-bottom:8px;">Uludoğan Savunma</h3>
+                    <p style="font-size:0.9rem; color:#475569; line-height:1.5; margin-bottom:20px;">TRL 6 - TRL 8 entegrasyonu, gerçek zamanlı risk analizi, pilot test ev sahipliği ve ticari satın alma niyet mektubu.</p>
+                    <a class="btn btn-primary btn-sm" style="width:100%; text-align:center; justify-content:center;" href="/docs/destek-mektubu-uludogan.pdf" target="_blank" rel="noopener noreferrer">@L["Partners.ViewSupportLetter"]</a>
+                </div>
+                <div class="support-letter-card">
+                    <div class="support-card-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <img src="~/img/partners/erzincan-tso-logo.png" style="height:44px; width:auto; object-fit:contain;" alt="Erzincan TSO" />
+                        <span class="verified-tag">@L["Partners.TagChamber"]</span>
+                    </div>
+                    <h3 style="font-size:1.15rem; margin-bottom:8px;">Erzincan Ticaret ve Sanayi Odası</h3>
+                    <p style="font-size:0.9rem; color:#475569; line-height:1.5; margin-bottom:20px;">12 Mart 2026 tarihli 113 sayılı Yönetim Kurulu Kararı ile onaylanan resmi oda destek ve inovasyon yazısı.</p>
+                    <a class="btn btn-primary btn-sm" style="width:100%; text-align:center; justify-content:center;" href="/docs/destek-mektubu-erzincan-tso.pdf" target="_blank" rel="noopener noreferrer">@L["Partners.ViewSupportLetter"]</a>
+                </div>
+                <div class="support-letter-card">
+                    <div class="support-card-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <img src="~/img/partners/ebyu-logo.png" style="height:44px; width:auto; object-fit:contain;" alt="EBYÜ" />
+                        <span class="verified-tag">@L["Partners.TagAcademic"]</span>
+                    </div>
+                    <h3 style="font-size:1.15rem; margin-bottom:8px;">Erzincan Binali Yıldırım Üniversitesi</h3>
+                    <p style="font-size:0.9rem; color:#475569; line-height:1.5; margin-bottom:20px;">Mühendislik-Mimarlık Fakültesi Dekanlığı tarafından sunulan siber güvenlik ve akademik araştırma destek mektubu.</p>
+                    <a class="btn btn-primary btn-sm" style="width:100%; text-align:center; justify-content:center;" href="/docs/destek-mektubu-ebyu.pdf" target="_blank" rel="noopener noreferrer">@L["Partners.ViewSupportLetter"]</a>
+                </div>
+                <div class="support-letter-card">
+                    <div class="support-card-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <img src="~/img/partners/sanayi-il-mudurlugu-logo.svg" style="height:42px; width:auto; object-fit:contain;" alt="T.C. Sanayi Bakanlığı" />
+                        <span class="verified-tag">@L["Partners.TagPublic"]</span>
+                    </div>
+                    <h3 style="font-size:1.15rem; margin-bottom:8px;">T.C. Sanayi ve Teknoloji İl Müdürlüğü</h3>
+                    <p style="font-size:0.9rem; color:#475569; line-height:1.5; margin-bottom:20px;">Milli Teknoloji Hamlesi ve yerli otonom yazılım ekosisteminin geliştirilmesine yönelik T.C. Bakanlık İl Müdürlüğü destek yazısı.</p>
+                    <a class="btn btn-primary btn-sm" style="width:100%; text-align:center; justify-content:center;" href="/docs/destek-mektubu-sanayi-il-mudurlugu.pdf" target="_blank" rel="noopener noreferrer">@L["Partners.ViewSupportLetter"]</a>
+                </div>
+            </div>
+        </div>
 
         @if (Model.OtherPartners.Count > 0)
         {

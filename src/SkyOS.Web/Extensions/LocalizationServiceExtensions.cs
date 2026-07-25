@@ -10,7 +10,7 @@ public static class LocalizationServiceExtensions
     public const string CookieName = "SkyOS.Culture";
     public const string QueryKey = "lang";
 
-    public static readonly string[] SupportedCultures = ["tr", "en"];
+    public static readonly string[] SupportedCultures = ["tr", "en", "de"];
 
     public static IServiceCollection AddSkyOsLocalization(this IServiceCollection services)
     {

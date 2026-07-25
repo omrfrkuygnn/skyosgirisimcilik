@@ -283,7 +283,16 @@
     "OthersHeading": "Other Partners",
     "Address": "Address",
     "Phone": "Phone",
-    "Notice": "New partners and collaborators can be added to this page without code changes once names are approved. Official institutional logos require the relevant organizations’ usage permission."
+    "Notice": "New partners and collaborators can be added to this page without code changes once names are approved. Official institutional logos require the relevant organizations’ usage permission.",
+    "ViewSupportLetter": "View Support Letter (PDF)",
+    "SupportLettersEyebrow": "OFFICIAL INSTITUTION & DEFENSE SUPPORTS",
+    "SupportLettersHeading": "Official Support & Intent Letters",
+    "SupportLettersLead": "Official support and intent letters issued to our SkyOS autonomous systems platform by universities, public institutions, chambers of commerce, and defense technology firms.",
+    "TagTechnical": "Technical Cooperation",
+    "TagDefense": "Defense Partner",
+    "TagChamber": "Chamber of Industry",
+    "TagAcademic": "Academic Support",
+    "TagPublic": "Public Institution"
   },
   "Contact": {
     "Title": "Contact",

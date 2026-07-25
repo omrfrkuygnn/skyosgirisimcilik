@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" width="420" height="120">
+  <g transform="translate(10, 10)">
+    <!-- Outer Seal Ring -->
+    <circle cx="50" cy="50" r="46" fill="#0284c7" opacity="0.08" stroke="#0284c7" stroke-width="2.5"/>
+    <circle cx="50" cy="50" r="40" fill="none" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="3 3"/>
+    
+    <!-- Ship & Cogwheel Emblem representation -->
+    <path d="M 50 20 L 56 30 L 68 30 L 58 38 L 62 50 L 50 42 L 38 50 L 42 38 L 32 30 L 44 30 Z" fill="#0284c7"/>
+    <path d="M 26 62 Q 50 78 74 62 L 68 74 Q 50 84 32 74 Z" fill="#0f172a"/>
+    <text x="50" y="92" font-family="'IBM Plex Sans', sans-serif" font-size="9" font-weight="bold" fill="#0284c7" text-anchor="middle">1925</text>
+  </g>
+  <text x="120" y="48" font-family="'Syne', 'Inter', sans-serif" font-size="20" font-weight="800" fill="#0f172a" letter-spacing="-0.02em">ERZİNCAN TSO</text>
+  <text x="120" y="70" font-family="'IBM Plex Sans', sans-serif" font-size="11" font-weight="600" fill="#0284c7" letter-spacing="0.06em">TİCARET VE SANAYİ ODASI</text>
+  <text x="120" y="86" font-family="'IBM Plex Sans', sans-serif" font-size="9" font-weight="500" fill="#64748b" letter-spacing="0.04em">Chamber of Commerce and Industry</text>
+</svg>

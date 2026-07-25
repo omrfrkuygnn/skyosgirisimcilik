@@ -96,7 +96,7 @@ public sealed class LocaleCatalog
         }
 
         var two = culture.Length >= 2 ? culture[..2].ToLowerInvariant() : culture.ToLowerInvariant();
-        return two is "en" or "tr" ? two : "tr";
+        return two is "en" or "tr" or "de" ? two : "tr";
     }
 }
 

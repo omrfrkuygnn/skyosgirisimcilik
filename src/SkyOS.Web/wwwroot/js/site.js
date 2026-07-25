@@ -27,6 +27,31 @@
     });
   }
 
+  // Language Dropdown Toggle
+  var langWrap = document.querySelector("[data-lang-dropdown]");
+  var langBtn = document.querySelector("[data-lang-btn]");
+  if (langWrap && langBtn) {
+    langBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = langWrap.classList.toggle("is-open");
+      langBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!langWrap.contains(e.target)) {
+        langWrap.classList.remove("is-open");
+        langBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && langWrap.classList.contains("is-open")) {
+        langWrap.classList.remove("is-open");
+        langBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
   // Scroll-triggered reveals (IntersectionObserver)
   var nodes = document.querySelectorAll("[data-reveal]");
   if (nodes.length && "IntersectionObserver" in window) {

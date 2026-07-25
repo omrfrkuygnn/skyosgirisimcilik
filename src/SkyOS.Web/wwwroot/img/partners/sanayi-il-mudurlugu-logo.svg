@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 90" width="460" height="90">
+  <g transform="translate(10, 8)">
+    <!-- Gold / Dark Gold Crescent & Star Emblem -->
+    <circle cx="36" cy="36" r="34" fill="#d97706" opacity="0.12"/>
+    <path d="M 38 12 A 22 22 0 1 0 38 60 A 17 17 0 1 1 38 12 Z" fill="#d97706"/>
+    <polygon points="48,28 50,33 56,33 52,37 53,42 48,39 43,42 44,37 40,33 46,33" fill="#d97706"/>
+  </g>
+  <text x="96" y="38" font-family="'Syne', 'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="800" fill="#0f172a" letter-spacing="-0.01em">T.C. SANAYİ VE TEKNOLOJİ</text>
+  <text x="96" y="60" font-family="'IBM Plex Sans', 'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#d97706" letter-spacing="0.06em">ERZİNCAN İL MÜDÜRLÜĞÜ</text>
+</svg>

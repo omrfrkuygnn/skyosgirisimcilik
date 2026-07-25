@@ -79,38 +79,69 @@
 <div class="marquee-strip" aria-hidden="true" data-marquee>
     <div class="marquee-track">
         <span class="marquee-item logo-item">
-            <img src="~/img/partners/havelsan.svg" class="marquee-logo marquee-logo--large" alt="HAVELSAN" />
+            <img src="~/img/partners/havelsan.svg" class="marquee-logo marquee-logo--large" alt="HAVELSAN" asp-append-version="true" />
         </span>
         <span>@L["Home.MarqueeAirLandSea"]</span>
+
+        <span class="marquee-item logo-item">
+            <img src="~/img/partners/uludogan-logo.png" class="marquee-logo marquee-logo--large" alt="Uludoğan Savunma" asp-append-version="true" />
+        </span>
         <span>@L["Home.MarqueeMemory"]</span>
 
         <span class="marquee-item logo-item">
-            <img src="~/img/partners/harven-logo.png" class="marquee-logo marquee-logo--large" alt="Harven Mühendislik" />
+            <img src="~/img/partners/erzincan-tso-logo.png" class="marquee-logo marquee-logo--large" alt="Erzincan TSO" asp-append-version="true" />
         </span>
         <span>@L["Home.MarqueeHotSwap"]</span>
+
+        <span class="marquee-item logo-item">
+            <img src="~/img/partners/ebyu-logo.png" class="marquee-logo marquee-logo--large" alt="EBYÜ" asp-append-version="true" />
+        </span>
         <span>@L["Home.MarqueeSwarm"]</span>
 
         <span class="marquee-item logo-item">
-            <img src="~/img/partners/teknofest.png" class="marquee-logo marquee-logo--large" alt="TEKNOFEST" />
+            <img src="~/img/partners/sanayi-il-mudurlugu-logo.svg" class="marquee-logo marquee-logo--large" alt="T.C. Sanayi Bakanlığı" asp-append-version="true" />
         </span>
-        <span>@Html.Raw(L["Home.MarqueeOrkaHtml"])</span>
 
         <span class="marquee-item logo-item">
-            <img src="~/img/partners/havelsan.svg" class="marquee-logo marquee-logo--large" alt="HAVELSAN" />
+            <img src="~/img/partners/harven-logo.png" class="marquee-logo marquee-logo--large" alt="Harven Mühendislik" asp-append-version="true" />
+        </span>
+
+        <span class="marquee-item logo-item">
+            <img src="~/img/partners/teknofest.png" class="marquee-logo marquee-logo--large" alt="TEKNOFEST" asp-append-version="true" />
+        </span>
+
+        <!-- Loop round 2 -->
+        <span class="marquee-item logo-item">
+            <img src="~/img/partners/havelsan.svg" class="marquee-logo marquee-logo--large" alt="HAVELSAN" asp-append-version="true" />
         </span>
         <span>@L["Home.MarqueeAirLandSea"]</span>
+
+        <span class="marquee-item logo-item">
+            <img src="~/img/partners/uludogan-logo.png" class="marquee-logo marquee-logo--large" alt="Uludoğan Savunma" asp-append-version="true" />
+        </span>
         <span>@L["Home.MarqueeMemory"]</span>
 
         <span class="marquee-item logo-item">
-            <img src="~/img/partners/harven-logo.png" class="marquee-logo marquee-logo--large" alt="Harven Mühendislik" />
+            <img src="~/img/partners/erzincan-tso-logo.png" class="marquee-logo marquee-logo--large" alt="Erzincan TSO" asp-append-version="true" />
         </span>
         <span>@L["Home.MarqueeHotSwap"]</span>
+
+        <span class="marquee-item logo-item">
+            <img src="~/img/partners/ebyu-logo.png" class="marquee-logo marquee-logo--large" alt="EBYÜ" asp-append-version="true" />
+        </span>
         <span>@L["Home.MarqueeSwarm"]</span>
 
         <span class="marquee-item logo-item">
-            <img src="~/img/partners/teknofest.png" class="marquee-logo marquee-logo--large" alt="TEKNOFEST" />
+            <img src="~/img/partners/sanayi-il-mudurlugu-logo.svg" class="marquee-logo marquee-logo--large" alt="T.C. Sanayi Bakanlığı" asp-append-version="true" />
         </span>
-        <span>@Html.Raw(L["Home.MarqueeOrkaHtml"])</span>
+
+        <span class="marquee-item logo-item">
+            <img src="~/img/partners/harven-logo.png" class="marquee-logo marquee-logo--large" alt="Harven Mühendislik" asp-append-version="true" />
+        </span>
+
+        <span class="marquee-item logo-item">
+            <img src="~/img/partners/teknofest.png" class="marquee-logo marquee-logo--large" alt="TEKNOFEST" asp-append-version="true" />
+        </span>
     </div>
 </div>
 
@@ -118,15 +149,27 @@
     <div class="container">
         <div class="logo-wall" data-reveal>
             <div class="logo-wall-label">@L["Home.LogoWallLabel"]</div>
-            <div class="logo-wall-row">
+            <div class="logo-wall-row logo-wall-row--wrap">
                 <a class="logo-chip" href="/destekcilerimiz" aria-label="HAVELSAN">
-                    <img src="~/img/partners/havelsan.svg" width="280" height="72" alt="HAVELSAN" loading="lazy" asp-append-version="true" />
+                    <img src="~/img/partners/havelsan.svg" width="220" height="64" alt="HAVELSAN" loading="lazy" asp-append-version="true" />
+                </a>
+                <a class="logo-chip" href="/destekcilerimiz" aria-label="Uludoğan Savunma">
+                    <img src="~/img/partners/uludogan-logo.png" width="200" height="64" alt="Uludoğan Savunma" loading="lazy" asp-append-version="true" />
+                </a>
+                <a class="logo-chip" href="/destekcilerimiz" aria-label="Erzincan TSO">
+                    <img src="~/img/partners/erzincan-tso-logo.png" width="180" height="64" alt="Erzincan TSO" loading="lazy" asp-append-version="true" />
+                </a>
+                <a class="logo-chip" href="/destekcilerimiz" aria-label="Erzincan Binali Yıldırım Üniversitesi">
+                    <img src="~/img/partners/ebyu-logo.png" width="180" height="64" alt="EBYÜ" loading="lazy" asp-append-version="true" />
+                </a>
+                <a class="logo-chip" href="/destekcilerimiz" aria-label="T.C. Sanayi ve Teknoloji İl Müdürlüğü">
+                    <img src="~/img/partners/sanayi-il-mudurlugu-logo.svg" width="220" height="64" alt="T.C. Sanayi Bakanlığı" loading="lazy" asp-append-version="true" />
                 </a>
                 <a class="logo-chip" href="/destekcilerimiz" aria-label="Harven Mühendislik">
-                    <img src="~/img/partners/harven-logo.png" width="220" height="72" alt="Harven Mühendislik" loading="lazy" asp-append-version="true" />
+                    <img src="~/img/partners/harven-logo.png" width="180" height="64" alt="Harven Mühendislik" loading="lazy" asp-append-version="true" />
                 </a>
                 <a class="logo-chip logo-chip-dark" href="/basarilar" aria-label="TEKNOFEST">
-                    <img src="~/img/partners/teknofest.png" width="220" height="165" alt="TEKNOFEST" loading="lazy" asp-append-version="true" />
+                    <img src="~/img/partners/teknofest.png" width="180" height="120" alt="TEKNOFEST" loading="lazy" asp-append-version="true" />
                 </a>
             </div>
         </div>

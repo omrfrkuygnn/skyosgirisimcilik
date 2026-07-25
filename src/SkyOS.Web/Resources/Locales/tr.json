@@ -283,7 +283,16 @@
     "OthersHeading": "Diğer Destekçiler",
     "Address": "Adres",
     "Phone": "Telefon",
-    "Notice": "Yeni destekçi ve iş ortaklarımız, isimleri onaylandıkça herhangi bir kod değişikliği gerektirmeden bu sayfaya eklenebilir. Resmî kurum logoları için ilgili kurumların kullanım izni esas alınmalıdır."
+    "Notice": "Yeni destekçi ve iş ortaklarımız, isimleri onaylandıkça herhangi bir kod değişikliği gerektirmeden bu sayfaya eklenebilir. Resmî kurum logoları için ilgili kurumların kullanım izni esas alınmalıdır.",
+    "ViewSupportLetter": "Destek Mektubunu İncele (PDF)",
+    "SupportLettersEyebrow": "RESMİ KURUM VE SAVUNMA DESTEKLERİ",
+    "SupportLettersHeading": "Resmi Destek ve Niyet Mektupları",
+    "SupportLettersLead": "Üniversiteler, kamu kurumları, sanayi odaları ve savunma teknolojisi firmalarından SkyOS otonom sistemler platformumuza verilen resmi destek yazıları.",
+    "TagTechnical": "Teknik İş Birliği",
+    "TagDefense": "Savunma Partneri",
+    "TagChamber": "Sanayi Odası",
+    "TagAcademic": "Akademik Destek",
+    "TagPublic": "Kamu Kurumu"
   },
   "Contact": {
     "Title": "İletişim",

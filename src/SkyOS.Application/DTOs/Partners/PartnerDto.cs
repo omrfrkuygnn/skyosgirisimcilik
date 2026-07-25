@@ -16,6 +16,8 @@ public sealed class PartnerDto
 
     public string? WebsiteUrl { get; init; }
 
+    public string? SupportLetterUrl { get; init; }
+
     public int DisplayOrder { get; init; }
 
     public bool IsVerifiedRelationship { get; init; }

@@ -35,15 +35,42 @@
             </ul>
         </nav>
 
-        <div class="lang-switch" role="navigation" aria-label="@L["Nav.LangSwitch"]">
-            <a class="lang-opt@(culture == "tr" ? " is-active" : "")" href="/dil/tr?returnUrl=@Uri.EscapeDataString(returnUrl)" hreflang="tr" lang="tr">
-                <span class="lang-flag" aria-hidden="true">TR</span>
-                <span class="lang-name">Türkçe</span>
-            </a>
-            <a class="lang-opt@(culture == "en" ? " is-active" : "")" href="/dil/en?returnUrl=@Uri.EscapeDataString(returnUrl)" hreflang="en" lang="en">
-                <span class="lang-flag" aria-hidden="true">EN</span>
-                <span class="lang-name">English</span>
-            </a>
+        <div class="lang-dropdown" data-lang-dropdown style="position:relative; display:inline-block; margin-left:auto;">
+            <button class="lang-dropdown-btn" type="button" aria-expanded="false" aria-label="@L["Nav.LangSwitch"]" data-lang-btn style="display:inline-flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; padding:7px 12px; border-radius:10px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); color:#ffffff; font-size:0.85rem; font-weight:600; cursor:pointer; white-space:nowrap; backdrop-filter:blur(8px); line-height:1;">
+                @if (culture == "en")
+                {
+                    <svg class="lang-flag-icon" viewBox="0 0 640 480" width="18" height="13.5" style="border-radius:2px; box-shadow:0 0 0 1px rgba(0,0,0,0.15); flex-shrink:0; vertical-align:middle; display:inline-block;"><clipPath id="gb-hdr-s"><path d="M0,0 v480 h640 v-480 z"/></clipPath><clipPath id="gb-hdr-t"><path d="M0,0 L640,480 M640,0 L0,480"/></clipPath><g clip-path="url(#gb-hdr-s)"><path d="M0,0 v480 h640 v-480 z" fill="#012169"/><path d="M0,0 L640,480 M640,0 L0,480" stroke="#fff" stroke-width="60"/><path d="M0,0 L640,480 M640,0 L0,480" clip-path="url(#gb-hdr-t)" stroke="#C8102E" stroke-width="40"/><path d="M320,0 v480 M0,240 h640" stroke="#fff" stroke-width="100"/><path d="M320,0 v480 M0,240 h640" stroke="#C8102E" stroke-width="60"/></g></svg>
+                    <span class="lang-code" style="font-weight:700; letter-spacing:0.04em;">EN</span>
+                }
+                else if (culture == "de")
+                {
+                    <svg class="lang-flag-icon" viewBox="0 0 640 480" width="18" height="13.5" style="border-radius:2px; box-shadow:0 0 0 1px rgba(0,0,0,0.15); flex-shrink:0; vertical-align:middle; display:inline-block;"><rect width="640" height="160" y="0" fill="#000000"/><rect width="640" height="160" y="160" fill="#DD0000"/><rect width="640" height="160" y="320" fill="#FFCE00"/></svg>
+                    <span class="lang-code" style="font-weight:700; letter-spacing:0.04em;">DE</span>
+                }
+                else
+                {
+                    <svg class="lang-flag-icon" viewBox="0 0 640 480" width="18" height="13.5" style="border-radius:2px; box-shadow:0 0 0 1px rgba(0,0,0,0.15); flex-shrink:0; vertical-align:middle; display:inline-block;"><rect width="640" height="480" fill="#e30a17"/><circle cx="270" cy="240" r="144" fill="#ffffff"/><circle cx="300" cy="240" r="115.2" fill="#e30a17"/><polygon fill="#ffffff" points="345.6,240 432,268 384,196.8 384,283.2 432,212"/></svg>
+                    <span class="lang-code" style="font-weight:700; letter-spacing:0.04em;">TR</span>
+                }
+                <svg class="lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:2px; opacity:0.8; flex-shrink:0;"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="lang-dropdown-menu" role="menu" style="position:absolute; top:calc(100% + 8px); right:0; min-width:150px; padding:6px; border-radius:12px; background:#ffffff; border:1px solid #e2e8f0; box-shadow:0 12px 32px rgba(15,23,42,0.2); display:none; flex-direction:column; gap:4px; z-index:9999;">
+                <a class="lang-dropdown-item@(culture == "tr" ? " is-active" : "")" href="/dil/tr?returnUrl=@Uri.EscapeDataString(returnUrl)" hreflang="tr" lang="tr" role="menuitem" style="display:flex; flex-direction:row; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; text-decoration:none; font-size:0.84rem; color:#1e293b; white-space:nowrap; transition:all 150ms ease;">
+                    <svg class="lang-flag-icon" viewBox="0 0 640 480" width="18" height="13.5" style="border-radius:2px; box-shadow:0 0 0 1px rgba(0,0,0,0.15); flex-shrink:0; display:inline-block;"><rect width="640" height="480" fill="#e30a17"/><circle cx="270" cy="240" r="144" fill="#ffffff"/><circle cx="300" cy="240" r="115.2" fill="#e30a17"/><polygon fill="#ffffff" points="345.6,240 432,268 384,196.8 384,283.2 432,212"/></svg>
+                    <span style="flex-grow:1; font-weight:600;">Türkçe</span>
+                    <span style="font-size:0.74rem; opacity:0.65; font-weight:700;">TR</span>
+                </a>
+                <a class="lang-dropdown-item@(culture == "en" ? " is-active" : "")" href="/dil/en?returnUrl=@Uri.EscapeDataString(returnUrl)" hreflang="en" lang="en" role="menuitem" style="display:flex; flex-direction:row; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; text-decoration:none; font-size:0.84rem; color:#1e293b; white-space:nowrap; transition:all 150ms ease;">
+                    <svg class="lang-flag-icon" viewBox="0 0 640 480" width="18" height="13.5" style="border-radius:2px; box-shadow:0 0 0 1px rgba(0,0,0,0.15); flex-shrink:0; display:inline-block;"><clipPath id="gb-mnu-s"><path d="M0,0 v480 h640 v-480 z"/></clipPath><clipPath id="gb-mnu-t"><path d="M0,0 L640,480 M640,0 L0,480"/></clipPath><g clip-path="url(#gb-mnu-s)"><path d="M0,0 v480 h640 v-480 z" fill="#012169"/><path d="M0,0 L640,480 M640,0 L0,480" stroke="#fff" stroke-width="60"/><path d="M0,0 L640,480 M640,0 L0,480" clip-path="url(#gb-mnu-t)" stroke="#C8102E" stroke-width="40"/><path d="M320,0 v480 M0,240 h640" stroke="#fff" stroke-width="100"/><path d="M320,0 v480 M0,240 h640" stroke="#C8102E" stroke-width="60"/></g></svg>
+                    <span style="flex-grow:1; font-weight:600;">English</span>
+                    <span style="font-size:0.74rem; opacity:0.65; font-weight:700;">EN</span>
+                </a>
+                <a class="lang-dropdown-item@(culture == "de" ? " is-active" : "")" href="/dil/de?returnUrl=@Uri.EscapeDataString(returnUrl)" hreflang="de" lang="de" role="menuitem" style="display:flex; flex-direction:row; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; text-decoration:none; font-size:0.84rem; color:#1e293b; white-space:nowrap; transition:all 150ms ease;">
+                    <svg class="lang-flag-icon" viewBox="0 0 640 480" width="18" height="13.5" style="border-radius:2px; box-shadow:0 0 0 1px rgba(0,0,0,0.15); flex-shrink:0; display:inline-block;"><rect width="640" height="160" y="0" fill="#000000"/><rect width="640" height="160" y="160" fill="#DD0000"/><rect width="640" height="160" y="320" fill="#FFCE00"/></svg>
+                    <span style="flex-grow:1; font-weight:600;">Deutsch</span>
+                    <span style="font-size:0.74rem; opacity:0.65; font-weight:700;">DE</span>
+                </a>
+            </div>
         </div>
     </div>
 </header>
