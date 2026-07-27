@@ -4,7 +4,8 @@
     ViewData["Description"] = Model.Summary;
 }
 
-<section class="page-intro page-intro--compact">
+<section class="page-intro page-intro--compact page-banner">
+    <partial name="_PageBannerMedia" model='"~/img/banners/page-news-detail.webp"' />
     <div class="container">
         <div class="section-head mb-0" data-reveal>
             <a class="text-link" href="@SiteUrls.Page(SitePageKeys.News)">← @L["News.BackToList"]</a>

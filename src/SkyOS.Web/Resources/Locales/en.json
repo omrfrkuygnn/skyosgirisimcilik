@@ -4,6 +4,7 @@
     "TitleSuffix": "{0} · SkyOS",
     "DefaultDescription": "A modular, hardware-agnostic domestic autonomous systems platform that manages air, land, and sea vehicles from a single software backbone.",
     "SkipLink": "Skip to content",
+    "BackToTop": "Back to top",
     "OgLocale": "en_US"
   },
   "Nav": {
@@ -128,7 +129,8 @@
     "WhyEyebrow": "Why SkyOS?",
     "WhyTitle": "Türkiye can build the brain software for autonomous systems",
     "WhyLead": "Existing open-source alternatives are hardware-dependent with weak security layers; closed commercial systems withhold source access. SkyOS fills this gap as a domestic alternative that has been tested and enterprise-evaluated.",
-    "WhyCta": "Read our story"
+    "WhyCta": "Read our story",
+    "WhyAlt": "Air and ground autonomous systems operating together in the field"
   },
   "About": {
     "Title": "About",
@@ -186,6 +188,7 @@
     "Row7": "Flight Controller Independence",
     "Row8": "AI-based Motion Control",
     "Row9": "Migration to Rust (Final Product)",
+    "ProgressLabel": "items completed",
     "Note": "Note: The prototype was developed in Python; the final product is being migrated to Rust."
   },
   "UseCases": {
@@ -219,6 +222,7 @@
     "Priority3": "TÜBİTAK, KOSGEB, and similar public R&D support",
     "Priority4": "Technology-focused grants and sponsorship",
     "Priority4Note": "Secondary.",
+    "PriorityAlt": "Strategic investment and partnership discussion",
     "ImpactEyebrow": "Economic and Strategic Contribution",
     "ImpactTitle": "Expected impact",
     "ColArea": "Contribution Area",
@@ -366,6 +370,7 @@
     "Description": "Privacy notice and policy under KVKK (Turkish Personal Data Protection Law).",
     "Eyebrow": "KVKK / Privacy",
     "Heading": "Privacy Policy and Notice",
+    "TocLabel": "Contents",
     "DraftNotice": "<strong>Draft notice:</strong> This page is a template. Because the contact form collects personal data (name, email, phone), a final text compliant with Law No. 6698 (KVKK) must be prepared and approved by legal counsel before go-live. This content is not legal advice.",
     "Section1Title": "1. Data Controller",
     "Section1Text": "[The data controller’s title, address, and contact details will be completed by legal counsel.]",

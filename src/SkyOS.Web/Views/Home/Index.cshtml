@@ -208,12 +208,14 @@
         </div>
 
         <div class="proof-grid">
-            <article class="proof-panel" data-reveal>
+            <article class="proof-panel proof-panel--swarm" data-reveal>
                 <div class="proof-panel-media">
                     <img src="~/img/banners/banner-swarm.webp" width="800" height="500" alt="@L["Home.SwarmAlt"]" loading="lazy" decoding="async" asp-append-version="true" />
+                    <div class="proof-panel-scrim" aria-hidden="true"></div>
                     <img class="proof-panel-logo" src="~/img/partners/teknofest.png" width="140" height="48" alt="TEKNOFEST" loading="lazy" asp-append-version="true" />
                 </div>
                 <div class="proof-panel-copy">
+                    <span class="proof-panel-kicker">TEKNOFEST</span>
                     <h3>@L["Home.SwarmTitle"]</h3>
                     <p>@L["Home.SwarmText"]</p>
                     <div class="proof-tags">
@@ -223,12 +225,14 @@
                 </div>
             </article>
 
-            <article class="proof-panel" data-reveal>
+            <article class="proof-panel proof-panel--combat" data-reveal>
                 <div class="proof-panel-media">
                     <img src="~/img/banners/banner-combat.webp" width="800" height="500" alt="@L["Home.CombatAlt"]" loading="lazy" decoding="async" asp-append-version="true" />
+                    <div class="proof-panel-scrim" aria-hidden="true"></div>
                     <img class="proof-panel-logo" src="~/img/partners/teknofest.png" width="140" height="48" alt="TEKNOFEST" loading="lazy" asp-append-version="true" />
                 </div>
                 <div class="proof-panel-copy">
+                    <span class="proof-panel-kicker">TEKNOFEST</span>
                     <h3>@L["Home.CombatTitle"]</h3>
                     <p>@L["Home.CombatText"]</p>
                     <div class="proof-tags">
@@ -256,43 +260,55 @@
     </div>
 </section>
 
-<section class="section section-alt">
+<section class="section section-capabilities">
     <div class="container">
         <div class="section-head" data-reveal>
             <span class="eyebrow">@L["Home.FeaturesEyebrow"]</span>
             <h2>@L["Home.FeaturesTitle"]</h2>
             <p class="lead">@L["Home.FeaturesLead"]</p>
         </div>
-        <div class="cards cards-4">
-            <article class="card" data-reveal>
-                <div class="feature-index">01 / 04</div>
-                <span class="card-icon" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2 4 5v6c0 5 3.4 8.3 8 11 4.6-2.7 8-6 8-11V5l-8-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
+        <div class="capability-grid">
+            <article class="capability-card" data-reveal>
+                <span class="capability-card-watermark" aria-hidden="true">01</span>
+                <div class="capability-card-top">
+                    <span class="feature-index">01 / 04</span>
+                    <span class="capability-card-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2 4 5v6c0 5 3.4 8.3 8 11 4.6-2.7 8-6 8-11V5l-8-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                </div>
                 <h3>@L["Home.Feature1Title"]</h3>
                 <p>@L["Home.Feature1Text"]</p>
             </article>
-            <article class="card" data-reveal>
-                <div class="feature-index">02 / 04</div>
-                <span class="card-icon" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 8h11l-2.5-2.5M20 16H9l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
+            <article class="capability-card" data-reveal>
+                <span class="capability-card-watermark" aria-hidden="true">02</span>
+                <div class="capability-card-top">
+                    <span class="feature-index">02 / 04</span>
+                    <span class="capability-card-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 8h11l-2.5-2.5M20 16H9l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                </div>
                 <h3>@L["Home.Feature2Title"]</h3>
                 <p>@L["Home.Feature2Text"]</p>
             </article>
-            <article class="card" data-reveal>
-                <div class="feature-index">03 / 04</div>
-                <span class="card-icon" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2.4" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="6" r="2.4" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="18" r="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M7.7 7.7 11 15m5.3-7.3L13 15" stroke="currentColor" stroke-width="1.6"/></svg>
-                </span>
+            <article class="capability-card" data-reveal>
+                <span class="capability-card-watermark" aria-hidden="true">03</span>
+                <div class="capability-card-top">
+                    <span class="feature-index">03 / 04</span>
+                    <span class="capability-card-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2.4" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="6" r="2.4" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="18" r="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M7.7 7.7 11 15m5.3-7.3L13 15" stroke="currentColor" stroke-width="1.6"/></svg>
+                    </span>
+                </div>
                 <h3>@L["Home.Feature3Title"]</h3>
                 <p>@L["Home.Feature3Text"]</p>
             </article>
-            <article class="card" data-reveal>
-                <div class="feature-index">04 / 04</div>
-                <span class="card-icon" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 9h6v6H9zM12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                </span>
+            <article class="capability-card" data-reveal>
+                <span class="capability-card-watermark" aria-hidden="true">04</span>
+                <div class="capability-card-top">
+                    <span class="feature-index">04 / 04</span>
+                    <span class="capability-card-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 9h6v6H9zM12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    </span>
+                </div>
                 <h3>@L["Home.Feature4Title"]</h3>
                 <p>@L["Home.Feature4Text"]</p>
             </article>
@@ -300,13 +316,18 @@
     </div>
 </section>
 
-<section class="section">
+<section class="section home-why">
     <div class="container">
-        <div class="section-head mb-0" data-reveal="left">
-            <span class="eyebrow">@L["Home.WhyEyebrow"]</span>
-            <h2>@L["Home.WhyTitle"]</h2>
-            <p class="lead">@L["Home.WhyLead"]</p>
-            <a class="btn btn-ghost" href="@SiteUrls.Page(SitePageKeys.About)">@L["Home.WhyCta"]</a>
+        <div class="home-why-grid">
+            <div class="home-why-copy" data-reveal="left">
+                <span class="eyebrow">@L["Home.WhyEyebrow"]</span>
+                <h2>@L["Home.WhyTitle"]</h2>
+                <p class="lead">@L["Home.WhyLead"]</p>
+                <a class="btn btn-ghost" href="@SiteUrls.Page(SitePageKeys.About)">@L["Home.WhyCta"]</a>
+            </div>
+            <figure class="home-why-media" data-reveal="scale">
+                <img src="~/img/banners/banner-platform.webp" width="960" height="720" alt="@L["Home.WhyAlt"]" loading="lazy" decoding="async" asp-append-version="true" />
+            </figure>
         </div>
     </div>
 </section>

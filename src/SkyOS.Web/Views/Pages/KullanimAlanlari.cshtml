@@ -3,7 +3,8 @@
     ViewData["Description"] = L["UseCases.Description"];
 }
 
-<section class="page-intro">
+<section class="page-intro page-banner">
+    <partial name="_PageBannerMedia" model='"~/img/banners/page-usecases.webp"' />
     <div class="container">
         <div class="section-head mb-0" data-reveal>
             <span class="eyebrow">@L["UseCases.Eyebrow"]</span>
@@ -15,7 +16,7 @@
 
 <section class="section" style="padding-top:0;">
     <div class="container">
-        <div class="sector-grid">
+        <div class="sector-grid sector-grid--usecases">
             <article class="sector-tile" data-reveal>
                 <span class="card-kicker">01</span>
                 <h3>@L["UseCases.Case1Title"]</h3>

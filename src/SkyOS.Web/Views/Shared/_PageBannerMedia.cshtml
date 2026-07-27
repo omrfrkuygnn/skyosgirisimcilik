@@ -1,0 +1,6 @@
+@model string
+@{
+    var src = string.IsNullOrWhiteSpace(Model) ? "~/img/banners/page-about.webp" : Model;
+}
+<img class="page-banner-bg" src="@src" width="1920" height="1080" alt="" decoding="async" asp-append-version="true" />
+<div class="page-banner-shade" aria-hidden="true"></div>

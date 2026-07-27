@@ -6,7 +6,8 @@
     var order = new[] { MilestoneCategory.Kurumsal, MilestoneCategory.Teknofest, MilestoneCategory.Teknik };
 }
 
-<section class="page-intro page-intro--proof">
+<section class="page-intro page-intro--proof page-banner">
+    <partial name="_PageBannerMedia" model='"~/img/banners/page-achievements.webp"' />
     <div class="container">
         <div class="section-head mb-0" data-reveal>
             <span class="eyebrow">@L["Achievements.Eyebrow"]</span>
@@ -45,22 +46,26 @@
 
         @* TEKNOFEST kategorileri *@
         <div class="proof-grid" style="margin-top: clamp(28px, 4vw, 40px);">
-            <article class="proof-panel" data-reveal>
+            <article class="proof-panel proof-panel--swarm" data-reveal>
                 <div class="proof-panel-media">
                     <img src="~/img/banners/banner-swarm.webp" width="800" height="500" alt="@L["Achievements.SwarmAlt"]" loading="lazy" decoding="async" asp-append-version="true" />
+                    <div class="proof-panel-scrim" aria-hidden="true"></div>
                     <img class="proof-panel-logo" src="~/img/partners/teknofest.png" width="140" height="48" alt="TEKNOFEST" loading="lazy" asp-append-version="true" />
                 </div>
                 <div class="proof-panel-copy">
+                    <span class="proof-panel-kicker">TEKNOFEST</span>
                     <h3>@L["Achievements.SwarmTitle"]</h3>
                     <p>@L["Achievements.SwarmText"]</p>
                 </div>
             </article>
-            <article class="proof-panel" data-reveal>
+            <article class="proof-panel proof-panel--combat" data-reveal>
                 <div class="proof-panel-media">
                     <img src="~/img/banners/banner-combat.webp" width="800" height="500" alt="@L["Achievements.CombatAlt"]" loading="lazy" decoding="async" asp-append-version="true" />
+                    <div class="proof-panel-scrim" aria-hidden="true"></div>
                     <img class="proof-panel-logo" src="~/img/partners/teknofest.png" width="140" height="48" alt="TEKNOFEST" loading="lazy" asp-append-version="true" />
                 </div>
                 <div class="proof-panel-copy">
+                    <span class="proof-panel-kicker">TEKNOFEST</span>
                     <h3>@L["Achievements.CombatTitle"]</h3>
                     <p>@L["Achievements.CombatText"]</p>
                 </div>

@@ -1,9 +1,11 @@
 @{
     ViewData["Title"] = L["Product.Title"];
     ViewData["Description"] = L["Product.Description"];
+    ViewData["BodyClass"] = "page-product";
 }
 
-<section class="page-intro">
+<section class="page-intro page-banner">
+    <partial name="_PageBannerMedia" model='"~/img/banners/page-product.webp"' />
     <div class="container">
         <div class="section-head mb-0" data-reveal>
             <span class="eyebrow">@L["Product.Eyebrow"]</span>
@@ -15,7 +17,7 @@
 
 <section class="section" style="padding-top:0;">
     <div class="container">
-        <div class="sector-grid" style="margin-bottom:clamp(40px,5vw,56px);">
+        <div class="sector-grid sector-grid--2 product-feature-grid">
             <article class="sector-tile" data-reveal>
                 <span class="card-kicker">@L["Product.KickerSecurity"]</span>
                 <h3>@L["Product.Feature1Title"]</h3>
@@ -49,19 +51,85 @@
             </div>
         </article>
 
-        <div class="timeline-block" data-reveal>
-            <ul class="roadmap-list">
-                <li class="roadmap-row"><span>@L["Product.Row1"]</span><span class="pill pill-done">@L["Product.Done"]</span></li>
-                <li class="roadmap-row"><span>@L["Product.Row2"]</span><span class="pill pill-done">@L["Product.Done"]</span></li>
-                <li class="roadmap-row"><span>@L["Product.Row3"]</span><span class="pill pill-done">@L["Product.Done"]</span></li>
-                <li class="roadmap-row"><span>@L["Product.Row4"]</span><span class="pill pill-done">@L["Product.Done"]</span></li>
-                <li class="roadmap-row"><span>@L["Product.Row5"]</span><span class="pill pill-done">@L["Product.Done"]</span></li>
-                <li class="roadmap-row"><span>@L["Product.Row6"]</span><span class="pill pill-done">@L["Product.Done"]</span></li>
-                <li class="roadmap-row"><span>@L["Product.Row7"]</span><span class="pill pill-done">@L["Product.Done"]</span></li>
-                <li class="roadmap-row"><span>@L["Product.Row8"]</span><span class="pill pill-done">@L["Product.Done"]</span></li>
-                <li class="roadmap-row"><span>@L["Product.Row9"]</span><span class="pill pill-progress">@L["Product.InProgress"]</span></li>
-            </ul>
-            <p class="form-note" style="margin-top:16px;">@L["Product.Note"]</p>
+        <div class="product-roadmap" data-reveal>
+            <div class="product-roadmap-head">
+                <div class="product-roadmap-progress" role="group" aria-label="@L["Product.ProgressLabel"]">
+                    <div class="product-roadmap-progress-bar" aria-hidden="true">
+                        <span style="width:88.89%"></span>
+                    </div>
+                    <p class="product-roadmap-progress-meta">
+                        <strong>8 / 9</strong>
+                        <span>@L["Product.ProgressLabel"]</span>
+                    </p>
+                </div>
+            </div>
+
+            <ol class="product-roadmap-list">
+                <li class="product-roadmap-item product-roadmap-item--done">
+                    <span class="product-roadmap-index" aria-hidden="true">01</span>
+                    <div class="product-roadmap-body">
+                        <span class="product-roadmap-title">@L["Product.Row1"]</span>
+                        <span class="pill pill-done">@L["Product.Done"]</span>
+                    </div>
+                </li>
+                <li class="product-roadmap-item product-roadmap-item--done">
+                    <span class="product-roadmap-index" aria-hidden="true">02</span>
+                    <div class="product-roadmap-body">
+                        <span class="product-roadmap-title">@L["Product.Row2"]</span>
+                        <span class="pill pill-done">@L["Product.Done"]</span>
+                    </div>
+                </li>
+                <li class="product-roadmap-item product-roadmap-item--done">
+                    <span class="product-roadmap-index" aria-hidden="true">03</span>
+                    <div class="product-roadmap-body">
+                        <span class="product-roadmap-title">@L["Product.Row3"]</span>
+                        <span class="pill pill-done">@L["Product.Done"]</span>
+                    </div>
+                </li>
+                <li class="product-roadmap-item product-roadmap-item--done">
+                    <span class="product-roadmap-index" aria-hidden="true">04</span>
+                    <div class="product-roadmap-body">
+                        <span class="product-roadmap-title">@L["Product.Row4"]</span>
+                        <span class="pill pill-done">@L["Product.Done"]</span>
+                    </div>
+                </li>
+                <li class="product-roadmap-item product-roadmap-item--done">
+                    <span class="product-roadmap-index" aria-hidden="true">05</span>
+                    <div class="product-roadmap-body">
+                        <span class="product-roadmap-title">@L["Product.Row5"]</span>
+                        <span class="pill pill-done">@L["Product.Done"]</span>
+                    </div>
+                </li>
+                <li class="product-roadmap-item product-roadmap-item--done">
+                    <span class="product-roadmap-index" aria-hidden="true">06</span>
+                    <div class="product-roadmap-body">
+                        <span class="product-roadmap-title">@L["Product.Row6"]</span>
+                        <span class="pill pill-done">@L["Product.Done"]</span>
+                    </div>
+                </li>
+                <li class="product-roadmap-item product-roadmap-item--done">
+                    <span class="product-roadmap-index" aria-hidden="true">07</span>
+                    <div class="product-roadmap-body">
+                        <span class="product-roadmap-title">@L["Product.Row7"]</span>
+                        <span class="pill pill-done">@L["Product.Done"]</span>
+                    </div>
+                </li>
+                <li class="product-roadmap-item product-roadmap-item--done">
+                    <span class="product-roadmap-index" aria-hidden="true">08</span>
+                    <div class="product-roadmap-body">
+                        <span class="product-roadmap-title">@L["Product.Row8"]</span>
+                        <span class="pill pill-done">@L["Product.Done"]</span>
+                    </div>
+                </li>
+                <li class="product-roadmap-item product-roadmap-item--active">
+                    <span class="product-roadmap-index" aria-hidden="true">09</span>
+                    <div class="product-roadmap-body">
+                        <span class="product-roadmap-title">@L["Product.Row9"]</span>
+                        <span class="pill pill-progress">@L["Product.InProgress"]</span>
+                    </div>
+                </li>
+            </ol>
+            <p class="product-roadmap-note">@L["Product.Note"]</p>
         </div>
     </div>
 </section>

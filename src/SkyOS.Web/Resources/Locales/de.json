@@ -4,6 +4,7 @@
     "TitleSuffix": "{0} · SkyOS",
     "DefaultDescription": "Eine modulare, hardwareunabhängige heimische Plattform für autonome Systeme, die Luft-, Land- und Seefahrzeuge über ein einziges Software-Rückgrat steuert.",
     "SkipLink": "Zum Inhalt springen",
+    "BackToTop": "Nach oben",
     "OgLocale": "de_DE"
   },
   "Nav": {
@@ -129,7 +130,8 @@
     "WhyEyebrow": "Warum SkyOS?",
     "WhyTitle": "Die Türkei kann die Gehirn-Software für autonome Systeme selbst entwickeln",
     "WhyLead": "Bestehende Open-Source-Alternativen sind hardwareabhängig mit schwachen Sicherheitsstrukturen; geschlossene kommerzielle Systeme gewähren keinen Quellcode-Zugriff. SkyOS schließt diese Lücke als geprüfte heimische Alternative.",
-    "WhyCta": "Unsere Geschichte lesen"
+    "WhyCta": "Unsere Geschichte lesen",
+    "WhyAlt": "Luft- und Boden-Autonomieplattformen im gemeinsamen Feldeinsatz"
   },
   "About": {
     "Title": "Über uns",
@@ -187,6 +189,7 @@
     "Row7": "Flugregler-Unabhängigkeit",
     "Row8": "KI-basierte Bewegungssteuerung",
     "Row9": "Migration zu Rust (Endprodukt)",
+    "ProgressLabel": "Punkte abgeschlossen",
     "Note": "Hinweis: Der Prototyp wurde in Python entwickelt; das Endprodukt wird auf Rust migriert."
   },
   "UseCases": {
@@ -220,6 +223,7 @@
     "Priority3": "TÜBİTAK, KOSGEB und ähnliche öffentliche F&E-Förderungen",
     "Priority4": "Technologieorientierte Zuschüsse und Sponsoring",
     "Priority4Note": "Sekundär.",
+    "PriorityAlt": "Strategische Investitions- und Partnerschaftsgespräche",
     "ImpactEyebrow": "Wirtschaftlicher und Strateigscher Beitrag",
     "ImpactTitle": "Erwartete Wirkung",
     "ColArea": "Beitragsbereich",
@@ -367,6 +371,7 @@
     "Description": "Datenschutzhinweis und -richtlinie gemäß KVKK.",
     "Eyebrow": "KVKK / Datenschutz",
     "Heading": "Datenschutzerklärung und Hinweis",
+    "TocLabel": "Inhalt",
     "DraftNotice": "<strong>Entwurfshinweis:</strong> Diese Seite ist eine Vorlage. Da das Kontaktformular personenbezogene Daten sammelt, muss vor dem Go-Live ein endgültiger Text vorbereitet und von einem Rechtsbeistand genehmigt werden.",
     "Section1Title": "1. Verantwortlicher",
     "Section1Text": "[Titel, Adresse und Kontaktdaten des Verantwortlichen werden vom Rechtsbeistand ergänzt.]",

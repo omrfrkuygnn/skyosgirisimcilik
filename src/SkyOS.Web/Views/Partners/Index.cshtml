@@ -24,7 +24,8 @@
     }
 }
 
-<section class="page-intro page-intro--partners page-intro--compact">
+<section class="page-intro page-intro--partners page-intro--compact page-banner">
+    <partial name="_PageBannerMedia" model='"~/img/banners/page-partners.webp"' />
     <div class="container">
         <div class="section-head mb-0" data-reveal>
             <span class="eyebrow">@L["Partners.Eyebrow"]</span>
@@ -67,14 +68,18 @@
                                     @if (!string.IsNullOrWhiteSpace(partner.Address))
                                     {
                                         <div class="partner-detail-item">
-                                            <span class="detail-icon">📍</span>
+                                            <span class="detail-icon" aria-hidden="true">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                            </span>
                                             <span><strong>@L["Partners.Address"]:</strong> @partner.Address</span>
                                         </div>
                                     }
                                     @if (!string.IsNullOrWhiteSpace(partner.Phone))
                                     {
                                         <div class="partner-detail-item">
-                                            <span class="detail-icon">📞</span>
+                                            <span class="detail-icon" aria-hidden="true">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                            </span>
                                             <span><strong>@L["Partners.Phone"]:</strong> <a href="tel:@partner.Phone.Replace(" ", string.Empty).Replace("(", string.Empty).Replace(")", string.Empty)">@partner.Phone</a></span>
                                         </div>
                                     }
@@ -117,10 +122,10 @@
         </article>
 
         <div class="support-letters-section" style="margin-top: 64px;" data-reveal>
-            <div class="section-head text-center mb-4">
+            <div class="section-head mb-4">
                 <span class="eyebrow">@L["Partners.SupportLettersEyebrow"]</span>
                 <h2>@L["Partners.SupportLettersHeading"]</h2>
-                <p class="lead" style="max-width:680px; margin:0 auto;">@L["Partners.SupportLettersLead"]</p>
+                <p class="lead" style="max-width:680px; margin:0;">@L["Partners.SupportLettersLead"]</p>
             </div>
             <div class="support-letters-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px; margin-top:32px;">
                 <div class="support-letter-card">

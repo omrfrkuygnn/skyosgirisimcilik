@@ -300,6 +300,29 @@
       }).catch(fail);
     });
   });
+  // Back to top — show after ~400px scroll
+  var backToTop = document.querySelector("[data-back-to-top]");
+  if (backToTop) {
+    var backToTopThreshold = 400;
+    var backToTopVisible = false;
+    var setBackToTop = function () {
+      var show = window.scrollY > backToTopThreshold;
+      if (show === backToTopVisible) {
+        return;
+      }
+      backToTopVisible = show;
+      backToTop.classList.toggle("is-visible", show);
+      backToTop.setAttribute("aria-hidden", show ? "false" : "true");
+      backToTop.tabIndex = show ? 0 : -1;
+    };
+    setBackToTop();
+    window.addEventListener("scroll", setBackToTop, { passive: true });
+    backToTop.addEventListener("click", function () {
+      var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+    });
+  }
+
   // Infinite marquee — clones content so track is always wider than viewport
   document.querySelectorAll("[data-marquee]").forEach(function (strip) {
     var track = strip.querySelector(".marquee-track");

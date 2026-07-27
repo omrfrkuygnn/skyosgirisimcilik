@@ -4,6 +4,7 @@
     "TitleSuffix": "{0} · SkyOS",
     "DefaultDescription": "Hava, kara ve deniz araçlarını tek bir yazılım omurgasından yöneten, modüler ve donanım bağımsız yerli otonom sistem platformu.",
     "SkipLink": "İçeriğe geç",
+    "BackToTop": "Yukarı çık",
     "OgLocale": "tr_TR"
   },
   "Nav": {
@@ -128,7 +129,8 @@
     "WhyEyebrow": "Neden SkyOS?",
     "WhyTitle": "Türkiye otonom sistemlerin beyin yazılımını kendisi üretebilir",
     "WhyLead": "Mevcut açık kaynak alternatifler donanıma bağımlı ve güvenlik katmanı zayıf; kapalı ticari sistemler ise kaynak koduna erişim vermiyor. SkyOS, test edilmiş ve kurumsal değerlendirmeden geçmiş yerli bir alternatif olarak bu boşluğu doldurur.",
-    "WhyCta": "Hikâyemizi okuyun"
+    "WhyCta": "Hikâyemizi okuyun",
+    "WhyAlt": "Hava ve kara otonom sistemleri sahada birlikte çalışıyor"
   },
   "About": {
     "Title": "Hakkımızda",
@@ -186,6 +188,7 @@
     "Row7": "Uçuş Kartı Bağımsızlığı",
     "Row8": "Yapay Zekâ ile Hareket Kontrolü",
     "Row9": "Rust Diline Geçiş (Son Ürün)",
+    "ProgressLabel": "madde tamamlandı",
     "Note": "Not: Prototip Python ile geliştirilmiştir; son ürün Rust diline taşınmaktadır."
   },
   "UseCases": {
@@ -219,6 +222,7 @@
     "Priority3": "TÜBİTAK, KOSGEB ve benzeri kamu Ar-Ge destekleri",
     "Priority4": "Teknoloji odaklı bağış ve sponsorluk",
     "Priority4Note": "İkincil.",
+    "PriorityAlt": "Stratejik yatırım ve iş birliği görüşmesi",
     "ImpactEyebrow": "Ekonomik ve Stratejik Katkı",
     "ImpactTitle": "Beklenen etki",
     "ColArea": "Katkı Alanı",
@@ -366,6 +370,7 @@
     "Description": "KVKK kapsamında aydınlatma metni ve gizlilik politikası.",
     "Eyebrow": "KVKK / Gizlilik",
     "Heading": "Gizlilik Politikası ve Aydınlatma Metni",
+    "TocLabel": "İçindekiler",
     "DraftNotice": "<strong>Taslak bildirimi:</strong> Bu sayfa bir şablondur. İletişim formu kişisel veri (ad, e-posta, telefon) topladığı için 6698 sayılı KVKK ile uyumlu nihai metin, yayına alınmadan önce bir hukuk danışmanı tarafından hazırlanıp onaylanmalıdır. Bu içerik hukuki tavsiye değildir.",
     "Section1Title": "1. Veri Sorumlusu",
     "Section1Text": "[Veri sorumlusu unvanı, adresi ve iletişim bilgileri hukuk danışmanı tarafından doldurulacaktır.]",

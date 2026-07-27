@@ -1,4 +1,5 @@
 @inject IOptions<SiteContactOptions> SiteContact
+@inject IWebHostEnvironment HostEnvironment
 @{
     var nonce = Context.GetCspNonce();
     var title = ViewData["Title"] as string;
@@ -11,6 +12,7 @@
         ? Array.Empty<(string Culture, string Url)>()
         : SiteUrls.GetAlternateAbsoluteUrls(Context);
     var robots = ViewData["Robots"] as string ?? "index, follow";
+    var isDev = HostEnvironment.IsDevelopment();
 }
 <!DOCTYPE html>
 <html lang="@L.Culture">
@@ -36,10 +38,21 @@
     }
     <link rel="icon" href="~/favicon.ico" />
     <link rel="preload" href="~/fonts/ibm-plex-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="~/fonts/ibm-plex-sans-400-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="~/fonts/ibm-plex-sans-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="~/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="~/fonts/jetbrains-mono-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="~/fonts/syne-latin-800.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="~/css/site.min.css" as="style" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    @* Development: load site.v3.css directly so style edits show without WebOptimizer cache *@
+    @if (isDev)
+    {
+        <link rel="stylesheet" href="~/css/site.v3.css" asp-append-version="true" />
+    }
+    else
+    {
+        <link rel="preload" href="~/css/site.min.css" as="style" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    }
 </head>
 <body class="@(ViewData["BodyClass"] as string)">
     <a class="skip-link" href="#main">@L["Layout.SkipLink"]</a>
@@ -50,6 +63,17 @@
     </main>
 
     <partial name="_Footer" />
+
+    <button type="button"
+            class="back-to-top"
+            data-back-to-top
+            aria-label="@L["Layout.BackToTop"]"
+            aria-hidden="true"
+            tabindex="-1">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path d="M12 5v14M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
 
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" defer asp-append-version="true"></script>

@@ -1,9 +1,11 @@
 @{
     ViewData["Title"] = L["Privacy.Title"];
     ViewData["Description"] = L["Privacy.Description"];
+    ViewData["BodyClass"] = "page-privacy";
 }
 
-<section class="page-intro">
+<section class="page-intro page-banner page-intro--compact">
+    <partial name="_PageBannerMedia" model='"~/img/banners/page-privacy.webp"' />
     <div class="container">
         <div class="section-head mb-0" data-reveal>
             <span class="eyebrow">@L["Privacy.Eyebrow"]</span>
@@ -12,30 +14,59 @@
     </div>
 </section>
 
-<section class="section" style="padding-top:0;">
+<section class="section privacy-section">
     <div class="container">
-        <article class="legal-doc" data-reveal>
-            <div class="notice-panel" style="margin-top:0;margin-bottom:28px;">
-                <p>@Html.Raw(L["Privacy.DraftNotice"])</p>
-            </div>
+        <div class="privacy-layout">
+            <nav class="privacy-toc" aria-label="@L["Privacy.TocLabel"]" data-reveal>
+                <p class="privacy-toc__label">@L["Privacy.TocLabel"]</p>
+                <ol class="privacy-toc__list">
+                    <li><a href="#privacy-s1">@L["Privacy.Section1Title"]</a></li>
+                    <li><a href="#privacy-s2">@L["Privacy.Section2Title"]</a></li>
+                    <li><a href="#privacy-s3">@L["Privacy.Section3Title"]</a></li>
+                    <li><a href="#privacy-s4">@L["Privacy.Section4Title"]</a></li>
+                    <li><a href="#privacy-s5">@L["Privacy.Section5Title"]</a></li>
+                    <li><a href="#privacy-s6">@L["Privacy.Section6Title"]</a></li>
+                </ol>
+            </nav>
 
-            <h2>@L["Privacy.Section1Title"]</h2>
-            <p>@L["Privacy.Section1Text"]</p>
+            <article class="privacy-doc" data-reveal>
+                <aside class="privacy-notice" role="note">
+                    <span class="privacy-notice__badge" aria-hidden="true"></span>
+                    <div class="privacy-notice__body">
+                        <p>@Html.Raw(L["Privacy.DraftNotice"])</p>
+                    </div>
+                </aside>
 
-            <h2>@L["Privacy.Section2Title"]</h2>
-            <p>@L["Privacy.Section2Text"]</p>
+                <section id="privacy-s1" class="privacy-block privacy-block--pending">
+                    <h2>@L["Privacy.Section1Title"]</h2>
+                    <p>@L["Privacy.Section1Text"]</p>
+                </section>
 
-            <h2>@L["Privacy.Section3Title"]</h2>
-            <p>@L["Privacy.Section3Text"]</p>
+                <section id="privacy-s2" class="privacy-block">
+                    <h2>@L["Privacy.Section2Title"]</h2>
+                    <p>@L["Privacy.Section2Text"]</p>
+                </section>
 
-            <h2>@L["Privacy.Section4Title"]</h2>
-            <p>@L["Privacy.Section4Text"]</p>
+                <section id="privacy-s3" class="privacy-block">
+                    <h2>@L["Privacy.Section3Title"]</h2>
+                    <p>@L["Privacy.Section3Text"]</p>
+                </section>
 
-            <h2>@L["Privacy.Section5Title"]</h2>
-            <p>@L["Privacy.Section5Text"]</p>
+                <section id="privacy-s4" class="privacy-block privacy-block--pending">
+                    <h2>@L["Privacy.Section4Title"]</h2>
+                    <p>@L["Privacy.Section4Text"]</p>
+                </section>
 
-            <h2>@L["Privacy.Section6Title"]</h2>
-            <p>@Html.Raw(L["Privacy.Section6Text"])</p>
-        </article>
+                <section id="privacy-s5" class="privacy-block">
+                    <h2>@L["Privacy.Section5Title"]</h2>
+                    <p>@L["Privacy.Section5Text"]</p>
+                </section>
+
+                <section id="privacy-s6" class="privacy-block privacy-block--contact">
+                    <h2>@L["Privacy.Section6Title"]</h2>
+                    <p>@Html.Raw(L["Privacy.Section6Text"])</p>
+                </section>
+            </article>
+        </div>
     </div>
 </section>
