@@ -1,0 +1,153 @@
+@using System.Security.Claims
+@{
+    var title = ViewData["Title"] as string ?? L["Admin.AppName"];
+    var isAuthenticated = User.Identity?.IsAuthenticated == true;
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var userEmail = User.Identity?.Name ?? "";
+    var displayName = User.FindFirstValue(ClaimTypes.GivenName)
+        ?? User.FindFirstValue("display_name")
+        ?? (userEmail.Contains('@') ? userEmail.Split('@')[0] : userEmail);
+    var nameParts = displayName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+    var initials = nameParts.Length >= 2
+        ? $"{nameParts[0][0]}{nameParts[^1][0]}"
+        : (displayName.Length > 0 ? displayName[..Math.Min(2, displayName.Length)] : "A");
+    initials = initials.ToUpperInvariant();
+    var culture = L.Culture.ToLowerInvariant();
+    var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+}
+<!DOCTYPE html>
+<html lang="@L.Culture">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>@title · SkyOS</title>
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<body class="@(isAuthenticated ? "admin-shell" : "admin-auth-page")">
+@if (isAuthenticated)
+{
+    <div class="admin-sidebar-overlay" id="admin-sidebar-overlay"></div>
+
+    <aside class="admin-sidebar" id="admin-sidebar" aria-label="@L["Admin.Navigation"]">
+        <div class="admin-sidebar-user">
+            <div class="admin-avatar" aria-hidden="true">@initials</div>
+            <div class="admin-sidebar-user-text">
+                <strong class="admin-sidebar-user-name">@displayName</strong>
+                <span class="admin-sidebar-user-role">@L["Admin.RoleAdmin"]</span>
+            </div>
+        </div>
+
+        <nav class="admin-nav">
+            <a class="admin-nav-link @(controller == "Dashboard" ? "is-active" : "")" href="/Dashboard" title="@L["Admin.Dashboard"]">
+                <span class="admin-nav-icon">@{ ViewData["Icon"] = "dashboard"; }<partial name="_BoIcons" /></span>
+                <span class="admin-nav-label">@L["Admin.Dashboard"]</span>
+            </a>
+            <a class="admin-nav-link @(controller == "ContactMessages" ? "is-active" : "")" href="/ContactMessages" title="@L["Admin.ContactMessages"]">
+                <span class="admin-nav-icon">@{ ViewData["Icon"] = "mail"; }<partial name="_BoIcons" /></span>
+                <span class="admin-nav-label">@L["Admin.ContactMessages"]</span>
+            </a>
+            <a class="admin-nav-link @(controller == "SiteFeedbacks" ? "is-active" : "")" href="/SiteFeedbacks" title="@L["Admin.SiteFeedbacks"]">
+                <span class="admin-nav-icon">@{ ViewData["Icon"] = "feedback"; }<partial name="_BoIcons" /></span>
+                <span class="admin-nav-label">@L["Admin.SiteFeedbacks"]</span>
+            </a>
+            <a class="admin-nav-link @(controller == "AuditLogs" ? "is-active" : "")" href="/AuditLogs" title="@L["Admin.AuditLogs"]">
+                <span class="admin-nav-icon">@{ ViewData["Icon"] = "audit"; }<partial name="_BoIcons" /></span>
+                <span class="admin-nav-label">@L["Admin.AuditLogs"]</span>
+            </a>
+
+            <p class="admin-nav-section">@L["Admin.ContentManagement"]</p>
+            <a class="admin-nav-link @(controller == "TeamMembers" ? "is-active" : "")" href="/TeamMembers" title="@L["Admin.TeamMembers"]">
+                <span class="admin-nav-icon">@{ ViewData["Icon"] = "users"; }<partial name="_BoIcons" /></span>
+                <span class="admin-nav-label">@L["Admin.TeamMembers"]</span>
+            </a>
+            <a class="admin-nav-link @(controller == "Partners" ? "is-active" : "")" href="/Partners" title="@L["Admin.Partners"]">
+                <span class="admin-nav-icon">@{ ViewData["Icon"] = "building"; }<partial name="_BoIcons" /></span>
+                <span class="admin-nav-label">@L["Admin.Partners"]</span>
+            </a>
+            <a class="admin-nav-link @(controller == "Milestones" ? "is-active" : "")" href="/Milestones" title="@L["Admin.Milestones"]">
+                <span class="admin-nav-icon">@{ ViewData["Icon"] = "flag"; }<partial name="_BoIcons" /></span>
+                <span class="admin-nav-label">@L["Admin.Milestones"]</span>
+            </a>
+            <a class="admin-nav-link @(controller == "NewsItems" ? "is-active" : "")" href="/NewsItems" title="@L["Admin.NewsItems"]">
+                <span class="admin-nav-icon">@{ ViewData["Icon"] = "news"; }<partial name="_BoIcons" /></span>
+                <span class="admin-nav-label">@L["Admin.NewsItems"]</span>
+            </a>
+        </nav>
+
+        <div class="admin-sidebar-bottom">
+            <button type="button" class="admin-sidebar-toggle" id="admin-sidebar-toggle" aria-expanded="true" aria-controls="admin-sidebar"
+                    data-label-collapse="@L["Admin.CollapseMenu"]" data-label-expand="@L["Admin.ExpandMenu"]">
+                <span class="admin-sidebar-toggle-icon">@{ ViewData["Icon"] = "chevron-left"; }<partial name="_BoIcons" /></span>
+                <span class="admin-sidebar-toggle-label">@L["Admin.CollapseMenu"]</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="admin-main">
+        <header class="admin-topbar">
+            <div class="admin-topbar-left">
+                <button type="button" class="admin-mobile-menu" id="admin-mobile-menu" aria-label="@L["Admin.Navigation"]">
+                    @{ ViewData["Icon"] = "menu"; }<partial name="_BoIcons" />
+                </button>
+                <a class="admin-topbar-brand" href="/Dashboard">
+                    <span class="admin-brand-mark">Sky<span>OS</span></span>
+                    <span class="admin-version-badge">@L["Admin.Version"]</span>
+                </a>
+            </div>
+
+            <nav class="admin-topnav" aria-label="@L["Admin.QuickNav"]">
+                <a class="admin-topnav-link @(controller == "Dashboard" ? "is-active" : "")" href="/Dashboard">@L["Admin.Dashboard"]</a>
+                <a class="admin-topnav-link @(controller == "ContactMessages" ? "is-active" : "")" href="/ContactMessages">@L["Admin.ContactMessages"]</a>
+                <a class="admin-topnav-link @(controller == "SiteFeedbacks" ? "is-active" : "")" href="/SiteFeedbacks">@L["Admin.SiteFeedbacks"]</a>
+                <a class="admin-topnav-link @(controller == "AuditLogs" ? "is-active" : "")" href="/AuditLogs">@L["Admin.AuditLogs"]</a>
+            </nav>
+
+            <div class="admin-topbar-right">
+                <div class="admin-lang" role="group" aria-label="Language">
+                    <a class="@(culture == "tr" ? "is-active" : "")" href="@AdminDisplay.CultureUrl("tr", returnUrl)" hreflang="tr">TR</a>
+                    <a class="@(culture == "en" ? "is-active" : "")" href="@AdminDisplay.CultureUrl("en", returnUrl)" hreflang="en">EN</a>
+                    <a class="@(culture == "de" ? "is-active" : "")" href="@AdminDisplay.CultureUrl("de", returnUrl)" hreflang="de">DE</a>
+                </div>
+                <div class="admin-topbar-user" title="@userEmail">
+                    <span class="admin-avatar admin-avatar-sm">@initials</span>
+                </div>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="admin-logout-form">
+                    @Html.AntiForgeryToken()
+                    <button class="admin-logout-btn" type="submit" title="@L["Admin.Logout"]">
+                        @{ ViewData["Icon"] = "logout"; }<partial name="_BoIcons" />
+                        <span class="admin-logout-label">@L["Admin.Logout"]</span>
+                    </button>
+                </form>
+            </div>
+        </header>
+
+        <main class="admin-content">
+            @RenderBody()
+        </main>
+    </div>
+}
+else
+{
+    @RenderBody()
+}
+
+@if (isAuthenticated)
+{
+    <div class="admin-modal is-hidden" id="admin-upload-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="admin-upload-modal-title">
+        <div class="admin-modal-backdrop" data-upload-modal-cancel></div>
+        <div class="admin-modal-panel">
+            <h2 class="admin-modal-title" id="admin-upload-modal-title"></h2>
+            <p class="admin-modal-text" id="admin-upload-modal-text"></p>
+            <div class="admin-modal-actions">
+                <button type="button" class="admin-btn admin-btn-primary" data-upload-modal-compress></button>
+                <button type="button" class="admin-btn admin-btn-ghost" data-upload-modal-keep></button>
+                <button type="button" class="admin-btn admin-btn-ghost" data-upload-modal-cancel></button>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+}
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

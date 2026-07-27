@@ -136,18 +136,16 @@ public sealed class ContactMessageService : IContactMessageService
             return;
         }
 
-        var isTurkish = string.Equals(culture, "tr", StringComparison.OrdinalIgnoreCase);
-        var interestLabel = GetInterestLabel(entity.InterestType, isTurkish);
+        var labels = ContactEmailCopy.ForCulture(culture);
+        var interestLabel = ContactEmailCopy.InterestLabel(entity.InterestType, culture);
 
-        var subject = isTurkish
-            ? $"[SkyOS İletişim] {interestLabel} — {entity.FullName}"
-            : $"[SkyOS Contact] {interestLabel} — {entity.FullName}";
+        var subject = $"[{labels.SubjectPrefix}] {interestLabel} — {entity.FullName}";
 
         var email = new EmailMessage
         {
             Subject = subject,
-            HtmlBody = BuildNotificationHtml(entity, isTurkish, interestLabel),
-            PlainTextBody = BuildNotificationText(entity, isTurkish, interestLabel),
+            HtmlBody = BuildNotificationHtml(entity, labels, interestLabel),
+            PlainTextBody = BuildNotificationText(entity, labels, interestLabel),
             ReplyToAddress = entity.Email,
             ReplyToName = entity.FullName,
         };
@@ -159,49 +157,20 @@ public sealed class ContactMessageService : IContactMessageService
         }
     }
 
-    private static string GetInterestLabel(InterestType interestType, bool isTurkish)
-    {
-        return (interestType, isTurkish) switch
-        {
-            (InterestType.Yatirimci, true) => "Yatırımcı",
-            (InterestType.Yatirimci, false) => "Investor",
-            (InterestType.KurumsalIsBirligi, true) => "Kurumsal İş Birliği",
-            (InterestType.KurumsalIsBirligi, false) => "Corporate Partnership",
-            (InterestType.Basin, true) => "Basın",
-            (InterestType.Basin, false) => "Press",
-            (InterestType.Diger, true) => "Diğer",
-            (InterestType.Diger, false) => "Other",
-            _ => interestType.ToString()
-        };
-    }
-
-    private static string BuildNotificationHtml(ContactMessage m, bool isTurkish, string interestLabel)
+    private static string BuildNotificationHtml(ContactMessage m, ContactEmailCopy.Labels labels, string interestLabel)
     {
         // Values are HTML-encoded to prevent injection into the notification e-mail body.
         static string enc(string? value) => System.Net.WebUtility.HtmlEncode(value ?? "-");
-
-        string heading      = isTurkish ? "Yeni İletişim Mesajı"  : "New Contact Form Submission";
-        string badgeHeading = isTurkish ? "YENİ İLETİŞİM MESAJI"  : "NEW CONTACT SUBMISSION";
-        string labelName    = isTurkish ? "Ad Soyad"              : "Full Name";
-        string labelCompany = isTurkish ? "Kurum / Şirket"        : "Company / Organization";
-        string labelEmail   = isTurkish ? "E-posta Adresi"        : "Email Address";
-        string labelPhone   = isTurkish ? "Telefon Numarası"      : "Phone Number";
-        string labelTopic   = isTurkish ? "İLGİ ALANI"            : "TOPIC";
-        string labelMessage = isTurkish ? "GELEN MESAJ"           : "SUBMITTED MESSAGE";
-        string footerNote   = isTurkish
-            ? "Bu e-posta SkyOS web platformu iletişim formu üzerinden otomatik oluşturulmuştur."
-            : "This notification was automatically generated via the SkyOS web platform contact form.";
-        string replyLabel   = isTurkish ? "Göndereni E-posta ile Yanıtla" : "Reply to Sender via Email";
 
         var messageHtml = enc(m.Message).Replace("\n", "<br />");
 
         return $"""
             <!DOCTYPE html>
-            <html lang="{(isTurkish ? "tr" : "en")}">
+            <html lang="{labels.Lang}">
             <head>
               <meta charset="UTF-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>{heading}</title>
+              <title>{labels.Heading}</title>
             </head>
             <body style="margin:0;padding:0;background-color:#f4f6f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
               <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f9;padding:32px 16px;">
@@ -217,7 +186,7 @@ public sealed class ContactMessageService : IContactMessageService
                           <tr>
                             <td>
                               <span style="font-size:24px;font-weight:800;color:#ffffff;letter-spacing:-0.5px;">Sky<span style="color:#0284c7;">OS</span></span>
-                              <span style="display:inline-block;margin-left:10px;padding:4px 12px;background-color:rgba(2,132,199,0.25);border-radius:4px;font-size:11px;font-weight:700;color:#38bdf8;letter-spacing:0.8px;">{badgeHeading}</span>
+                              <span style="display:inline-block;margin-left:10px;padding:4px 12px;background-color:rgba(2,132,199,0.25);border-radius:4px;font-size:11px;font-weight:700;color:#38bdf8;letter-spacing:0.8px;">{labels.BadgeHeading}</span>
                             </td>
                             <td align="right">
                               <span style="font-size:12px;font-weight:600;color:#94a3b8;letter-spacing:0.3px;">ORKA Mühendislik</span>
@@ -233,11 +202,11 @@ public sealed class ContactMessageService : IContactMessageService
                         <table width="100%" cellpadding="0" cellspacing="0">
                           <tr>
                             <td>
-                              <span style="font-size:11px;font-weight:700;color:#64748b;letter-spacing:1px;">{labelTopic}:</span>
+                              <span style="font-size:11px;font-weight:700;color:#64748b;letter-spacing:1px;">{labels.LabelTopic}:</span>
                               <span style="display:inline-block;margin-left:6px;padding:4px 12px;background-color:#e0f2fe;border:1px solid #bae6fd;border-radius:16px;font-size:13px;font-weight:700;color:#0369a1;">{enc(interestLabel)}</span>
                             </td>
                             <td align="right" style="font-size:12px;color:#64748b;">
-                              Tarih: <strong>{enc(m.CreatedAtUtc.ToString("dd.MM.yyyy HH:mm"))} UTC</strong>
+                              {labels.DateLabel}: <strong>{enc(m.CreatedAtUtc.ToString("dd.MM.yyyy HH:mm"))} UTC</strong>
                             </td>
                           </tr>
                         </table>
@@ -251,25 +220,25 @@ public sealed class ContactMessageService : IContactMessageService
                           
                           <!-- NAME -->
                           <tr>
-                            <td style="padding-bottom:18px;width:130px;vertical-align:top;font-size:13px;font-weight:600;color:#64748b;">{labelName}:</td>
+                            <td style="padding-bottom:18px;width:130px;vertical-align:top;font-size:13px;font-weight:600;color:#64748b;">{labels.LabelName}:</td>
                             <td style="padding-bottom:18px;vertical-align:top;font-size:15px;font-weight:700;color:#0f172a;">{enc(m.FullName)}</td>
                           </tr>
 
                           <!-- COMPANY -->
                           <tr>
-                            <td style="padding-bottom:18px;vertical-align:top;font-size:13px;font-weight:600;color:#64748b;">{labelCompany}:</td>
+                            <td style="padding-bottom:18px;vertical-align:top;font-size:13px;font-weight:600;color:#64748b;">{labels.LabelCompany}:</td>
                             <td style="padding-bottom:18px;vertical-align:top;font-size:14px;color:#334155;">{enc(m.Company)}</td>
                           </tr>
 
                           <!-- EMAIL -->
                           <tr>
-                            <td style="padding-bottom:18px;vertical-align:top;font-size:13px;font-weight:600;color:#64748b;">{labelEmail}:</td>
+                            <td style="padding-bottom:18px;vertical-align:top;font-size:13px;font-weight:600;color:#64748b;">{labels.LabelEmail}:</td>
                             <td style="padding-bottom:18px;vertical-align:top;font-size:14px;"><a href="mailto:{enc(m.Email)}" style="color:#0284c7;font-weight:600;text-decoration:none;">{enc(m.Email)}</a></td>
                           </tr>
 
                           <!-- PHONE -->
                           <tr>
-                            <td style="padding-bottom:18px;vertical-align:top;font-size:13px;font-weight:600;color:#64748b;">{labelPhone}:</td>
+                            <td style="padding-bottom:18px;vertical-align:top;font-size:13px;font-weight:600;color:#64748b;">{labels.LabelPhone}:</td>
                             <td style="padding-bottom:18px;vertical-align:top;font-size:14px;font-weight:600;color:#0f172a;">{enc(m.Phone)}</td>
                           </tr>
 
@@ -281,7 +250,7 @@ public sealed class ContactMessageService : IContactMessageService
                     <tr>
                       <td style="padding:0 36px 32px;">
                         <div style="background-color:#f0f9ff;border-left:4px solid #0284c7;border-radius:0 8px 8px 0;padding:20px 24px;">
-                          <div style="font-size:11px;font-weight:800;color:#0369a1;letter-spacing:1px;margin-bottom:10px;">{labelMessage}</div>
+                          <div style="font-size:11px;font-weight:800;color:#0369a1;letter-spacing:1px;margin-bottom:10px;">{labels.LabelMessage}</div>
                           <div style="font-size:15px;line-height:1.65;color:#1e293b;font-weight:400;white-space:pre-wrap;">{messageHtml}</div>
                         </div>
                       </td>
@@ -290,15 +259,15 @@ public sealed class ContactMessageService : IContactMessageService
                     <!-- ACTION BUTTON -->
                     <tr>
                       <td style="padding:0 36px 36px;text-align:center;">
-                        <a href="mailto:{enc(m.Email)}?subject=Re: SkyOS {enc(interestLabel)}" style="display:inline-block;padding:12px 28px;background-color:#0284c7;border-radius:6px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;box-shadow:0 4px 12px rgba(2,132,199,0.25);">{replyLabel} &rarr;</a>
+                        <a href="mailto:{enc(m.Email)}?subject=Re: SkyOS {enc(interestLabel)}" style="display:inline-block;padding:12px 28px;background-color:#0284c7;border-radius:6px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;box-shadow:0 4px 12px rgba(2,132,199,0.25);">{labels.ReplyLabel} &rarr;</a>
                       </td>
                     </tr>
 
                     <!-- FOOTER METADATA -->
                     <tr>
                       <td style="background-color:#f8fafc;padding:16px 36px;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8;text-align:center;">
-                        <p style="margin:0 0 4px;">{footerNote}</p>
-                        <p style="margin:0;font-size:11px;">Mesaj ID: #{enc(m.Id.ToString())} &middot; Gönderen IP: {enc(m.IpAddress)}</p>
+                        <p style="margin:0 0 4px;">{labels.FooterNote}</p>
+                        <p style="margin:0;font-size:11px;">{labels.MessageIdLabel}: #{enc(m.Id.ToString())} &middot; {labels.IpLabel}: {enc(m.IpAddress)}</p>
                       </td>
                     </tr>
 
@@ -311,39 +280,21 @@ public sealed class ContactMessageService : IContactMessageService
             """;
     }
 
-    private static string BuildNotificationText(ContactMessage m, bool isTurkish, string interestLabel)
+    private static string BuildNotificationText(ContactMessage m, ContactEmailCopy.Labels labels, string interestLabel)
     {
-        if (isTurkish)
-        {
-            return $"""
-             YENİ İLETİŞİM MESAJI #{m.Id}
-             ─────────────────────────────────────────
-             Ad Soyad    : {m.FullName}
-             Kurum       : {m.Company ?? "-"}
-             E-posta     : {m.Email}
-             Telefon     : {m.Phone ?? "-"}
-             İlgi Alanı  : {interestLabel}
-
-             GELEN MESAJ:
-             {m.Message}
-             ─────────────────────────────────────────
-             Tarih: {m.CreatedAtUtc:dd.MM.yyyy HH:mm} UTC | IP: {m.IpAddress}
-             """;
-        }
-
         return $"""
-         NEW CONTACT SUBMISSION #{m.Id}
+         {labels.PlainHeading} #{m.Id}
          ─────────────────────────────────────────
-         Full Name   : {m.FullName}
-         Company     : {m.Company ?? "-"}
-         Email       : {m.Email}
-         Phone       : {m.Phone ?? "-"}
-         Topic       : {interestLabel}
+         {labels.LabelName,-14}: {m.FullName}
+         {labels.LabelCompany,-14}: {m.Company ?? "-"}
+         {labels.LabelEmail,-14}: {m.Email}
+         {labels.LabelPhone,-14}: {m.Phone ?? "-"}
+         {labels.LabelTopic,-14}: {interestLabel}
 
-         SUBMITTED MESSAGE:
+         {labels.LabelMessage}:
          {m.Message}
          ─────────────────────────────────────────
-         Date: {m.CreatedAtUtc:dd.MM.yyyy HH:mm} UTC | IP: {m.IpAddress}
+         {labels.DateLabel}: {m.CreatedAtUtc:dd.MM.yyyy HH:mm} UTC | {labels.IpLabel}: {m.IpAddress}
          """;
     }
 }

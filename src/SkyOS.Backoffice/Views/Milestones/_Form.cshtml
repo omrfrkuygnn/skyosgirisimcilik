@@ -1,0 +1,62 @@
+@model MilestoneUpsertDto
+@{
+    var isEdit = (bool?)ViewData["IsEdit"] == true;
+    var id = ViewData["EntityId"];
+    var actionName = isEdit ? "Edit" : "Create";
+    ViewData["Title"] ??= isEdit ? L["Admin.EditMilestone"] : L["Admin.AddMilestone"];
+}
+
+<header class="admin-page-header">
+    <div>
+        <p class="admin-page-eyebrow">@L["Admin.ContentManagement"]</p>
+        <h1 class="admin-page-title">@ViewData["Title"]</h1>
+        <p class="admin-page-lead">@L["Admin.MilestonesLead"]</p>
+    </div>
+    <a class="admin-btn admin-btn-ghost" href="/Milestones">@L["Admin.Back"]</a>
+</header>
+
+<form asp-action="@actionName" asp-route-id="@id" method="post" class="admin-cms-form">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="admin-validation-summary"></div>
+
+    <div class="admin-cms-layout admin-cms-layout--single">
+        <div class="admin-cms-main">
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionBasicInfo"]</h2>
+                <div class="admin-cms-grid">
+                    <div class="admin-field admin-field--full">
+                        <label asp-for="Title">@L["Admin.ColTitle"]</label>
+                        <input asp-for="Title" class="admin-input" required />
+                    </div>
+                    <div class="admin-field admin-field--full">
+                        <label asp-for="Description">@L["Admin.ColDescription"]</label>
+                        <textarea asp-for="Description" class="admin-textarea" rows="6" required></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionSettings"]</h2>
+                <div class="admin-cms-grid admin-cms-grid--3">
+                    <div class="admin-field">
+                        <label asp-for="Category">@L["Admin.ColCategory"]</label>
+                        <select asp-for="Category" class="admin-input" asp-items="Html.GetEnumSelectList<MilestoneCategory>()"></select>
+                    </div>
+                    <div class="admin-field">
+                        <label asp-for="DateAchieved">@L["Admin.ColDateAchieved"]</label>
+                        <input asp-for="DateAchieved" class="admin-input" type="date" />
+                    </div>
+                    <div class="admin-field">
+                        <label asp-for="DisplayOrder">@L["Admin.ColOrder"]</label>
+                        <input asp-for="DisplayOrder" class="admin-input" type="number" min="0" />
+                    </div>
+                </div>
+            </section>
+
+            <div class="admin-cms-actions admin-cms-actions--inline">
+                <button type="submit" class="admin-btn admin-btn-primary">@L["Admin.Save"]</button>
+                <a class="admin-btn admin-btn-ghost" href="/Milestones">@L["Admin.Cancel"]</a>
+            </div>
+        </div>
+    </div>
+</form>

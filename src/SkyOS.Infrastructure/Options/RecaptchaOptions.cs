@@ -8,7 +8,7 @@ public sealed class RecaptchaOptions
 {
     public const string SectionName = "Recaptcha";
 
-    /// <summary>When false, verification is skipped (useful for local dev without keys).</summary>
+    /// <summary>When false, verification is skipped entirely.</summary>
     public bool Enabled { get; set; }
 
     public string SiteKey { get; set; } = string.Empty;
@@ -19,4 +19,13 @@ public sealed class RecaptchaOptions
 
     /// <summary>Minimum v3 score (0.0–1.0) to accept a submission.</summary>
     public double MinimumScore { get; set; } = 0.5;
+
+    public bool HasConfiguredKeys =>
+        !string.IsNullOrWhiteSpace(SiteKey) && !string.IsNullOrWhiteSpace(SecretKey);
+
+    public bool UsesPlaceholderKeys =>
+        string.IsNullOrWhiteSpace(SecretKey)
+        || SecretKey.StartsWith("6LdR52Mt", StringComparison.Ordinal)
+        || SecretKey.Contains("YOUR_SECRET_KEY", StringComparison.OrdinalIgnoreCase)
+        || SecretKey.Contains("placeholder", StringComparison.OrdinalIgnoreCase);
 }

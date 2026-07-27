@@ -21,22 +21,22 @@ public sealed class PagesController : Controller
         _milestoneService = milestoneService;
     }
 
-    [HttpGet("hakkimizda")]
+    [HttpGet]
     public IActionResult Hakkimizda() => View();
 
-    [HttpGet("urun")]
+    [HttpGet]
     public IActionResult Urun() => View();
 
-    [HttpGet("kullanim-alanlari")]
+    [HttpGet]
     public IActionResult KullanimAlanlari() => View();
 
-    [HttpGet("yatirimcilar")]
+    [HttpGet]
     public IActionResult Yatirimcilar() => View();
 
-    [HttpGet("gizlilik-politikasi")]
+    [HttpGet]
     public IActionResult GizlilikPolitikasi() => View();
 
-    [HttpGet("ekip")]
+    [HttpGet]
     public async Task<IActionResult> Ekip(CancellationToken cancellationToken)
     {
         var all = await _teamService.GetAllAsync(cancellationToken);
@@ -48,7 +48,7 @@ public sealed class PagesController : Controller
         return View(viewModel);
     }
 
-    [HttpGet("basarilar")]
+    [HttpGet]
     public async Task<IActionResult> Basarilar(CancellationToken cancellationToken)
     {
         var all = await _milestoneService.GetAllAsync(cancellationToken);

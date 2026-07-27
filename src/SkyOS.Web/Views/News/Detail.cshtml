@@ -1,0 +1,29 @@
+@model SkyOS.Application.DTOs.News.NewsDetailDto
+@{
+    ViewData["Title"] = Model.Title;
+    ViewData["Description"] = Model.Summary;
+}
+
+<section class="page-intro page-intro--compact">
+    <div class="container">
+        <div class="section-head mb-0" data-reveal>
+            <a class="text-link" href="@SiteUrls.Page(SitePageKeys.News)">← @L["News.BackToList"]</a>
+            <time class="news-date" datetime="@Model.PublishedAtUtc.ToString("yyyy-MM-dd")">
+                @Model.PublishedAtUtc.ToLocalTime().ToString("f")
+            </time>
+            <h1>@Model.Title</h1>
+            <p class="lead">@Model.Summary</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+    <div class="container">
+        <div class="news-body" data-reveal>
+            @foreach (var paragraph in Model.Body.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                <p>@paragraph</p>
+            }
+        </div>
+    </div>
+</section>

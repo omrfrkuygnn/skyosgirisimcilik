@@ -1,0 +1,44 @@
+@model SiteFeedbackDetailDto
+@{
+    ViewData["Title"] = L["Admin.FeedbackDetail"];
+}
+
+<header class="admin-page-header admin-page-header--compact">
+    <div>
+        <a class="admin-back-link" href="/SiteFeedbacks">← @L["Admin.Back"]</a>
+        <h1 class="admin-page-title">@L["Admin.FeedbackDetail"]</h1>
+        <p class="admin-page-lead">@Model.FullName · @(Model.Email ?? "—")</p>
+    </div>
+    <div class="admin-page-meta">
+        <span class="admin-badge admin-badge--@(Model.IsRead ? "success" : "warning")">
+            @(Model.IsRead ? L["Admin.Read"] : L["Admin.Unread"])
+        </span>
+    </div>
+</header>
+
+<div class="admin-panel">
+    <dl class="admin-detail">
+        <dt>@L["Admin.ColName"]</dt><dd>@Model.FullName</dd>
+        <dt>@L["Admin.ColEmail"]</dt><dd>@(Model.Email is null ? "—" : Model.Email)</dd>
+        <dt>@L["Admin.ColCategory"]</dt><dd><span class="admin-tag">@L.FeedbackCategoryLabel(Model.Category)</span></dd>
+        <dt>@L["Admin.ColCulture"]</dt><dd><span class="admin-tag admin-tag--lang">@Model.Culture.ToUpperInvariant()</span></dd>
+        <dt>@L["Admin.ColDate"]</dt><dd>@Model.CreatedAtUtc.ToLocalTime().ToString("f")</dd>
+        <dt>@L["Admin.ColMessage"]</dt><dd class="admin-message">@Model.Message</dd>
+    </dl>
+
+    @{
+        ViewData["ReplyToEmail"] = Model.Email;
+        ViewData["ReplyDefaultSubject"] = L["Admin.ReplySubjectFeedback"];
+        ViewData["ReplyEntityId"] = Model.Id;
+    }
+    <partial name="_AdminReplyForm" />
+
+    <div class="admin-actions">
+        <a class="admin-btn admin-btn-ghost" href="/SiteFeedbacks">@L["Admin.Back"]</a>
+        <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button class="admin-btn admin-btn-danger" type="submit">@L["Admin.Delete"]</button>
+        </form>
+    </div>
+</div>

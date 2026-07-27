@@ -4,6 +4,6 @@ namespace SkyOS.Web.Controllers;
 
 public sealed class HomeController : Controller
 {
-    [HttpGet("")]
+    [HttpGet]
     public IActionResult Index() => View();
 }

@@ -1,0 +1,42 @@
+@{
+    var recipientEmail = ViewData["ReplyToEmail"] as string;
+    var defaultSubject = ViewData["ReplyDefaultSubject"] as string ?? string.Empty;
+    var canReply = !string.IsNullOrWhiteSpace(recipientEmail);
+}
+
+@if (TempData["ReplySuccess"] is not null)
+{
+    <div class="admin-alert admin-alert-success" role="status">@L["Admin.ReplySent"]</div>
+}
+@if (TempData["ReplyError"] is not null)
+{
+    <div class="admin-alert admin-alert-error" role="alert">
+        @(string.IsNullOrWhiteSpace(TempData["ReplyError"]?.ToString()) ? L["Admin.ReplyFailed"] : TempData["ReplyError"])
+    </div>
+}
+
+<section class="admin-reply-panel">
+    <h2 class="admin-reply-title">@L["Admin.ReplyTitle"]</h2>
+    @if (canReply)
+    {
+        <p class="admin-reply-hint">@L["Admin.ReplyHint"] <strong>@recipientEmail</strong></p>
+        <form class="admin-reply-form" asp-action="Reply" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@ViewData["ReplyEntityId"]" />
+            <label class="admin-field">
+                <span>@L["Admin.ReplySubject"]</span>
+                <input type="text" name="Subject" value="@defaultSubject" maxlength="200" required autocomplete="off" />
+            </label>
+            <label class="admin-field">
+                <span>@L["Admin.ReplyMessage"]</span>
+                <textarea name="Message" rows="8" maxlength="4000" minlength="10" required placeholder="@L["Admin.ReplyPlaceholder"]"></textarea>
+            </label>
+            <p class="admin-reply-note">@L["Admin.ReplyMinLength"]</p>
+            <button class="admin-btn admin-btn-primary" type="submit">@L["Admin.ReplySend"]</button>
+        </form>
+    }
+    else
+    {
+        <p class="admin-reply-unavailable">@L["Admin.ReplyNoEmail"]</p>
+    }
+</section>

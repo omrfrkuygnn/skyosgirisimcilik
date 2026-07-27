@@ -9,11 +9,13 @@ using WebOptimizer;
 using SkyOS.Application;
 using SkyOS.Application.Options;
 using SkyOS.Infrastructure;
+using SkyOS.Infrastructure.Options;
 using SkyOS.Infrastructure.Persistence;
 using SkyOS.Shared.Constants;
 using SkyOS.Web.Extensions;
 using SkyOS.Web.Middleware;
 using SkyOS.Web.Options;
+using SkyOS.Web.Routing;
 
 // Two-stage Serilog init: a bootstrap logger captures failures during startup itself.
 Log.Logger = new LoggerConfiguration()
@@ -37,8 +39,11 @@ try
 
     // ---- Layers ----
     builder.Services.AddApplication();
-    builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Services.AddInfrastructure(builder.Configuration, builder.Environment.ContentRootPath);
     builder.Services.AddSkyOsLocalization();
+    builder.Services.AddHttpContextAccessor();
+    builder.Services.AddSingleton<ILocalizedRouteService, LocalizedRouteService>();
+    builder.Services.AddTransient<LocalizedRouteTransformer>();
 
     // ---- MVC + anti-forgery + validation ----
     builder.Services.AddControllersWithViews(options =>
@@ -110,13 +115,14 @@ try
     else
     {
         app.UseExceptionHandler("/hata/500");
-        app.UseStatusCodePagesWithReExecute("/hata/{0}");
         app.UseHsts();
     }
 
+    app.UseStatusCodePagesWithReExecute("/hata/{0}");
+
     app.UseHttpsRedirection();
-    app.UseSkyOsLocalization();
     app.UseResponseCompression();
+    app.UseMiddleware<LegacyLocalizedRedirectMiddleware>();
 
     // Security headers (incl. CSP nonce) applied to every response, including static assets.
     app.UseMiddleware<SecurityHeadersMiddleware>();
@@ -133,11 +139,12 @@ try
     });
 
     app.UseRouting();
+    app.UseSkyOsLocalization();
     app.UseRateLimiter();
 
-    app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+    app.MapDynamicControllerRoute<LocalizedRouteTransformer>("{culture:regex(^tr|en|de$)}");
+    app.MapDynamicControllerRoute<LocalizedRouteTransformer>("{culture:regex(^tr|en|de$)}/{**slug}");
+    app.MapControllers();
 
     // Apply schema/seed on startup (Migrate for SqlServer, EnsureCreated for the Sqlite dev fallback).
     await DatabaseInitializer.InitializeAsync(app.Services);

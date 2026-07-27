@@ -1,0 +1,152 @@
+@model DashboardStatsDto
+@{
+    ViewData["Title"] = L["Admin.Dashboard"];
+    var newMessages = Model.UnreadContactMessages + Model.UnreadSiteFeedbacks;
+    var now = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+}
+
+<section class="admin-hero">
+    <div class="admin-hero-body">
+        <p class="admin-hero-eyebrow">@L["Admin.Dashboard"]</p>
+        <h1 class="admin-hero-title">@L["Admin.WelcomeTitle"]</h1>
+        <p class="admin-hero-subtitle">@L["Admin.WelcomeSubtitle"]</p>
+    </div>
+    <div class="admin-hero-meta">
+        <span class="admin-hero-meta-label">@L["Admin.LastUpdate"]</span>
+        <span class="admin-hero-meta-value">
+            @{ ViewData["Icon"] = "clock"; }<partial name="_BoIcons" />
+            @now
+        </span>
+    </div>
+</section>
+
+<div class="admin-metrics-grid">
+    <article class="admin-metric-card admin-metric-card--blue">
+        <div class="admin-metric-head">
+            <span class="admin-metric-label">@L["Admin.TotalContacts"]</span>
+            <span class="admin-metric-icon">@{ ViewData["Icon"] = "mail"; }<partial name="_BoIcons" /></span>
+        </div>
+        <div class="admin-metric-value">@Model.TotalContactMessages</div>
+        <div class="admin-metric-badges">
+            @if (Model.UnreadContactMessages > 0)
+            {
+                <span class="admin-badge admin-badge--warning">@Model.UnreadContactMessages @L["Admin.Unread"]</span>
+            }
+            else
+            {
+                <span class="admin-badge admin-badge--success">@L["Admin.AllRead"]</span>
+            }
+        </div>
+        <a class="admin-metric-link" href="/ContactMessages">
+            @L["Admin.ViewAllContacts"]
+            @{ ViewData["Icon"] = "arrow-right"; }<partial name="_BoIcons" />
+        </a>
+    </article>
+
+    <article class="admin-metric-card admin-metric-card--indigo">
+        <div class="admin-metric-head">
+            <span class="admin-metric-label">@L["Admin.UnreadContacts"]</span>
+            <span class="admin-metric-icon">@{ ViewData["Icon"] = "inbox"; }<partial name="_BoIcons" /></span>
+        </div>
+        <div class="admin-metric-value">@Model.UnreadContactMessages</div>
+        <div class="admin-metric-badges">
+            @if (Model.UnreadContactMessages > 0)
+            {
+                <span class="admin-badge admin-badge--warning">@L["Admin.AwaitingReview"]</span>
+            }
+            else
+            {
+                <span class="admin-badge admin-badge--muted">@L["Admin.NoPending"]</span>
+            }
+        </div>
+        <a class="admin-metric-link" href="/ContactMessages">
+            @L["Admin.ViewAllContacts"]
+            @{ ViewData["Icon"] = "arrow-right"; }<partial name="_BoIcons" />
+        </a>
+    </article>
+
+    <article class="admin-metric-card admin-metric-card--emerald">
+        <div class="admin-metric-head">
+            <span class="admin-metric-label">@L["Admin.TotalFeedbacks"]</span>
+            <span class="admin-metric-icon">@{ ViewData["Icon"] = "feedback"; }<partial name="_BoIcons" /></span>
+        </div>
+        <div class="admin-metric-value">@Model.TotalSiteFeedbacks</div>
+        <div class="admin-metric-badges">
+            @if (Model.UnreadSiteFeedbacks > 0)
+            {
+                <span class="admin-badge admin-badge--warning">@Model.UnreadSiteFeedbacks @L["Admin.Unread"]</span>
+            }
+            else
+            {
+                <span class="admin-badge admin-badge--success">@L["Admin.AllRead"]</span>
+            }
+        </div>
+        <a class="admin-metric-link" href="/SiteFeedbacks">
+            @L["Admin.ViewAllFeedbacks"]
+            @{ ViewData["Icon"] = "arrow-right"; }<partial name="_BoIcons" />
+        </a>
+    </article>
+
+    <article class="admin-metric-card admin-metric-card--amber">
+        <div class="admin-metric-head">
+            <span class="admin-metric-label">@L["Admin.UnreadFeedbacks"]</span>
+            <span class="admin-metric-icon">@{ ViewData["Icon"] = "feedback"; }<partial name="_BoIcons" /></span>
+        </div>
+        <div class="admin-metric-value">@Model.UnreadSiteFeedbacks</div>
+        <div class="admin-metric-badges">
+            <span class="admin-badge admin-badge--@(Model.UnreadSiteFeedbacks > 0 ? "warning" : "muted")">
+                @(Model.UnreadSiteFeedbacks > 0 ? L["Admin.AwaitingReview"] : L["Admin.NoPending"])
+            </span>
+        </div>
+        <a class="admin-metric-link" href="/SiteFeedbacks">
+            @L["Admin.ViewAllFeedbacks"]
+            @{ ViewData["Icon"] = "arrow-right"; }<partial name="_BoIcons" />
+        </a>
+    </article>
+
+    <article class="admin-metric-card admin-metric-card--violet">
+        <div class="admin-metric-head">
+            <span class="admin-metric-label">@L["Admin.AuditToday"]</span>
+            <span class="admin-metric-icon">@{ ViewData["Icon"] = "activity"; }<partial name="_BoIcons" /></span>
+        </div>
+        <div class="admin-metric-value">@Model.AuditLogsToday</div>
+        <div class="admin-metric-badges">
+            <span class="admin-badge admin-badge--info">@L["Admin.SystemActivity"]</span>
+        </div>
+        <a class="admin-metric-link" href="/AuditLogs">
+            @L["Admin.ViewAuditLogs"]
+            @{ ViewData["Icon"] = "arrow-right"; }<partial name="_BoIcons" />
+        </a>
+    </article>
+
+    <article class="admin-metric-card admin-metric-card--rose">
+        <div class="admin-metric-head">
+            <span class="admin-metric-label">@L["Admin.NewMessages"]</span>
+            <span class="admin-metric-icon">@{ ViewData["Icon"] = "inbox"; }<partial name="_BoIcons" /></span>
+        </div>
+        <div class="admin-metric-value">@newMessages</div>
+        <div class="admin-metric-badges">
+            <span class="admin-badge admin-badge--@(newMessages > 0 ? "warning" : "success")">
+                @(newMessages > 0 ? L["Admin.AwaitingReview"] : L["Admin.AllCaughtUp"])
+            </span>
+        </div>
+        <a class="admin-metric-link" href="/ContactMessages">
+            @L["Admin.ReviewInbox"]
+            @{ ViewData["Icon"] = "arrow-right"; }<partial name="_BoIcons" />
+        </a>
+    </article>
+</div>
+
+<section class="admin-panel admin-panel--footer">
+    <div class="admin-panel-header">
+        <div>
+            <h2 class="admin-panel-title">@L["Admin.OverviewPanel"]</h2>
+            <p class="admin-panel-lead">@L["Admin.OverviewLead"]</p>
+        </div>
+        <div class="admin-quick-links">
+            <a class="admin-btn admin-btn-primary" href="/ContactMessages">@L["Admin.ContactMessages"]</a>
+            <a class="admin-btn admin-btn-ghost" href="/SiteFeedbacks">@L["Admin.SiteFeedbacks"]</a>
+            <a class="admin-btn admin-btn-ghost" href="/AuditLogs">@L["Admin.AuditLogs"]</a>
+        </div>
+    </div>
+</section>

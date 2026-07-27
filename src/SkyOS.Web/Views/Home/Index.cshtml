@@ -15,8 +15,8 @@
                 <h1>@L["Home.Hero1Title"]</h1>
                 <p class="hero-sub">@L["Home.Hero1Sub"]</p>
                 <div class="hero-actions">
-                    <a class="btn btn-primary" href="/iletisim">@L["Home.Hero1CtaPrimary"]</a>
-                    <a class="btn btn-ghost-light" href="/urun">@L["Home.Hero1CtaSecondary"]</a>
+                    <a class="btn btn-primary" href="@SiteUrls.Page(SitePageKeys.Contact)">@L["Home.Hero1CtaPrimary"]</a>
+                    <a class="btn btn-ghost-light" href="@SiteUrls.Page(SitePageKeys.Product)">@L["Home.Hero1CtaSecondary"]</a>
                 </div>
             </div>
         </article>
@@ -29,8 +29,8 @@
                 <h2 class="hero-slide-title">@L["Home.Hero2Title"]</h2>
                 <p class="hero-sub">@L["Home.Hero2Sub"]</p>
                 <div class="hero-actions">
-                    <a class="btn btn-primary" href="/basarilar">@L["Home.Hero2CtaPrimary"]</a>
-                    <a class="btn btn-ghost-light" href="/kullanim-alanlari">@L["Home.Hero2CtaSecondary"]</a>
+                    <a class="btn btn-primary" href="@SiteUrls.Page(SitePageKeys.Achievements)">@L["Home.Hero2CtaPrimary"]</a>
+                    <a class="btn btn-ghost-light" href="@SiteUrls.Page(SitePageKeys.UseCases)">@L["Home.Hero2CtaSecondary"]</a>
                 </div>
             </div>
         </article>
@@ -43,8 +43,8 @@
                 <h2 class="hero-slide-title">@L["Home.Hero3Title"]</h2>
                 <p class="hero-sub">@L["Home.Hero3Sub"]</p>
                 <div class="hero-actions">
-                    <a class="btn btn-primary" href="/urun">@L["Home.Hero3CtaPrimary"]</a>
-                    <a class="btn btn-ghost-light" href="/basarilar">@L["Home.Hero3CtaSecondary"]</a>
+                    <a class="btn btn-primary" href="@SiteUrls.Page(SitePageKeys.Product)">@L["Home.Hero3CtaPrimary"]</a>
+                    <a class="btn btn-ghost-light" href="@SiteUrls.Page(SitePageKeys.Achievements)">@L["Home.Hero3CtaSecondary"]</a>
                 </div>
             </div>
         </article>
@@ -57,8 +57,8 @@
                 <h2 class="hero-slide-title">@L["Home.Hero4Title"]</h2>
                 <p class="hero-sub">@L["Home.Hero4Sub"]</p>
                 <div class="hero-actions">
-                    <a class="btn btn-primary" href="/destekcilerimiz">@L["Home.Hero4CtaPrimary"]</a>
-                    <a class="btn btn-ghost-light" href="/yatirimcilar">@L["Home.Hero4CtaSecondary"]</a>
+                    <a class="btn btn-primary" href="@SiteUrls.Page(SitePageKeys.Partners)">@L["Home.Hero4CtaPrimary"]</a>
+                    <a class="btn btn-ghost-light" href="@SiteUrls.Page(SitePageKeys.Investors)">@L["Home.Hero4CtaSecondary"]</a>
                 </div>
             </div>
         </article>
@@ -150,25 +150,25 @@
         <div class="logo-wall" data-reveal>
             <div class="logo-wall-label">@L["Home.LogoWallLabel"]</div>
             <div class="logo-wall-row logo-wall-row--wrap">
-                <a class="logo-chip" href="/destekcilerimiz" aria-label="HAVELSAN">
+                <a class="logo-chip" href="@SiteUrls.Page(SitePageKeys.Partners)" aria-label="HAVELSAN">
                     <img src="~/img/partners/havelsan.svg" width="220" height="64" alt="HAVELSAN" loading="lazy" asp-append-version="true" />
                 </a>
-                <a class="logo-chip" href="/destekcilerimiz" aria-label="Uludoğan Savunma">
+                <a class="logo-chip" href="@SiteUrls.Page(SitePageKeys.Partners)" aria-label="Uludoğan Savunma">
                     <img src="~/img/partners/uludogan-logo.png" width="200" height="64" alt="Uludoğan Savunma" loading="lazy" asp-append-version="true" />
                 </a>
-                <a class="logo-chip" href="/destekcilerimiz" aria-label="Erzincan TSO">
+                <a class="logo-chip" href="@SiteUrls.Page(SitePageKeys.Partners)" aria-label="Erzincan TSO">
                     <img src="~/img/partners/erzincan-tso-logo.png" width="180" height="64" alt="Erzincan TSO" loading="lazy" asp-append-version="true" />
                 </a>
-                <a class="logo-chip" href="/destekcilerimiz" aria-label="Erzincan Binali Yıldırım Üniversitesi">
+                <a class="logo-chip" href="@SiteUrls.Page(SitePageKeys.Partners)" aria-label="Erzincan Binali Yıldırım Üniversitesi">
                     <img src="~/img/partners/ebyu-logo.png" width="180" height="64" alt="EBYÜ" loading="lazy" asp-append-version="true" />
                 </a>
-                <a class="logo-chip" href="/destekcilerimiz" aria-label="T.C. Sanayi ve Teknoloji İl Müdürlüğü">
+                <a class="logo-chip" href="@SiteUrls.Page(SitePageKeys.Partners)" aria-label="T.C. Sanayi ve Teknoloji İl Müdürlüğü">
                     <img src="~/img/partners/sanayi-il-mudurlugu-logo.svg" width="220" height="64" alt="T.C. Sanayi Bakanlığı" loading="lazy" asp-append-version="true" />
                 </a>
-                <a class="logo-chip" href="/destekcilerimiz" aria-label="Harven Mühendislik">
+                <a class="logo-chip" href="@SiteUrls.Page(SitePageKeys.Partners)" aria-label="Harven Mühendislik">
                     <img src="~/img/partners/harven-logo.png" width="180" height="64" alt="Harven Mühendislik" loading="lazy" asp-append-version="true" />
                 </a>
-                <a class="logo-chip logo-chip-dark" href="/basarilar" aria-label="TEKNOFEST">
+                <a class="logo-chip logo-chip-dark" href="@SiteUrls.Page(SitePageKeys.Achievements)" aria-label="TEKNOFEST">
                     <img src="~/img/partners/teknofest.png" width="180" height="120" alt="TEKNOFEST" loading="lazy" asp-append-version="true" />
                 </a>
             </div>
@@ -249,8 +249,8 @@
                 <p>@L["Home.HavelsanText"]</p>
             </div>
             <div class="proof-partner-actions">
-                <a class="btn btn-primary" href="/basarilar">@L["Home.HavelsanCtaPrimary"]</a>
-                <a class="btn btn-ghost" href="/destekcilerimiz">@L["Home.HavelsanCtaSecondary"]</a>
+                <a class="btn btn-primary" href="@SiteUrls.Page(SitePageKeys.Achievements)">@L["Home.HavelsanCtaPrimary"]</a>
+                <a class="btn btn-ghost" href="@SiteUrls.Page(SitePageKeys.Partners)">@L["Home.HavelsanCtaSecondary"]</a>
             </div>
         </article>
     </div>
@@ -306,7 +306,7 @@
             <span class="eyebrow">@L["Home.WhyEyebrow"]</span>
             <h2>@L["Home.WhyTitle"]</h2>
             <p class="lead">@L["Home.WhyLead"]</p>
-            <a class="btn btn-ghost" href="/hakkimizda">@L["Home.WhyCta"]</a>
+            <a class="btn btn-ghost" href="@SiteUrls.Page(SitePageKeys.About)">@L["Home.WhyCta"]</a>
         </div>
     </div>
 </section>

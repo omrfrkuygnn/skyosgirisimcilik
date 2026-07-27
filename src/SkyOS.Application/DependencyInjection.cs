@@ -28,6 +28,14 @@ public static class DependencyInjection
         services.AddScoped<ITeamService, TeamService>();
         services.AddScoped<IPartnerService, PartnerService>();
         services.AddScoped<IMilestoneService, MilestoneService>();
+        services.AddScoped<ISiteFeedbackService, SiteFeedbackService>();
+        services.AddScoped<INewsService, NewsService>();
+        services.AddScoped<IContentAdminService, ContentAdminService>();
+        services.AddScoped<IContactMessageAdminService, ContactMessageAdminService>();
+        services.AddScoped<ISiteFeedbackAdminService, SiteFeedbackAdminService>();
+        services.AddScoped<IAdminReplyService, AdminReplyService>();
+        services.AddScoped<IAuditLogService, AuditLogService>();
+        services.AddScoped<IDashboardAdminService, DashboardAdminService>();
 
         return services;
     }

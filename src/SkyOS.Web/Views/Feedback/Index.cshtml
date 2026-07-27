@@ -1,0 +1,92 @@
+@model FeedbackPageViewModel
+@{
+    ViewData["Title"] = L["Feedback.Title"];
+    ViewData["Description"] = L["Feedback.Description"];
+}
+
+<section class="page-intro">
+    <div class="container">
+        <div class="section-head mb-0" data-reveal>
+            <span class="eyebrow">@L["Feedback.Eyebrow"]</span>
+            <h1>@L["Feedback.Heading"]</h1>
+            <p class="lead">@L["Feedback.Lead"]</p>
+        </div>
+    </div>
+</section>
+
+<section class="section section--no-pt">
+    <div class="container">
+        <div class="feedback-page">
+            <div class="form-card" data-reveal>
+                @if (TempData["FeedbackSuccess"] as bool? == true)
+                {
+                    <div class="feedback-alert is-success" role="status">@L["Feedback.Success"]</div>
+                }
+
+                @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty]?.Errors.Count > 0)
+                {
+                    <div class="feedback-alert is-error" asp-validation-summary="ModelOnly"></div>
+                }
+
+                <form method="post"
+                      action="@SiteUrls.Page(SitePageKeys.Feedback)"
+                      novalidate
+                      data-recaptcha-form
+                      data-recaptcha-action="feedback"
+                      data-recaptcha-key="@(Model.RecaptchaEnabled ? Model.RecaptchaSiteKey : string.Empty)"
+                      data-recaptcha-load-error="@L["Contact.RecaptchaLoadError"]"
+                      data-recaptcha-submit-error="@L["Contact.RecaptchaSubmitError"]">
+                    @Html.AntiForgeryToken()
+
+                    <div class="honeypot" aria-hidden="true">
+                        <label asp-for="Form.Website">@L["Feedback.Honeypot"]</label>
+                        <input asp-for="Form.Website" tabindex="-1" autocomplete="off" />
+                    </div>
+
+                    <input type="hidden" asp-for="Form.RecaptchaToken" data-recaptcha-token />
+
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label asp-for="Form.FullName">@L["Feedback.FullName"] <span class="required-mark">*</span></label>
+                            <input asp-for="Form.FullName" autocomplete="name" maxlength="120" />
+                            <span asp-validation-for="Form.FullName" class="field-validation-error"></span>
+                        </div>
+
+                        <div class="form-field">
+                            <label asp-for="Form.Email">@L["Feedback.Email"]</label>
+                            <input asp-for="Form.Email" type="email" autocomplete="email" maxlength="254" />
+                            <span asp-validation-for="Form.Email" class="field-validation-error"></span>
+                        </div>
+
+                        <div class="form-field span-2">
+                            <label asp-for="Form.Category">@L["Feedback.Category"] <span class="required-mark">*</span></label>
+                            <select asp-for="Form.Category" asp-items="@DisplayNames.FeedbackCategorySelectList(L, Model.Form.Category)"></select>
+                            <span asp-validation-for="Form.Category" class="field-validation-error"></span>
+                        </div>
+
+                        <div class="form-field span-2">
+                            <label asp-for="Form.Message">@L["Feedback.Message"] <span class="required-mark">*</span></label>
+                            <textarea asp-for="Form.Message" rows="6"></textarea>
+                            <span asp-validation-for="Form.Message" class="field-validation-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-submit-wrap">
+                        <p class="form-note form-note--recaptcha-error" data-recaptcha-error hidden></p>
+                        <button type="submit" class="btn btn-primary btn-block">@L["Feedback.Submit"]</button>
+                    </div>
+
+                    @if (Model.RecaptchaEnabled)
+                    {
+                        <p class="form-note form-note--recaptcha">@Html.Raw(L["Contact.RecaptchaNote"])</p>
+                    }
+                    <p class="form-note">@L["Feedback.Note"]</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

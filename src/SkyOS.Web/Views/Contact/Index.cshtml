@@ -26,9 +26,12 @@
                     <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
                 }
 
-                <form method="post" action="/iletisim" novalidate
-                      data-contact-form
-                      data-recaptcha-key="@(Model.RecaptchaEnabled ? Model.RecaptchaSiteKey : string.Empty)">
+                <form method="post" action="@SiteUrls.Page(SitePageKeys.Contact)" novalidate
+                      data-recaptcha-form
+                      data-recaptcha-action="contact"
+                      data-recaptcha-key="@(Model.RecaptchaEnabled ? Model.RecaptchaSiteKey : string.Empty)"
+                      data-recaptcha-load-error="@L["Contact.RecaptchaLoadError"]"
+                      data-recaptcha-submit-error="@L["Contact.RecaptchaSubmitError"]">
                     @Html.AntiForgeryToken()
 
                     @* Honeypot: hidden from humans, tempting for bots. Must stay empty. *@
@@ -81,6 +84,7 @@
                     </div>
 
                     <div class="form-submit-wrap">
+                        <p class="form-note form-note--recaptcha-error" data-recaptcha-error hidden></p>
                         <button type="submit" class="btn btn-primary btn-block">@L["Contact.Submit"]</button>
                     </div>
 
@@ -126,8 +130,4 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    @if (Model.RecaptchaEnabled && !string.IsNullOrWhiteSpace(Model.RecaptchaSiteKey))
-    {
-        <script src="https://www.google.com/recaptcha/api.js?render=@Model.RecaptchaSiteKey" async defer></script>
-    }
 }

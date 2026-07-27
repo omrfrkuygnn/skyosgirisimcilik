@@ -1,0 +1,55 @@
+@model IReadOnlyList<TeamMemberDto>
+@{
+    ViewData["Title"] = L["Admin.TeamMembers"];
+}
+
+<header class="admin-page-header">
+    <div>
+        <p class="admin-page-eyebrow">@L["Admin.ContentManagement"]</p>
+        <h1 class="admin-page-title">@L["Admin.TeamMembers"]</h1>
+        <p class="admin-page-lead">@L["Admin.TeamMembersLead"]</p>
+    </div>
+    <a class="admin-btn admin-btn-primary" href="/TeamMembers/Create">@L["Admin.AddNew"]</a>
+</header>
+
+<div class="admin-panel">
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>@L["Admin.ColName"]</th>
+                    <th>@L["Admin.ColRole"]</th>
+                    <th>@L["Admin.ColOrder"]</th>
+                    <th>@L["Admin.ColLeader"]</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr><td colspan="5" class="admin-table-empty">@L["Admin.NoRecords"]</td></tr>
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@item.FullName</strong></td>
+                    <td>@item.Role</td>
+                    <td>@item.DisplayOrder</td>
+                    <td>
+                        <span class="admin-badge admin-badge--@(item.IsLeader ? "info" : "success")">
+                            @(item.IsLeader ? L["Admin.Yes"] : L["Admin.No"])
+                        </span>
+                    </td>
+                    <td class="admin-table-actions">
+                        <a class="admin-btn admin-btn-ghost admin-btn-sm" href="/TeamMembers/Edit/@item.Id">@L["Admin.Edit"]</a>
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="admin-inline-form" onsubmit="return confirm('@L["Admin.ConfirmDelete"]');">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm">@L["Admin.Delete"]</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

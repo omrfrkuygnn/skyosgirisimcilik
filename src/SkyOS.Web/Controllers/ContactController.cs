@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Options;
 using SkyOS.Application.DTOs.Contact;
 using SkyOS.Application.Interfaces.Services;
 using SkyOS.Domain.Enums;
+using SkyOS.Infrastructure.Options;
 using SkyOS.Shared.Constants;
 using SkyOS.Shared.Localization;
 using SkyOS.Web.Helpers;
+using SkyOS.Web.Routing;
 using SkyOS.Web.ViewModels;
 
 namespace SkyOS.Web.Controllers;
@@ -13,20 +16,23 @@ namespace SkyOS.Web.Controllers;
 public sealed class ContactController : Controller
 {
     private readonly IContactMessageService _contactMessageService;
-    private readonly IConfiguration _configuration;
+    private readonly IOptions<RecaptchaOptions> _recaptchaOptions;
     private readonly IAppLocalizer _L;
+    private readonly ILocalizedRouteService _routes;
 
     public ContactController(
         IContactMessageService contactMessageService,
-        IConfiguration configuration,
-        IAppLocalizer localizer)
+        IOptions<RecaptchaOptions> recaptchaOptions,
+        IAppLocalizer localizer,
+        ILocalizedRouteService routes)
     {
         _contactMessageService = contactMessageService;
-        _configuration = configuration;
+        _recaptchaOptions = recaptchaOptions;
         _L = localizer;
+        _routes = routes;
     }
 
-    [HttpGet("iletisim")]
+    [HttpGet]
     public IActionResult Index([FromQuery] string? ilgi = null)
     {
         var investor = string.Equals(ilgi, "yatirimci", StringComparison.OrdinalIgnoreCase);
@@ -37,7 +43,7 @@ public sealed class ContactController : Controller
         return View(BuildViewModel(form, investor));
     }
 
-    [HttpPost("iletisim")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     [EnableRateLimiting(AppConstants.RateLimiting.ContactFormPolicy)]
     public async Task<IActionResult> Index(
@@ -51,7 +57,7 @@ public sealed class ContactController : Controller
 
         // IP and Culture are set server-side and never trusted from the client.
         form.IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
-        form.Culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        form.Culture = _routes.GetCurrentCulture(HttpContext);
 
         var result = await _contactMessageService.SubmitAsync(form, cancellationToken);
         if (result.IsFailure)
@@ -60,17 +66,17 @@ public sealed class ContactController : Controller
             return View(BuildViewModel(form, form.InterestType == InterestType.Yatirimci));
         }
 
-        return RedirectToAction(nameof(Success));
+        return Redirect(_routes.Page(SitePageKeys.ContactSuccess));
     }
 
-    [HttpGet("iletisim/tesekkurler")]
+    [HttpGet]
     public IActionResult Success() => View();
 
     private ContactPageViewModel BuildViewModel(ContactMessageRequestDto form, bool investorVariant) => new()
     {
         Form = form,
-        RecaptchaEnabled = _configuration.GetValue<bool>("Recaptcha:Enabled"),
-        RecaptchaSiteKey = _configuration.GetValue<string>("Recaptcha:SiteKey") ?? string.Empty,
+        RecaptchaEnabled = RecaptchaUi.IsEnabled(_recaptchaOptions),
+        RecaptchaSiteKey = _recaptchaOptions.Value.SiteKey,
         InterestOptions = DisplayNames.InterestSelectList(_L, form.InterestType),
         CountryCodeOptions = DisplayNames.CountryCodeSelectList(form.PhoneCountryCode),
         InvestorVariant = investorVariant,

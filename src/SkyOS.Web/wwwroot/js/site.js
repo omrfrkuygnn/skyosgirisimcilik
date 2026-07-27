@@ -177,59 +177,129 @@
     restart();
   }
 
-  // reCAPTCHA v3
-  var form = document.querySelector("[data-contact-form]");
-  if (form) {
-    var siteKey = form.getAttribute("data-recaptcha-key");
-    var tokenField = form.querySelector("[data-recaptcha-token]");
+  // reCAPTCHA v3 (contact + feedback forms)
+  function loadRecaptcha(siteKey) {
+    return new Promise(function (resolve, reject) {
+      if (!siteKey) {
+        resolve();
+        return;
+      }
 
-    // siteKey yoksa reCAPTCHA devre dışı — formu direkt gönder
-    if (siteKey && tokenField) {
-      form.addEventListener("submit", function (e) {
-        if (form.dataset.captchaReady === "1") {
-          return; // token zaten hazır, ikinci submit — engelleme
-        }
-        e.preventDefault();
+      if (window.grecaptcha && window.grecaptcha.execute) {
+        window.grecaptcha.ready(resolve);
+        return;
+      }
 
-        // grecaptcha henüz yüklenmemiş olabilir (async defer), ready() ile bekle
-        var execute = function () {
-          window.grecaptcha.execute(siteKey, { action: "contact" }).then(function (token) {
-            tokenField.value = token;
-            form.dataset.captchaReady = "1";
-            if (form.requestSubmit) {
-              form.requestSubmit();
-            } else {
-              form.submit();
-            }
-          }).catch(function () {
-            // Token alınamazsa formu bloke etme, doğrudan gönder
-            form.dataset.captchaReady = "1";
-            form.submit();
-          });
-        };
+      var existing = document.querySelector('script[data-recaptcha-loader="1"]');
+      if (existing) {
+        existing.addEventListener("load", function () { window.grecaptcha.ready(resolve); });
+        existing.addEventListener("error", reject);
+        return;
+      }
 
-        if (window.grecaptcha) {
-          window.grecaptcha.ready(execute);
-        } else {
-          // grecaptcha script daha yüklenmedi — yüklenince çalıştır
-          var interval = setInterval(function () {
-            if (window.grecaptcha) {
-              clearInterval(interval);
-              window.grecaptcha.ready(execute);
-            }
-          }, 100);
-          // 5 saniye sonra hala yüklenmediyse formu direkt gönder
-          setTimeout(function () {
-            clearInterval(interval);
-            if (!window.grecaptcha) {
-              form.dataset.captchaReady = "1";
-              form.submit();
-            }
-          }, 5000);
-        }
-      });
-    }
+      var script = document.createElement("script");
+      script.src = "https://www.google.com/recaptcha/api.js?render=" + encodeURIComponent(siteKey);
+      script.async = true;
+      script.defer = true;
+      script.setAttribute("data-recaptcha-loader", "1");
+      script.onload = function () { window.grecaptcha.ready(resolve); };
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
   }
+
+  function refreshRecaptchaToken(form, siteKey, action, tokenField) {
+    return window.grecaptcha.execute(siteKey, { action: action }).then(function (token) {
+      tokenField.value = token;
+      form.dataset.captchaIssuedAt = String(Date.now());
+      return token;
+    });
+  }
+
+  document.querySelectorAll("[data-recaptcha-form]").forEach(function (form) {
+    var siteKey = form.getAttribute("data-recaptcha-key");
+    var recaptchaAction = form.getAttribute("data-recaptcha-action") || "contact";
+    var tokenField = form.querySelector("[data-recaptcha-token]");
+    var errorBox = form.querySelector("[data-recaptcha-error]");
+    var submitButton = form.querySelector('[type="submit"]');
+
+    if (!siteKey || !tokenField) {
+      return;
+    }
+
+    var showError = function (message) {
+      if (!errorBox) {
+        return;
+      }
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+    };
+
+    var clearError = function () {
+      if (!errorBox) {
+        return;
+      }
+      errorBox.textContent = "";
+      errorBox.hidden = true;
+    };
+
+    var setSubmitting = function (isSubmitting) {
+      if (!submitButton) {
+        return;
+      }
+      submitButton.disabled = isSubmitting;
+      submitButton.setAttribute("aria-busy", isSubmitting ? "true" : "false");
+    };
+
+    loadRecaptcha(siteKey).then(function () {
+      return refreshRecaptchaToken(form, siteKey, recaptchaAction, tokenField);
+    }).catch(function () {
+      showError(form.getAttribute("data-recaptcha-load-error") || "Security verification could not be loaded.");
+    });
+
+    window.setInterval(function () {
+      if (!window.grecaptcha) {
+        return;
+      }
+      refreshRecaptchaToken(form, siteKey, recaptchaAction, tokenField).catch(function () { /* ignore background refresh errors */ });
+    }, 90000);
+
+    form.addEventListener("submit", function (e) {
+      if (form.dataset.captchaReady === "1") {
+        form.dataset.captchaReady = "0";
+        return;
+      }
+
+      e.preventDefault();
+      clearError();
+      setSubmitting(true);
+
+      var issuedAt = Number(form.dataset.captchaIssuedAt || "0");
+      var tokenIsFresh = tokenField.value && (Date.now() - issuedAt) < 110000;
+
+      var submitWithToken = function () {
+        form.dataset.captchaReady = "1";
+        if (form.requestSubmit) {
+          form.requestSubmit();
+        } else {
+          form.submit();
+        }
+      };
+
+      var fail = function () {
+        setSubmitting(false);
+        showError(form.getAttribute("data-recaptcha-submit-error") || "Security verification failed. Please try again.");
+      };
+
+      loadRecaptcha(siteKey).then(function () {
+        if (tokenIsFresh) {
+          submitWithToken();
+          return;
+        }
+        return refreshRecaptchaToken(form, siteKey, recaptchaAction, tokenField).then(submitWithToken);
+      }).catch(fail);
+    });
+  });
   // Infinite marquee — clones content so track is always wider than viewport
   document.querySelectorAll("[data-marquee]").forEach(function (strip) {
     var track = strip.querySelector(".marquee-track");

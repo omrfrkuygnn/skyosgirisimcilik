@@ -40,8 +40,12 @@ public sealed class EmailSender : IEmailSender
             return Result.Failure(Error.Failure("E-posta gönderimi yapılandırılmamış."));
         }
 
-        var recipientEmail = _contactFormOptions.NotificationRecipientEmail;
-        var recipientName = _contactFormOptions.NotificationRecipientName;
+        var recipientEmail = !string.IsNullOrWhiteSpace(message.ToEmail)
+            ? message.ToEmail
+            : _contactFormOptions.NotificationRecipientEmail;
+        var recipientName = !string.IsNullOrWhiteSpace(message.ToName)
+            ? message.ToName!
+            : _contactFormOptions.NotificationRecipientName;
         if (string.IsNullOrWhiteSpace(recipientEmail))
         {
             return Result.Failure(Error.Failure("Bildirim alıcısı yapılandırılmamış."));

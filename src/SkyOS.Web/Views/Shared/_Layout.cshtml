@@ -5,6 +5,12 @@
     var fullTitle = string.IsNullOrEmpty(title) ? L["Layout.DefaultTitle"] : L["Layout.TitleSuffix", title];
     var description = ViewData["Description"] as string ?? L["Layout.DefaultDescription"];
     var ogLocale = L["Layout.OgLocale"];
+    var currentPageKey = SiteUrls.GetCurrentPageKey(Context);
+    var canonicalUrl = currentPageKey is null ? null : SiteUrls.AbsolutePage(Context, currentPageKey, queryValues: Context.Request.Query);
+    var alternateUrls = currentPageKey is null
+        ? Array.Empty<(string Culture, string Url)>()
+        : SiteUrls.GetAlternateAbsoluteUrls(Context);
+    var robots = ViewData["Robots"] as string ?? "index, follow";
 }
 <!DOCTYPE html>
 <html lang="@L.Culture">
@@ -15,11 +21,19 @@
     <meta name="description" content="@description" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="color-scheme" content="light" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="@robots" />
     <meta property="og:title" content="@fullTitle" />
     <meta property="og:description" content="@description" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="@ogLocale" />
+    @if (!string.IsNullOrWhiteSpace(canonicalUrl))
+    {
+        <link rel="canonical" href="@canonicalUrl" />
+        @foreach (var alternate in alternateUrls)
+        {
+            <link rel="alternate" hreflang="@alternate.Culture" href="@alternate.Url" />
+        }
+    }
     <link rel="icon" href="~/favicon.ico" />
     <link rel="preload" href="~/fonts/ibm-plex-sans-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="~/fonts/ibm-plex-sans-600.woff2" as="font" type="font/woff2" crossorigin />

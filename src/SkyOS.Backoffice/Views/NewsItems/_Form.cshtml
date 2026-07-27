@@ -1,0 +1,72 @@
+@model NewsItemUpsertDto
+@{
+    var isEdit = (bool?)ViewData["IsEdit"] == true;
+    var id = ViewData["EntityId"];
+    var actionName = isEdit ? "Edit" : "Create";
+    ViewData["Title"] ??= isEdit ? L["Admin.EditNewsItem"] : L["Admin.AddNewsItem"];
+    var publishedLocal = Model.PublishedAtUtc.ToLocalTime().ToString("yyyy-MM-ddTHH:mm");
+}
+
+<header class="admin-page-header">
+    <div>
+        <p class="admin-page-eyebrow">@L["Admin.ContentManagement"]</p>
+        <h1 class="admin-page-title">@ViewData["Title"]</h1>
+        <p class="admin-page-lead">@L["Admin.NewsItemsLead"]</p>
+    </div>
+    <a class="admin-btn admin-btn-ghost" href="/NewsItems">@L["Admin.Back"]</a>
+</header>
+
+<form asp-action="@actionName" asp-route-id="@id" method="post" class="admin-cms-form">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="admin-validation-summary"></div>
+
+    <div class="admin-cms-layout">
+        <div class="admin-cms-main">
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionBasicInfo"]</h2>
+                <div class="admin-cms-grid">
+                    <div class="admin-field admin-field--full">
+                        <label asp-for="Title">@L["Admin.ColTitle"]</label>
+                        <input asp-for="Title" class="admin-input" required />
+                    </div>
+                    <div class="admin-field admin-field--full">
+                        <label asp-for="Slug">@L["Admin.ColSlug"]</label>
+                        <input asp-for="Slug" class="admin-input" placeholder="@L["Admin.SlugHint"]" />
+                    </div>
+                    <div class="admin-field admin-field--full">
+                        <label asp-for="Summary">@L["Admin.ColSummary"]</label>
+                        <textarea asp-for="Summary" class="admin-textarea" rows="3" required></textarea>
+                    </div>
+                    <div class="admin-field admin-field--full">
+                        <label asp-for="Body">@L["Admin.ColBody"]</label>
+                        <textarea asp-for="Body" class="admin-textarea admin-textarea--tall" rows="12" required></textarea>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside class="admin-cms-aside">
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionPublishing"]</h2>
+                <div class="admin-settings-stack">
+                    <div class="admin-field">
+                        <label asp-for="PublishedAtUtc">@L["Admin.ColPublishedAt"]</label>
+                        <input asp-for="PublishedAtUtc" class="admin-input" type="datetime-local" value="@publishedLocal" />
+                    </div>
+                    <div class="admin-field admin-field--switch">
+                        <label class="admin-switch" for="IsPublished">
+                            <span class="admin-switch-text">@L["Admin.ColPublished"]</span>
+                            <input asp-for="IsPublished" type="checkbox" id="IsPublished" />
+                            <span class="admin-switch-ui" aria-hidden="true"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <div class="admin-cms-actions">
+                <button type="submit" class="admin-btn admin-btn-primary admin-btn-block">@L["Admin.Save"]</button>
+                <a class="admin-btn admin-btn-ghost admin-btn-block" href="/NewsItems">@L["Admin.Cancel"]</a>
+            </div>
+        </aside>
+    </div>
+</form>

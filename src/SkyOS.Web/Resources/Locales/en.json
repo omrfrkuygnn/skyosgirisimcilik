@@ -19,6 +19,7 @@
     "Partners": "Partners",
     "Contact": "Contact",
     "Team": "Team",
+    "News": "News",
     "LangSwitch": "Language",
     "LangTr": "TR",
     "LangEn": "EN"
@@ -36,6 +37,15 @@
     "InvestorRelations": "Investor Relations",
     "PrivacyPolicy": "Privacy Policy",
     "ContactHeading": "Contact",
+    "FeedbackTitle": "Feedback & Complaints",
+    "FeedbackText": "Report site issues, complaints, or questions. Our team reviews submissions in the backoffice.",
+    "FeedbackName": "Full name",
+    "FeedbackEmail": "Email (optional)",
+    "FeedbackCategory": "Topic",
+    "FeedbackMessage": "Your message",
+    "FeedbackSubmit": "Send feedback",
+    "FeedbackSuccess": "Thank you. Your feedback has been received.",
+    "FeedbackError": "We could not send your feedback. Please check the fields and try again.",
     "Copyright": "© {0} {1} · {2}. All rights reserved.",
     "PrivacyShort": "Privacy",
     "ContactShort": "Contact"
@@ -311,12 +321,39 @@
     "Submit": "Send Message",
     "RecaptchaNote": "This site is protected by reCAPTCHA; Google <a href=\"https://policies.google.com/privacy\" rel=\"noopener noreferrer\" target=\"_blank\">Privacy Policy</a> and <a href=\"https://policies.google.com/terms\" rel=\"noopener noreferrer\" target=\"_blank\">Terms</a> apply.",
     "RecaptchaLocalhost": "If reCAPTCHA does not appear, add the <code>localhost</code> domain to the site key in the Google console.",
+    "RecaptchaLoadError": "Security verification could not be loaded. Please refresh the page and try again.",
+    "RecaptchaSubmitError": "Security verification could not be completed. Please try again.",
     "PrivacyAccept": "By submitting you accept the <a href=\"/gizlilik-politikasi\">Privacy Policy</a>.",
     "InfoHeading": "Contact Details",
     "InfoEmail": "Email",
     "InfoPhone": "Phone",
     "InvestorHint": "For investor meetings, select <strong>Investor</strong> as the area of interest.",
     "ThrottleError": "You have sent too many messages in a short time. Please try again later."
+  },
+  "News": {
+    "Title": "News",
+    "Description": "Latest news, announcements, and updates from SkyOS.",
+    "Eyebrow": "News",
+    "Heading": "News & Announcements",
+    "Lead": "Latest developments, events, and announcements from the SkyOS ecosystem.",
+    "Empty": "No published news yet.",
+    "ReadMore": "Read more",
+    "BackToList": "All news"
+  },
+  "Feedback": {
+    "Title": "Feedback & Complaints",
+    "Description": "Report site issues, complaints, or questions.",
+    "Eyebrow": "Feedback",
+    "Heading": "Feedback & Complaints",
+    "Lead": "Report site issues, complaints, or questions. Our team reviews submissions in the backoffice.",
+    "FullName": "Full name",
+    "Email": "Email (optional)",
+    "Category": "Topic",
+    "Message": "Your message",
+    "Submit": "Send feedback",
+    "Success": "Thank you. Your feedback has been received.",
+    "Honeypot": "Your website (leave this field empty)",
+    "Note": "Your submission will be reviewed by our team and we will respond if needed."
   },
   "ContactSuccess": {
     "Title": "Message Received",
@@ -346,8 +383,11 @@
   "Errors": {
     "NotFoundTitle": "Page Not Found",
     "NotFoundDescription": "The page you are looking for was not found.",
-    "NotFoundHeading": "Page not found",
-    "NotFoundLead": "The page may have moved or never existed. You can continue from the home page.",
+    "NotFoundEyebrow": "404 · Route not found",
+    "NotFoundSignal": "GPS signal lost — target coordinates unavailable.",
+    "NotFoundHeading": "The page you requested was not found",
+    "NotFoundLead": "The link may be broken, the page may have moved, or it may never have existed. You can continue from the links below.",
+    "NotFoundSuggestions": "You might want to visit",
     "ServerTitle": "Something Went Wrong",
     "ServerDescription": "An unexpected error occurred.",
     "ServerHeading": "An unexpected error occurred",
@@ -378,6 +418,21 @@
       "Teknofest": "TEKNOFEST",
       "Kurumsal": "Enterprise Validation",
       "Teknik": "Technical Validation"
+    },
+    "FeedbackCategory": {
+      "Complaint": "Complaint",
+      "Question": "Question",
+      "SiteIssue": "Site issue",
+      "Other": "Other"
     }
+  },
+  "FeedbackValidation": {
+    "FullNameRequired": "Full name is required.",
+    "FullNameMax": "Full name cannot exceed 120 characters.",
+    "EmailInvalid": "Enter a valid email address.",
+    "EmailMax": "Email cannot exceed 254 characters.",
+    "MessageRequired": "Message is required.",
+    "MessageMin": "Message must be at least 10 characters.",
+    "MessageMax": "Message cannot exceed 4000 characters."
   }
 }

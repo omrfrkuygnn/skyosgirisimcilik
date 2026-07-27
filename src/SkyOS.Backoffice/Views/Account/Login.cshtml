@@ -1,0 +1,90 @@
+@model SkyOS.Backoffice.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = L["Admin.LoginTitle"];
+    Layout = "_LoginLayout";
+    var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+}
+
+<div class="login-backdrop" aria-hidden="true">
+    <div class="login-orb login-orb-a"></div>
+    <div class="login-orb login-orb-b"></div>
+    <div class="login-grid"></div>
+</div>
+
+<header class="login-topbar">
+    <div class="login-brand">
+        <span class="login-brand-mark">Sky<span>OS</span></span>
+        <span class="login-brand-sub">Backoffice</span>
+    </div>
+    <nav class="login-lang" aria-label="Language">
+        <a href="@AdminDisplay.CultureUrl("tr", returnUrl)" hreflang="tr" class="@(L.Culture == "tr" ? "is-active" : "")">TR</a>
+        <a href="@AdminDisplay.CultureUrl("en", returnUrl)" hreflang="en" class="@(L.Culture == "en" ? "is-active" : "")">EN</a>
+        <a href="@AdminDisplay.CultureUrl("de", returnUrl)" hreflang="de" class="@(L.Culture == "de" ? "is-active" : "")">DE</a>
+    </nav>
+</header>
+
+<main class="login-shell">
+    <section class="login-showcase">
+        <p class="login-eyebrow">@L["Admin.LoginBadge"]</p>
+        <h1 class="login-showcase-title">@L["Admin.LoginHeroTitle"]</h1>
+        <p class="login-showcase-text">@L["Admin.LoginHeroText"]</p>
+        <ul class="login-features">
+            <li>
+                <span class="login-feature-icon" aria-hidden="true">✓</span>
+                @L["Admin.LoginFeature1"]
+            </li>
+            <li>
+                <span class="login-feature-icon" aria-hidden="true">✓</span>
+                @L["Admin.LoginFeature2"]
+            </li>
+            <li>
+                <span class="login-feature-icon" aria-hidden="true">✓</span>
+                @L["Admin.LoginFeature3"]
+            </li>
+        </ul>
+    </section>
+
+    <section class="login-card" aria-labelledby="login-heading">
+        <div class="login-card-inner">
+            <div class="login-card-header">
+                <h2 id="login-heading">@L["Admin.LoginHeading"]</h2>
+                <p>@L["Admin.LoginLead"]</p>
+            </div>
+
+            <form asp-action="Login" method="post" class="login-form" novalidate>
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="ReturnUrl" />
+
+                <div asp-validation-summary="ModelOnly" class="login-alert"></div>
+
+                <div class="login-field">
+                    <label asp-for="Email">@L["Admin.Email"]</label>
+                    <div class="login-input-wrap">
+                        <svg class="login-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+                        <input asp-for="Email" type="email" autocomplete="username" placeholder="admin@skyos.local" />
+                    </div>
+                </div>
+
+                <div class="login-field">
+                    <label asp-for="Password">@L["Admin.Password"]</label>
+                    <div class="login-input-wrap">
+                        <svg class="login-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 1 1 8 0v3"/></svg>
+                        <input asp-for="Password" type="password" autocomplete="current-password" placeholder="••••••••" />
+                    </div>
+                </div>
+
+                <label class="login-remember">
+                    <input asp-for="RememberMe" type="checkbox" />
+                    <span>@L["Admin.RememberMe"]</span>
+                </label>
+
+                <button class="login-submit" type="submit">
+                    <span>@L["Admin.SignIn"]</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+            </form>
+
+            <p class="login-footnote">@L["Admin.LoginFootnote"]</p>
+        </div>
+    </section>
+</main>

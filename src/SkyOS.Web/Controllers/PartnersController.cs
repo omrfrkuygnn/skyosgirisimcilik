@@ -10,7 +10,7 @@ public sealed class PartnersController : Controller
 
     public PartnersController(IPartnerService partnerService) => _partnerService = partnerService;
 
-    [HttpGet("destekcilerimiz")]
+    [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
         var all = await _partnerService.GetAllAsync(cancellationToken);

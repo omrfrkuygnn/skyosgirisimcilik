@@ -21,6 +21,11 @@ public static class DisplayNames
             .Select(v => new SelectListItem(L[$"Enums.Interest.{v}"], ((int)v).ToString(), selected == v))
             .ToList();
 
+    public static IReadOnlyList<SelectListItem> FeedbackCategorySelectList(IAppLocalizer L, FeedbackCategory? selected = null) =>
+        Enum.GetValues<FeedbackCategory>()
+            .Select(v => new SelectListItem(L[$"Enums.FeedbackCategory.{v}"], ((int)v).ToString(), selected == v))
+            .ToList();
+
     public static IReadOnlyList<SelectListItem> CountryCodeSelectList(string? selected = "+90")
     {
         var list = new (string Code, string ShortName, string Flag)[]

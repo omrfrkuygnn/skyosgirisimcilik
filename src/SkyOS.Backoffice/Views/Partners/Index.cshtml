@@ -1,0 +1,53 @@
+@model IReadOnlyList<PartnerDto>
+@{
+    ViewData["Title"] = L["Admin.Partners"];
+}
+
+<header class="admin-page-header">
+    <div>
+        <p class="admin-page-eyebrow">@L["Admin.ContentManagement"]</p>
+        <h1 class="admin-page-title">@L["Admin.Partners"]</h1>
+        <p class="admin-page-lead">@L["Admin.PartnersLead"]</p>
+    </div>
+    <a class="admin-btn admin-btn-primary" href="/Partners/Create">@L["Admin.AddNew"]</a>
+</header>
+
+<div class="admin-panel">
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>@L["Admin.ColName"]</th>
+                    <th>@L["Admin.ColOrder"]</th>
+                    <th>@L["Admin.ColVerified"]</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr><td colspan="4" class="admin-table-empty">@L["Admin.NoRecords"]</td></tr>
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@item.Name</strong></td>
+                    <td>@item.DisplayOrder</td>
+                    <td>
+                        <span class="admin-badge admin-badge--@(item.IsVerifiedRelationship ? "info" : "success")">
+                            @(item.IsVerifiedRelationship ? L["Admin.Yes"] : L["Admin.No"])
+                        </span>
+                    </td>
+                    <td class="admin-table-actions">
+                        <a class="admin-btn admin-btn-ghost admin-btn-sm" href="/Partners/Edit/@item.Id">@L["Admin.Edit"]</a>
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="admin-inline-form" onsubmit="return confirm('@L["Admin.ConfirmDelete"]');">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm">@L["Admin.Delete"]</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

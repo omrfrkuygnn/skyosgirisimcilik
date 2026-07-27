@@ -10,8 +10,8 @@
             <p>@L["Footer.CtaText"]</p>
         </div>
         <div class="footer-cta-actions">
-            <a class="btn btn-primary" href="/iletisim">@L["Footer.CtaContact"]</a>
-            <a class="btn btn-outline" href="/yatirimcilar">@L["Footer.CtaInvestors"]</a>
+            <a class="btn btn-primary" href="@SiteUrls.Page(SitePageKeys.Contact)">@L["Footer.CtaContact"]</a>
+            <a class="btn btn-outline" href="@SiteUrls.Page(SitePageKeys.Investors)">@L["Footer.CtaInvestors"]</a>
         </div>
     </div>
 </div>
@@ -60,20 +60,23 @@
         <nav class="footer-col" aria-label="@L["Footer.Sitemap"]">
             <h3 class="footer-heading">@L["Footer.Corporate"]</h3>
             <ul>
-                <li><a href="/hakkimizda">@L["Nav.About"]</a></li>
-                <li><a href="/urun">@L["Nav.Product"]</a></li>
-                <li><a href="/kullanim-alanlari">@L["Nav.UseCases"]</a></li>
-                <li><a href="/basarilar">@L["Nav.Achievements"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.About)">@L["Nav.About"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.Product)">@L["Nav.Product"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.UseCases)">@L["Nav.UseCases"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.Achievements)">@L["Nav.Achievements"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.Team)">@L["Nav.Team"]</a></li>
             </ul>
         </nav>
 
         <nav class="footer-col" aria-label="@L["Footer.ConnectNav"]">
             <h3 class="footer-heading">@L["Footer.Connect"]</h3>
             <ul>
-                <li><a href="/yatirimcilar">@L["Footer.InvestorRelations"]</a></li>
-                <li><a href="/iletisim">@L["Common.Contact"]</a></li>
-                <li><a href="/destekcilerimiz">@L["Nav.Partners"]</a></li>
-                <li><a href="/gizlilik-politikasi">@L["Footer.PrivacyPolicy"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.Investors)">@L["Footer.InvestorRelations"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.News)">@L["Nav.News"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.Contact)">@L["Common.Contact"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.Feedback)">@L["Footer.FeedbackTitle"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.Partners)">@L["Nav.Partners"]</a></li>
+                <li><a href="@SiteUrls.Page(SitePageKeys.PrivacyPolicy)">@L["Footer.PrivacyPolicy"]</a></li>
             </ul>
         </nav>
 
@@ -100,8 +103,9 @@
         <div class="container">
             <p>@L["Footer.Copyright", year, c.CompanyName, c.TeamName]</p>
             <div class="footer-bottom-links">
-                <a href="/gizlilik-politikasi">@L["Footer.PrivacyShort"]</a>
-                <a href="/iletisim">@L["Footer.ContactShort"]</a>
+                <a href="@SiteUrls.Page(SitePageKeys.PrivacyPolicy)">@L["Footer.PrivacyShort"]</a>
+                <a href="@SiteUrls.Page(SitePageKeys.Feedback)">@L["Footer.FeedbackTitle"]</a>
+                <a href="@SiteUrls.Page(SitePageKeys.Contact)">@L["Footer.ContactShort"]</a>
             </div>
         </div>
     </div>

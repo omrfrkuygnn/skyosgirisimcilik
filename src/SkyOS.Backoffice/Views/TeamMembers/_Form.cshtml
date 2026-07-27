@@ -1,0 +1,81 @@
+@model TeamMemberUpsertDto
+@{
+    var isEdit = (bool?)ViewData["IsEdit"] == true;
+    var id = ViewData["EntityId"];
+    var actionName = isEdit ? "Edit" : "Create";
+    ViewData["Title"] ??= isEdit ? L["Admin.EditTeamMember"] : L["Admin.AddTeamMember"];
+}
+
+<header class="admin-page-header">
+    <div>
+        <p class="admin-page-eyebrow">@L["Admin.ContentManagement"]</p>
+        <h1 class="admin-page-title">@ViewData["Title"]</h1>
+        <p class="admin-page-lead">@L["Admin.TeamMembersLead"]</p>
+    </div>
+    <a class="admin-btn admin-btn-ghost" href="/TeamMembers">@L["Admin.Back"]</a>
+</header>
+
+<form asp-action="@actionName" asp-route-id="@id" method="post" enctype="multipart/form-data" class="admin-cms-form">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="admin-validation-summary"></div>
+
+    <div class="admin-cms-layout">
+        <div class="admin-cms-main">
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionBasicInfo"]</h2>
+                <div class="admin-cms-grid">
+                    <div class="admin-field">
+                        <label asp-for="FullName">@L["Admin.ColName"]</label>
+                        <input asp-for="FullName" class="admin-input" required placeholder="@L["Admin.Placeholder.FullName"]" />
+                    </div>
+                    <div class="admin-field">
+                        <label asp-for="Role">@L["Admin.ColRole"]</label>
+                        <input asp-for="Role" class="admin-input" required placeholder="@L["Admin.Placeholder.Role"]" />
+                    </div>
+                    <div class="admin-field admin-field--full">
+                        <label asp-for="Bio">@L["Admin.ColBio"]</label>
+                        <textarea asp-for="Bio" class="admin-textarea" rows="5" placeholder="@L["Admin.Placeholder.Bio"]"></textarea>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside class="admin-cms-aside">
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionPhoto"]</h2>
+                @{
+                    ViewData["UploadInputName"] = "photoFile";
+                    ViewData["UploadHiddenName"] = nameof(Model.PhotoUrl);
+                    ViewData["UploadCompressName"] = "photoCompress";
+                    ViewData["UploadCurrentUrl"] = Model.PhotoUrl;
+                    ViewData["UploadLabel"] = L["Admin.UploadPhoto"];
+                    ViewData["UploadHint"] = L["Admin.UploadImageHint"];
+                    ViewData["UploadKind"] = "image";
+                }
+                <partial name="_FileUploadField" />
+            </section>
+
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionSettings"]</h2>
+                <div class="admin-settings-stack">
+                    <div class="admin-field">
+                        <label asp-for="DisplayOrder">@L["Admin.ColOrder"]</label>
+                        <input asp-for="DisplayOrder" class="admin-input" type="number" min="0" />
+                    </div>
+                    <div class="admin-field admin-field--switch">
+                        <label class="admin-switch" for="IsLeader">
+                            <span class="admin-switch-text">@L["Admin.ColLeader"]</span>
+                            <input asp-for="IsLeader" type="checkbox" id="IsLeader" />
+                            <span class="admin-switch-ui" aria-hidden="true"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <div class="admin-cms-actions">
+                <button type="submit" class="admin-btn admin-btn-primary admin-btn-block">@L["Admin.Save"]</button>
+                <a class="admin-btn admin-btn-ghost admin-btn-block" href="/TeamMembers">@L["Admin.Cancel"]</a>
+            </div>
+        </aside>
+    </div>
+</form>

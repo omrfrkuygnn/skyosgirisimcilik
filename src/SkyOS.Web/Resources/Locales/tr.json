@@ -19,6 +19,7 @@
     "Partners": "Destekçilerimiz",
     "Contact": "İletişim",
     "Team": "Ekip",
+    "News": "Haberler",
     "LangSwitch": "Dil seçimi",
     "LangTr": "TR",
     "LangEn": "EN"
@@ -36,6 +37,15 @@
     "InvestorRelations": "Yatırımcı İlişkileri",
     "PrivacyPolicy": "Gizlilik Politikası",
     "ContactHeading": "İletişim",
+    "FeedbackTitle": "Geri Bildirim & Şikayet",
+    "FeedbackText": "Siteyle ilgili sorun, şikayet veya sorularınızı bize iletebilirsiniz. Ekibimiz backoffice panelinden değerlendirir.",
+    "FeedbackName": "Ad Soyad",
+    "FeedbackEmail": "E-posta (isteğe bağlı)",
+    "FeedbackCategory": "Konu",
+    "FeedbackMessage": "Mesajınız",
+    "FeedbackSubmit": "Gönder",
+    "FeedbackSuccess": "Geri bildiriminiz alındı. Teşekkür ederiz.",
+    "FeedbackError": "Geri bildirim gönderilemedi. Lütfen alanları kontrol edip tekrar deneyin.",
     "Copyright": "© {0} {1} · {2}. Tüm hakları saklıdır.",
     "PrivacyShort": "Gizlilik",
     "ContactShort": "İletişim"
@@ -311,12 +321,39 @@
     "Submit": "Mesajı Gönder",
     "RecaptchaNote": "Bu site reCAPTCHA ile korunmaktadır; Google <a href=\"https://policies.google.com/privacy\" rel=\"noopener noreferrer\" target=\"_blank\">Gizlilik Politikası</a> ve <a href=\"https://policies.google.com/terms\" rel=\"noopener noreferrer\" target=\"_blank\">Şartlar</a> geçerlidir.",
     "RecaptchaLocalhost": "reCAPTCHA görünmüyorsa Google konsolunda site anahtarına <code>localhost</code> domainini eklemeniz gerekir.",
+    "RecaptchaLoadError": "Güvenlik doğrulaması yüklenemedi. Sayfayı yenileyip tekrar deneyin.",
+    "RecaptchaSubmitError": "Güvenlik doğrulaması tamamlanamadı. Lütfen tekrar deneyin.",
     "PrivacyAccept": "Gönderim ile <a href=\"/gizlilik-politikasi\">Gizlilik Politikası</a>'nı kabul etmiş olursunuz.",
     "InfoHeading": "İletişim Bilgileri",
     "InfoEmail": "E-posta",
     "InfoPhone": "Telefon",
     "InvestorHint": "Yatırımcı görüşmeleri için \"İlgi Alanı\" olarak <strong>Yatırımcı</strong> seçeneğini kullanabilirsiniz.",
     "ThrottleError": "Kısa süre içinde çok fazla mesaj gönderdiniz. Lütfen daha sonra tekrar deneyin."
+  },
+  "News": {
+    "Title": "Haberler",
+    "Description": "SkyOS'tan güncel haberler, duyurular ve gelişmeler.",
+    "Eyebrow": "Haberler",
+    "Heading": "Haberler & Duyurular",
+    "Lead": "SkyOS ekosisteminden güncel gelişmeler, etkinlikler ve duyurular.",
+    "Empty": "Henüz yayınlanmış haber bulunmuyor.",
+    "ReadMore": "Devamını oku",
+    "BackToList": "Tüm haberler"
+  },
+  "Feedback": {
+    "Title": "Geri Bildirim & Şikayet",
+    "Description": "Siteyle ilgili sorun, şikayet veya sorularınızı bize iletin.",
+    "Eyebrow": "Geri Bildirim",
+    "Heading": "Geri Bildirim & Şikayet",
+    "Lead": "Siteyle ilgili sorun, şikayet veya sorularınızı bize iletebilirsiniz. Ekibimiz backoffice panelinden değerlendirir.",
+    "FullName": "Ad Soyad",
+    "Email": "E-posta (isteğe bağlı)",
+    "Category": "Konu",
+    "Message": "Mesajınız",
+    "Submit": "Gönder",
+    "Success": "Geri bildiriminiz alındı. Teşekkür ederiz.",
+    "Honeypot": "Web siteniz (bu alanı boş bırakın)",
+    "Note": "Gönderiminiz ekibimiz tarafından incelenecek ve gerekirse size dönüş yapılacaktır."
   },
   "ContactSuccess": {
     "Title": "Mesajınız Alındı",
@@ -346,8 +383,11 @@
   "Errors": {
     "NotFoundTitle": "Sayfa Bulunamadı",
     "NotFoundDescription": "Aradığınız sayfa bulunamadı.",
-    "NotFoundHeading": "Sayfa bulunamadı",
-    "NotFoundLead": "Aradığınız sayfa taşınmış veya hiç var olmamış olabilir. Ana sayfadan devam edebilirsiniz.",
+    "NotFoundEyebrow": "404 · Rota bulunamadı",
+    "NotFoundSignal": "GPS sinyali kayboldu — hedef koordinat mevcut değil.",
+    "NotFoundHeading": "Aradığınız sayfa bulunamadı",
+    "NotFoundLead": "Bağlantı hatalı olabilir, sayfa taşınmış ya da hiç var olmamış olabilir. Aşağıdaki bağlantılardan devam edebilirsiniz.",
+    "NotFoundSuggestions": "Şuradan devam edebilirsiniz",
     "ServerTitle": "Bir Hata Oluştu",
     "ServerDescription": "Beklenmeyen bir hata oluştu.",
     "ServerHeading": "Beklenmeyen bir hata oluştu",
@@ -378,6 +418,21 @@
       "Teknofest": "TEKNOFEST",
       "Kurumsal": "Kurumsal Doğrulama",
       "Teknik": "Teknik Doğrulama"
+    },
+    "FeedbackCategory": {
+      "Complaint": "Şikayet",
+      "Question": "Soru",
+      "SiteIssue": "Site Sorunu",
+      "Other": "Diğer"
     }
+  },
+  "FeedbackValidation": {
+    "FullNameRequired": "Ad soyad gereklidir.",
+    "FullNameMax": "Ad soyad en fazla 120 karakter olabilir.",
+    "EmailInvalid": "Geçerli bir e-posta adresi girin.",
+    "EmailMax": "E-posta en fazla 254 karakter olabilir.",
+    "MessageRequired": "Mesaj gereklidir.",
+    "MessageMin": "Mesaj en az 10 karakter olmalıdır.",
+    "MessageMax": "Mesaj en fazla 4000 karakter olabilir."
   }
 }

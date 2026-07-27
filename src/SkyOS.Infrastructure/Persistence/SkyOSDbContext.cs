@@ -1,11 +1,13 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SkyOS.Application.Interfaces.Infrastructure;
 using SkyOS.Domain.Common;
 using SkyOS.Domain.Entities;
+using SkyOS.Infrastructure.Identity;
 
 namespace SkyOS.Infrastructure.Persistence;
 
-public sealed class SkyOSDbContext : DbContext
+public sealed class SkyOSDbContext : IdentityDbContext<ApplicationUser>
 {
     private readonly IDateTimeProvider _dateTimeProvider;
 
@@ -24,6 +26,10 @@ public sealed class SkyOSDbContext : DbContext
     public DbSet<ContactMessage> ContactMessages => Set<ContactMessage>();
 
     public DbSet<NewsItem> NewsItems => Set<NewsItem>();
+
+    public DbSet<SiteFeedback> SiteFeedbacks => Set<SiteFeedback>();
+
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

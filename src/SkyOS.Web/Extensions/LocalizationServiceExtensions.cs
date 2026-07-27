@@ -2,6 +2,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using SkyOS.Shared.Localization;
 using SkyOS.Web.Localization;
+using SkyOS.Web.Routing;
 
 namespace SkyOS.Web.Extensions;
 
@@ -26,6 +27,10 @@ public static class LocalizationServiceExtensions
             options.ApplyCurrentCultureToResponseHeaders = true;
             options.RequestCultureProviders =
             [
+                new RouteValueRequestCultureProvider
+                {
+                    RouteValueKey = LocalizedRouteService.CultureRouteKey,
+                },
                 new CookieRequestCultureProvider { CookieName = CookieName },
                 new QueryStringRequestCultureProvider { QueryStringKey = QueryKey, UIQueryStringKey = QueryKey },
             ];

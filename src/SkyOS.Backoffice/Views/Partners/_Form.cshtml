@@ -1,0 +1,109 @@
+@model PartnerUpsertDto
+@{
+    var isEdit = (bool?)ViewData["IsEdit"] == true;
+    var id = ViewData["EntityId"];
+    var actionName = isEdit ? "Edit" : "Create";
+    ViewData["Title"] ??= isEdit ? L["Admin.EditPartner"] : L["Admin.AddPartner"];
+}
+
+<header class="admin-page-header">
+    <div>
+        <p class="admin-page-eyebrow">@L["Admin.ContentManagement"]</p>
+        <h1 class="admin-page-title">@ViewData["Title"]</h1>
+        <p class="admin-page-lead">@L["Admin.PartnersLead"]</p>
+    </div>
+    <a class="admin-btn admin-btn-ghost" href="/Partners">@L["Admin.Back"]</a>
+</header>
+
+<form asp-action="@actionName" asp-route-id="@id" method="post" enctype="multipart/form-data" class="admin-cms-form">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="admin-validation-summary"></div>
+
+    <div class="admin-cms-layout">
+        <div class="admin-cms-main">
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionBasicInfo"]</h2>
+                <div class="admin-cms-grid">
+                    <div class="admin-field admin-field--full">
+                        <label asp-for="Name">@L["Admin.ColName"]</label>
+                        <input asp-for="Name" class="admin-input" required />
+                    </div>
+                    <div class="admin-field admin-field--full">
+                        <label asp-for="Description">@L["Admin.ColDescription"]</label>
+                        <textarea asp-for="Description" class="admin-textarea" rows="4"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionContact"]</h2>
+                <div class="admin-cms-grid">
+                    <div class="admin-field admin-field--full">
+                        <label asp-for="Address">@L["Admin.ColAddress"]</label>
+                        <input asp-for="Address" class="admin-input" />
+                    </div>
+                    <div class="admin-field">
+                        <label asp-for="Phone">@L["Admin.ColPhone"]</label>
+                        <input asp-for="Phone" class="admin-input" />
+                    </div>
+                    <div class="admin-field">
+                        <label asp-for="WebsiteUrl">@L["Admin.ColWebsite"]</label>
+                        <input asp-for="WebsiteUrl" class="admin-input" placeholder="https://" />
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside class="admin-cms-aside">
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionLogo"]</h2>
+                @{
+                    ViewData["UploadInputName"] = "logoFile";
+                    ViewData["UploadHiddenName"] = nameof(Model.LogoUrl);
+                    ViewData["UploadCompressName"] = "logoCompress";
+                    ViewData["UploadCurrentUrl"] = Model.LogoUrl;
+                    ViewData["UploadLabel"] = L["Admin.UploadLogo"];
+                    ViewData["UploadHint"] = L["Admin.UploadLogoHint"];
+                    ViewData["UploadKind"] = "image";
+                }
+                <partial name="_FileUploadField" />
+            </section>
+
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionSupportLetter"]</h2>
+                @{
+                    ViewData["UploadInputName"] = "supportLetterFile";
+                    ViewData["UploadHiddenName"] = nameof(Model.SupportLetterUrl);
+                    ViewData["UploadCurrentUrl"] = Model.SupportLetterUrl;
+                    ViewData["UploadLabel"] = L["Admin.UploadDocument"];
+                    ViewData["UploadHint"] = L["Admin.UploadDocumentHint"];
+                    ViewData["UploadAccept"] = ".pdf,.html,.htm";
+                    ViewData["UploadKind"] = "document";
+                }
+                <partial name="_FileUploadField" />
+            </section>
+
+            <section class="admin-cms-card">
+                <h2 class="admin-cms-card-title">@L["Admin.SectionSettings"]</h2>
+                <div class="admin-settings-stack">
+                    <div class="admin-field">
+                        <label asp-for="DisplayOrder">@L["Admin.ColOrder"]</label>
+                        <input asp-for="DisplayOrder" class="admin-input" type="number" min="0" />
+                    </div>
+                    <div class="admin-field admin-field--switch">
+                        <label class="admin-switch" for="IsVerifiedRelationship">
+                            <span class="admin-switch-text">@L["Admin.ColVerified"]</span>
+                            <input asp-for="IsVerifiedRelationship" type="checkbox" id="IsVerifiedRelationship" />
+                            <span class="admin-switch-ui" aria-hidden="true"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <div class="admin-cms-actions">
+                <button type="submit" class="admin-btn admin-btn-primary admin-btn-block">@L["Admin.Save"]</button>
+                <a class="admin-btn admin-btn-ghost admin-btn-block" href="/Partners">@L["Admin.Cancel"]</a>
+            </div>
+        </aside>
+    </div>
+</form>

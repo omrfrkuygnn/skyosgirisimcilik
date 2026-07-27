@@ -1,0 +1,51 @@
+@model IReadOnlyList<AuditLogListItemDto>
+@{
+    ViewData["Title"] = L["Admin.AuditLogs"];
+}
+
+<header class="admin-page-header">
+    <div>
+        <p class="admin-page-eyebrow">@L["Admin.System"]</p>
+        <h1 class="admin-page-title">@L["Admin.AuditLogs"]</h1>
+        <p class="admin-page-lead">@L["Admin.AuditLogsLead"]</p>
+    </div>
+    <div class="admin-page-meta">
+        <span class="admin-badge admin-badge--info">@Model.Count @L["Admin.Records"]</span>
+    </div>
+</header>
+
+<div class="admin-panel">
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>@L["Admin.ColDate"]</th>
+                    <th>@L["Admin.ColUser"]</th>
+                    <th>@L["Admin.ColAction"]</th>
+                    <th>@L["Admin.ColEntity"]</th>
+                    <th>@L["Admin.ColDetails"]</th>
+                    <th>IP</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr>
+                    <td colspan="6" class="admin-table-empty">@L["Admin.NoRecords"]</td>
+                </tr>
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CreatedAtUtc.ToLocalTime().ToString("g")</td>
+                    <td>@item.UserEmail</td>
+                    <td><span class="admin-tag">@L.AuditActionLabel(item.Action)</span></td>
+                    <td>@(item.EntityType is null ? "—" : $"{L.EntityTypeLabel(item.EntityType)} #{item.EntityId}")</td>
+                    <td class="admin-table-message">@AdminDisplay.AuditDetailLabel(L, item.Details)</td>
+                    <td>@(item.IpAddress ?? "—")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

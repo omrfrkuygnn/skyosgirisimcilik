@@ -19,6 +19,7 @@
     "Partners": "Partner",
     "Contact": "Kontakt",
     "Team": "Team",
+    "News": "Nachrichten",
     "LangSwitch": "Sprache",
     "LangTr": "TR",
     "LangEn": "EN",
@@ -37,6 +38,15 @@
     "InvestorRelations": "Investor Relations",
     "PrivacyPolicy": "Datenschutzerklärung",
     "ContactHeading": "Kontakt",
+    "FeedbackTitle": "Feedback & Beschwerden",
+    "FeedbackText": "Melden Sie Website-Probleme, Beschwerden oder Fragen. Unser Team prüft die Eingaben im Backoffice.",
+    "FeedbackName": "Name",
+    "FeedbackEmail": "E-Mail (optional)",
+    "FeedbackCategory": "Thema",
+    "FeedbackMessage": "Ihre Nachricht",
+    "FeedbackSubmit": "Senden",
+    "FeedbackSuccess": "Vielen Dank. Ihr Feedback wurde empfangen.",
+    "FeedbackError": "Feedback konnte nicht gesendet werden. Bitte Felder prüfen und erneut versuchen.",
     "Copyright": "© {0} {1} · {2}. Alle Rechte vorbehalten.",
     "PrivacyShort": "Datenschutz",
     "ContactShort": "Kontakt"
@@ -312,12 +322,39 @@
     "Submit": "Nachricht senden",
     "RecaptchaNote": "Diese Seite ist durch reCAPTCHA geschützt; es gelten die Google <a href=\"https://policies.google.com/privacy\" rel=\"noopener noreferrer\" target=\"_blank\">Datenschutzerklärung</a> und <a href=\"https://policies.google.com/terms\" rel=\"noopener noreferrer\" target=\"_blank\">Nutzungsbedingungen</a>.",
     "RecaptchaLocalhost": "Wenn reCAPTCHA nicht angezeigt wird, fügen Sie die Domain <code>localhost</code> zum Website-Schlüssel in der Google-Konsole hinzu.",
+    "RecaptchaLoadError": "Die Sicherheitsüberprüfung konnte nicht geladen werden. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",
+    "RecaptchaSubmitError": "Die Sicherheitsüberprüfung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
     "PrivacyAccept": "Mit dem Absenden akzeptieren Sie die <a href=\"/gizlilik-politikasi\">Datenschutzerklärung</a>.",
     "InfoHeading": "Kontaktdaten",
     "InfoEmail": "E-Mail",
     "InfoPhone": "Telefon",
     "InvestorHint": "Wählen Sie für Investorengespräche <strong>Investor</strong> als Interessenbereich.",
     "ThrottleError": "Sie haben in kurzer Zeit zu viele Nachrichten gesendet. Bitte versuchen Sie es später erneut."
+  },
+  "News": {
+    "Title": "Nachrichten",
+    "Description": "Aktuelle Nachrichten, Ankündigungen und Updates von SkyOS.",
+    "Eyebrow": "Nachrichten",
+    "Heading": "Nachrichten & Ankündigungen",
+    "Lead": "Aktuelle Entwicklungen, Veranstaltungen und Ankündigungen aus dem SkyOS-Ökosystem.",
+    "Empty": "Noch keine veröffentlichten Nachrichten.",
+    "ReadMore": "Weiterlesen",
+    "BackToList": "Alle Nachrichten"
+  },
+  "Feedback": {
+    "Title": "Feedback & Beschwerden",
+    "Description": "Melden Sie Website-Probleme, Beschwerden oder Fragen.",
+    "Eyebrow": "Feedback",
+    "Heading": "Feedback & Beschwerden",
+    "Lead": "Melden Sie Website-Probleme, Beschwerden oder Fragen. Unser Team prüft die Eingaben im Backoffice.",
+    "FullName": "Name",
+    "Email": "E-Mail (optional)",
+    "Category": "Thema",
+    "Message": "Ihre Nachricht",
+    "Submit": "Senden",
+    "Success": "Vielen Dank. Ihr Feedback wurde empfangen.",
+    "Honeypot": "Ihre Website (dieses Feld leer lassen)",
+    "Note": "Ihre Nachricht wird von unserem Team geprüft und bei Bedarf beantwortet."
   },
   "ContactSuccess": {
     "Title": "Nachricht erhalten",
@@ -347,8 +384,11 @@
   "Errors": {
     "NotFoundTitle": "Seite nicht gefunden",
     "NotFoundDescription": "Die von Ihnen gesuchte Seite wurde nicht gefunden.",
-    "NotFoundHeading": "Seite nicht gefunden",
-    "NotFoundLead": "Die Seite wurde möglicherweise verschoben oder existiert nicht. Sie können von der Startseite aus fortfahren.",
+    "NotFoundEyebrow": "404 · Route nicht gefunden",
+    "NotFoundSignal": "GPS-Signal verloren — Zielkoordinaten nicht verfügbar.",
+    "NotFoundHeading": "Die angeforderte Seite wurde nicht gefunden",
+    "NotFoundLead": "Der Link ist möglicherweise fehlerhaft, die Seite wurde verschoben oder hat nie existiert. Sie können über die folgenden Links fortfahren.",
+    "NotFoundSuggestions": "Vielleicht suchen Sie",
     "ServerTitle": "Etwas ist schief gelaufen",
     "ServerDescription": "Ein unerwarteter Fehler ist aufgetreten.",
     "ServerHeading": "Ein unerwarteter Fehler ist aufgetreten",
@@ -379,6 +419,21 @@
       "Teknofest": "TEKNOFEST",
       "Kurumsal": "Unternehmensvalidierung",
       "Teknik": "Technische Validierung"
+    },
+    "FeedbackCategory": {
+      "Complaint": "Beschwerde",
+      "Question": "Frage",
+      "SiteIssue": "Website-Problem",
+      "Other": "Sonstiges"
     }
+  },
+  "FeedbackValidation": {
+    "FullNameRequired": "Name ist erforderlich.",
+    "FullNameMax": "Name darf maximal 120 Zeichen lang sein.",
+    "EmailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "EmailMax": "E-Mail darf maximal 254 Zeichen lang sein.",
+    "MessageRequired": "Nachricht ist erforderlich.",
+    "MessageMin": "Nachricht muss mindestens 10 Zeichen lang sein.",
+    "MessageMax": "Nachricht darf maximal 4000 Zeichen lang sein."
   }
 }

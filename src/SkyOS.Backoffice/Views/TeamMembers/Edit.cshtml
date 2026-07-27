@@ -1,0 +1,3 @@
+@model TeamMemberUpsertDto
+@{ ViewData["IsEdit"] = true; ViewData["EntityId"] = ViewContext.RouteData.Values["id"]; }
+<partial name="_Form" model="Model" />

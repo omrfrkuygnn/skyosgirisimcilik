@@ -2,11 +2,16 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using SkyOS.Web.Extensions;
 using SkyOS.Web.Localization;
+using SkyOS.Web.Routing;
 
 namespace SkyOS.Web.Controllers;
 
 public sealed class CultureController : Controller
 {
+    private readonly ILocalizedRouteService _routes;
+
+    public CultureController(ILocalizedRouteService routes) => _routes = routes;
+
     [HttpGet("/dil/{culture}")]
     [HttpGet("/lang/{culture}")]
     public IActionResult Set(string culture, string? returnUrl = null)
@@ -28,9 +33,9 @@ public sealed class CultureController : Controller
 
         if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
         {
-            return LocalRedirect(returnUrl);
+            return LocalRedirect(_routes.LocalizeLocalUrl(returnUrl, culture));
         }
 
-        return LocalRedirect("~/");
+        return LocalRedirect(_routes.Page(SitePageKeys.Home, culture));
     }
 }

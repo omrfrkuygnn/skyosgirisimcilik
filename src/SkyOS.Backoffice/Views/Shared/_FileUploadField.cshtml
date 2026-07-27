@@ -1,0 +1,72 @@
+@using Microsoft.Extensions.Options
+@using SkyOS.Backoffice.Options
+@inject IOptions<ContentUploadOptions> ContentUploadOptions
+@{
+    var inputName = ViewData["UploadInputName"] as string ?? "file";
+    var hiddenName = ViewData["UploadHiddenName"] as string ?? "PhotoUrl";
+    var compressName = ViewData["UploadCompressName"] as string ?? "photoCompress";
+    var currentUrl = ViewData["UploadCurrentUrl"] as string ?? ViewData[hiddenName] as string;
+    var label = ViewData["UploadLabel"] as string ?? L["Admin.UploadPhoto"];
+    var hint = ViewData["UploadHint"] as string ?? L["Admin.UploadImageHint"];
+    var accept = ViewData["UploadAccept"] as string ?? "image/jpeg,image/png,image/webp,image/gif";
+    var isDocument = string.Equals(ViewData["UploadKind"] as string, "document", StringComparison.OrdinalIgnoreCase);
+    var previewUrl = AdminMedia.PreviewUrl(currentUrl, ContentUploadOptions);
+    var hasFile = !string.IsNullOrWhiteSpace(currentUrl);
+    var opts = ContentUploadOptions.Value;
+}
+
+<div class="admin-upload"
+     data-upload
+     data-upload-kind="@(isDocument ? "document" : "image")"
+     data-upload-warn-bytes="@opts.ImageWarningBytes"
+     data-upload-max-bytes="@opts.MaxImageBytes"
+     data-upload-modal-title="@L["Admin.UploadLargeTitle"]"
+     data-upload-modal-text="@L["Admin.UploadLargeBody"]"
+     data-upload-keep="@L["Admin.UploadKeepOriginal"]"
+     data-upload-compress="@L["Admin.UploadCompress"]"
+     data-upload-cancel="@L["Admin.Cancel"]"
+     data-upload-too-large="@L["Admin.Error.FileTooLarge"]"
+     data-upload-size-reduced="@L["Admin.UploadSizeReduced"]">
+    <input type="hidden" name="@hiddenName" value="@currentUrl" data-upload-hidden />
+    @if (!isDocument)
+    {
+        <input type="hidden" name="@compressName" value="true" data-upload-compress-flag />
+    }
+    <label class="admin-upload-label">@label</label>
+    <p class="admin-upload-hint">@hint</p>
+    <div class="admin-upload-choice is-hidden" data-upload-choice role="status"></div>
+
+    <div class="admin-upload-dropzone@(hasFile ? " has-file" : "")" data-upload-dropzone>
+        @if (!isDocument && hasFile && !string.IsNullOrWhiteSpace(previewUrl))
+        {
+            <div class="admin-upload-preview" data-upload-preview-wrap>
+                <img src="@previewUrl" alt="" class="admin-upload-preview-img" data-upload-preview />
+            </div>
+        }
+        else if (isDocument && hasFile)
+        {
+            <div class="admin-upload-doc" data-upload-preview-wrap>
+                <span class="admin-upload-doc-icon" aria-hidden="true">PDF</span>
+                <span class="admin-upload-doc-name">@System.IO.Path.GetFileName(currentUrl)</span>
+                @if (!string.IsNullOrWhiteSpace(previewUrl))
+                {
+                    <a class="admin-link" href="@previewUrl" target="_blank" rel="noopener">@L["Admin.ViewFile"]</a>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="admin-upload-empty" data-upload-preview-wrap>
+                <span class="admin-upload-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </span>
+                <strong>@L["Admin.UploadDragDrop"]</strong>
+                <span>@L["Admin.UploadBrowse"]</span>
+            </div>
+        }
+
+        <input type="file" name="@inputName" class="admin-upload-input" accept="@accept" data-upload-input />
+    </div>
+
+    <button type="button" class="admin-upload-clear@(hasFile ? "" : " is-hidden")" data-upload-clear>@L["Admin.RemoveFile"]</button>
+</div>

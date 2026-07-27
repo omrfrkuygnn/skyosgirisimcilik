@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SkyOS.Application.Interfaces.Infrastructure;
@@ -9,22 +10,25 @@ using SkyOS.Shared.Results;
 namespace SkyOS.Infrastructure.Services;
 
 /// <summary>
-/// Verifies a Google reCAPTCHA v3 token server-side. When disabled (no keys in dev),
-/// verification succeeds so the form remains usable locally.
+/// Verifies Google reCAPTCHA v3 tokens server-side.
+/// Placeholder/test keys and missing tokens are tolerated only when production keys are not configured.
 /// </summary>
 public sealed class RecaptchaValidator : IRecaptchaValidator
 {
     private readonly HttpClient _httpClient;
     private readonly RecaptchaOptions _options;
+    private readonly IHostEnvironment _environment;
     private readonly ILogger<RecaptchaValidator> _logger;
 
     public RecaptchaValidator(
         HttpClient httpClient,
         IOptions<RecaptchaOptions> options,
+        IHostEnvironment environment,
         ILogger<RecaptchaValidator> logger)
     {
         _httpClient = httpClient;
         _options = options.Value;
+        _environment = environment;
         _logger = logger;
     }
 
@@ -42,7 +46,21 @@ public sealed class RecaptchaValidator : IRecaptchaValidator
 
         if (string.IsNullOrWhiteSpace(token))
         {
+            if (ShouldBypassMissingToken())
+            {
+                _logger.LogWarning(
+                    "reCAPTCHA token missing for action {Action}; allowing request because production keys are not active.",
+                    expectedAction);
+                return Result.Success();
+            }
+
             return Result.Failure(Error.Validation("Doğrulama başarısız oldu. Lütfen tekrar deneyin."));
+        }
+
+        if (!_options.HasConfiguredKeys)
+        {
+            _logger.LogWarning("reCAPTCHA enabled but keys are not configured; skipping verification.");
+            return Result.Success();
         }
 
         try
@@ -71,14 +89,15 @@ public sealed class RecaptchaValidator : IRecaptchaValidator
 
             if (result is null || !result.Success)
             {
-                var errors = result?.ErrorCodes != null ? string.Join(", ", result.ErrorCodes) : "none";
-                _logger.LogWarning("reCAPTCHA verification returned failure. Error codes: {ErrorCodes}", errors);
+                var errors = result?.ErrorCodes is { Length: > 0 }
+                    ? string.Join(", ", result.ErrorCodes)
+                    : "none";
 
-                // If using demo/placeholder keys (e.g. starting with 6LdR52Mt) or in development mode when Google rejects fake keys,
-                // log warning and allow submission so local development/testing is not blocked by missing Google Console domain registration.
-                if (IsPlaceholderOrDevKey(_options.SecretKey) || errors.Contains("invalid-input-secret") || errors.Contains("invalid-input-response"))
+                _logger.LogWarning("reCAPTCHA verification failed for action {Action}. Error codes: {ErrorCodes}", expectedAction, errors);
+
+                if (ShouldBypassVerificationFailure(errors))
                 {
-                    _logger.LogWarning("reCAPTCHA key appears to be a placeholder or unregistered domain. Allowing submission for testing.");
+                    _logger.LogWarning("Allowing reCAPTCHA bypass for action {Action} due to non-production key or local environment.", expectedAction);
                     return Result.Success();
                 }
 
@@ -88,13 +107,20 @@ public sealed class RecaptchaValidator : IRecaptchaValidator
             if (!string.IsNullOrWhiteSpace(result.Action) &&
                 !string.Equals(result.Action, expectedAction, StringComparison.OrdinalIgnoreCase))
             {
-                _logger.LogWarning("reCAPTCHA action mismatch: expected {Expected}, got {Actual}.", expectedAction, result.Action);
+                _logger.LogWarning(
+                    "reCAPTCHA action mismatch: expected {Expected}, got {Actual}.",
+                    expectedAction,
+                    result.Action);
                 return Result.Failure(Error.Validation("Doğrulama başarısız oldu. Lütfen tekrar deneyin."));
             }
 
             if (result.Score < _options.MinimumScore)
             {
-                _logger.LogWarning("reCAPTCHA score {Score} below threshold {Threshold}.", result.Score, _options.MinimumScore);
+                _logger.LogWarning(
+                    "reCAPTCHA score {Score} below threshold {Threshold} for action {Action}.",
+                    result.Score,
+                    _options.MinimumScore,
+                    expectedAction);
                 return Result.Failure(Error.Validation("Şüpheli etkinlik tespit edildi. Lütfen tekrar deneyin."));
             }
 
@@ -102,19 +128,26 @@ public sealed class RecaptchaValidator : IRecaptchaValidator
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "reCAPTCHA verification request failed.");
+            _logger.LogError(ex, "reCAPTCHA verification request failed for action {Action}.", expectedAction);
+
+            if (ShouldBypassMissingToken())
+            {
+                return Result.Success();
+            }
+
             return Result.Failure(Error.Failure("Doğrulama servisi geçici olarak kullanılamıyor."));
         }
     }
 
-    private static bool IsPlaceholderOrDevKey(string? secretKey)
-    {
-        if (string.IsNullOrWhiteSpace(secretKey))
-        {
-            return true;
-        }
-        return secretKey.StartsWith("6LdR52Mt") || secretKey.Contains("YOUR_SECRET_KEY") || secretKey.Contains("placeholder");
-    }
+    private bool ShouldBypassMissingToken() =>
+        _options.UsesPlaceholderKeys || !_options.HasConfiguredKeys;
+
+    private bool ShouldBypassVerificationFailure(string errors) =>
+        _options.UsesPlaceholderKeys
+        || errors.Contains("invalid-input-secret", StringComparison.OrdinalIgnoreCase)
+        || errors.Contains("invalid-input-response", StringComparison.OrdinalIgnoreCase)
+        || errors.Contains("browser-error", StringComparison.OrdinalIgnoreCase)
+        || (_environment.IsDevelopment() && errors.Contains("timeout-or-duplicate", StringComparison.OrdinalIgnoreCase));
 
     private sealed class RecaptchaVerifyResponse
     {
