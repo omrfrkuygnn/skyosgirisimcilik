@@ -15,6 +15,7 @@ public static class AuditActions
     public const string ReplySiteFeedback = "ReplySiteFeedback";
     public const string ViewAuditLogs = "ViewAuditLogs";
     public const string ViewDashboard = "ViewDashboard";
+    public const string CreateAdminUser = "CreateAdminUser";
 
     public const string CreateTeamMember = "CreateTeamMember";
     public const string UpdateTeamMember = "UpdateTeamMember";

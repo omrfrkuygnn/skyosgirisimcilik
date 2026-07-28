@@ -1,0 +1,54 @@
+@model IReadOnlyList<AdminUserListItemViewModel>
+@{
+    ViewData["Title"] = L["Admin.Users"];
+}
+
+<header class="admin-page-header">
+    <div>
+        <p class="admin-page-eyebrow">@L["Admin.System"]</p>
+        <h1 class="admin-page-title">@L["Admin.Users"]</h1>
+        <p class="admin-page-lead">@L["Admin.UsersLead"]</p>
+    </div>
+    <a class="admin-btn admin-btn-primary" href="/Users/Create">@L["Admin.AddUser"]</a>
+</header>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="admin-panel">
+        <div class="admin-alert admin-alert-success">@successMessage</div>
+    </div>
+}
+
+<div class="admin-panel">
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>@L["Admin.ColName"]</th>
+                    <th>@L["Admin.ColEmail"]</th>
+                    <th>@L["Admin.ColRole"]</th>
+                    <th>@L["Admin.ColStatus"]</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr><td colspan="4" class="admin-table-empty">@L["Admin.NoRecords"]</td></tr>
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@item.DisplayName</strong></td>
+                    <td>@item.Email</td>
+                    <td>@L["Admin.RoleAdmin"]</td>
+                    <td>
+                        <span class="admin-badge admin-badge--@(item.IsActive ? "success" : "info")">
+                            @(item.IsActive ? L["Admin.UserStatusActive"] : L["Admin.UserStatusPassive"])
+                        </span>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

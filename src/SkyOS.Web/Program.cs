@@ -146,7 +146,7 @@ try
     app.MapDynamicControllerRoute<LocalizedRouteTransformer>("{culture:regex(^tr|en|de$)}/{**slug}");
     app.MapControllers();
 
-    // Apply schema/seed on startup (Migrate for SqlServer, EnsureCreated for the Sqlite dev fallback).
+    // Apply SQL Server schema/seed on startup.
     await DatabaseInitializer.InitializeAsync(app.Services);
 
     await app.RunAsync();

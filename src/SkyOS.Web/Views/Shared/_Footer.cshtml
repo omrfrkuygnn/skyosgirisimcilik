@@ -17,10 +17,12 @@
 </div>
 
 <footer class="site-footer">
-
     <div class="container footer-grid">
         <div class="footer-brand">
-            <span class="brand-text">Sky<span class="brand-accent">OS</span></span>
+            <a class="footer-brand-link" href="@SiteUrls.Page(SitePageKeys.Home)" aria-label="@L["Nav.BrandHome"]">
+                <img class="footer-brand-logo" src="~/img/brand/orka-logo.png" width="160" height="54" alt="ORKA" asp-append-version="true" />
+            </a>
+            <p class="footer-product">@L["Footer.ProductLine"]</p>
             <p class="footer-tagline">@L["Footer.Tagline"]</p>
             <p class="footer-team">@c.TeamName</p>
             <div class="footer-social">
@@ -57,45 +59,60 @@
             </div>
         </div>
 
-        <nav class="footer-col" aria-label="@L["Footer.Sitemap"]">
-            <h3 class="footer-heading">@L["Footer.Corporate"]</h3>
-            <ul>
-                <li><a href="@SiteUrls.Page(SitePageKeys.Product)">@L["Nav.Product"]</a></li>
-                <li><a href="@SiteUrls.Page(SitePageKeys.UseCases)">@L["Nav.UseCases"]</a></li>
-                <li><a href="@SiteUrls.Page(SitePageKeys.Achievements)">@L["Nav.Achievements"]</a></li>
-                <li><a href="@SiteUrls.Page(SitePageKeys.About)">@L["Nav.About"]</a></li>
-                <li><a href="@SiteUrls.Page(SitePageKeys.Team)">@L["Nav.Team"]</a></li>
-            </ul>
+        <nav class="footer-col footer-accordion" aria-label="@L["Footer.Sitemap"]" data-footer-accordion>
+            <button type="button" class="footer-accordion-trigger" aria-expanded="false" data-footer-trigger>
+                <span class="footer-heading">@L["Footer.Corporate"]</span>
+                <span class="footer-accordion-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="footer-accordion-panel" data-footer-panel hidden>
+                <ul>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.Product)">@L["Nav.Product"]</a></li>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.UseCases)">@L["Nav.UseCases"]</a></li>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.Achievements)">@L["Nav.Achievements"]</a></li>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.About)">@L["Nav.About"]</a></li>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.Team)">@L["Nav.Team"]</a></li>
+                </ul>
+            </div>
         </nav>
 
-        <nav class="footer-col" aria-label="@L["Footer.ConnectNav"]">
-            <h3 class="footer-heading">@L["Footer.Connect"]</h3>
-            <ul>
-                <li><a href="@SiteUrls.Page(SitePageKeys.Partners)">@L["Nav.Partners"]</a></li>
-                <li><a href="@SiteUrls.Page(SitePageKeys.Investors)">@L["Footer.InvestorRelations"]</a></li>
-                <li><a href="@SiteUrls.Page(SitePageKeys.News)">@L["Nav.News"]</a></li>
-                <li><a href="@SiteUrls.Page(SitePageKeys.Contact)">@L["Common.Contact"]</a></li>
-                <li><a href="@SiteUrls.Page(SitePageKeys.Feedback)">@L["Footer.FeedbackTitle"]</a></li>
-                <li><a href="@SiteUrls.Page(SitePageKeys.PrivacyPolicy)">@L["Footer.PrivacyPolicy"]</a></li>
-            </ul>
+        <nav class="footer-col footer-accordion" aria-label="@L["Footer.ConnectNav"]" data-footer-accordion>
+            <button type="button" class="footer-accordion-trigger" aria-expanded="false" data-footer-trigger>
+                <span class="footer-heading">@L["Footer.Connect"]</span>
+                <span class="footer-accordion-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="footer-accordion-panel" data-footer-panel hidden>
+                <ul>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.Partners)">@L["Nav.Partners"]</a></li>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.Investors)">@L["Footer.InvestorRelations"]</a></li>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.News)">@L["Nav.News"]</a></li>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.Contact)">@L["Common.Contact"]</a></li>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.Feedback)">@L["Footer.FeedbackTitle"]</a></li>
+                    <li><a href="@SiteUrls.Page(SitePageKeys.PrivacyPolicy)">@L["Footer.PrivacyPolicy"]</a></li>
+                </ul>
+            </div>
         </nav>
 
-        <div class="footer-col footer-contact">
-            <h3 class="footer-heading">@L["Footer.ContactHeading"]</h3>
-            <ul>
-                @if (!string.IsNullOrWhiteSpace(c.Email))
-                {
-                    <li><a href="mailto:@c.Email">@c.Email</a></li>
-                }
-                @if (!string.IsNullOrWhiteSpace(c.PhonePrimary))
-                {
-                    <li><a href="tel:@c.PhonePrimary.Replace(" ", string.Empty)">@c.PhonePrimary</a></li>
-                }
-                @if (!string.IsNullOrWhiteSpace(c.PhoneSecondary))
-                {
-                    <li><a href="tel:@c.PhoneSecondary.Replace(" ", string.Empty)">@c.PhoneSecondary</a></li>
-                }
-            </ul>
+        <div class="footer-col footer-contact footer-accordion is-open" data-footer-accordion>
+            <button type="button" class="footer-accordion-trigger" aria-expanded="true" data-footer-trigger>
+                <span class="footer-heading">@L["Footer.ContactHeading"]</span>
+                <span class="footer-accordion-icon" aria-hidden="true">−</span>
+            </button>
+            <div class="footer-accordion-panel" data-footer-panel>
+                <ul>
+                    @if (!string.IsNullOrWhiteSpace(c.Email))
+                    {
+                        <li><a href="mailto:@c.Email">@c.Email</a></li>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(c.PhonePrimary))
+                    {
+                        <li><a href="tel:@c.PhonePrimary.Replace(" ", string.Empty)">@c.PhonePrimary</a></li>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(c.PhoneSecondary))
+                    {
+                        <li><a href="tel:@c.PhoneSecondary.Replace(" ", string.Empty)">@c.PhoneSecondary</a></li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 

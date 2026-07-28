@@ -8,7 +8,7 @@ public sealed class SiteContactOptions
 {
     public const string SectionName = "SiteContact";
 
-    public string CompanyName { get; set; } = "SkyOS";
+    public string CompanyName { get; set; } = "ORKA";
 
     public string TeamName { get; set; } = "ORKA Mühendislik";
 

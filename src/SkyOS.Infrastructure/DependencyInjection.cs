@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkyOS.Application.Interfaces.Infrastructure;
@@ -27,33 +26,13 @@ public static class DependencyInjection
         services.Configure<SmtpOptions>(configuration.GetSection(SmtpOptions.SectionName));
         services.Configure<RecaptchaOptions>(configuration.GetSection(RecaptchaOptions.SectionName));
         services.Configure<BackofficeOptions>(configuration.GetSection(BackofficeOptions.SectionName));
-
-        var databaseOptions = configuration.GetSection(DatabaseOptions.SectionName).Get<DatabaseOptions>()
-                              ?? new DatabaseOptions();
-        var connectionString = SqliteConnectionStringResolver.Resolve(
-            configuration.GetConnectionString("DefaultConnection"),
-            databaseOptions.Provider,
-            contentRootPath);
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         services.AddDbContext<SkyOSDbContext>(options =>
         {
-            switch (databaseOptions.Provider)
-            {
-                case DatabaseProvider.Sqlite:
-                    options.UseSqlite(
-                        connectionString ?? "Data Source=skyos.dev.db",
-                        sqlite => sqlite.MigrationsAssembly(typeof(SkyOSDbContext).Assembly.FullName))
-                        // Migrations are authored against SQL Server; SQLite dev may report false pending-model diffs in EF Core 9.
-                        .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
-                    break;
-
-                case DatabaseProvider.SqlServer:
-                default:
-                    options.UseSqlServer(
-                        connectionString,
-                        sql => sql.MigrationsAssembly(typeof(SkyOSDbContext).Assembly.FullName));
-                    break;
-            }
+            options.UseSqlServer(
+                connectionString,
+                sql => sql.MigrationsAssembly(typeof(SkyOSDbContext).Assembly.FullName));
         });
 
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -67,6 +46,8 @@ public static class DependencyInjection
             })
             .AddEntityFrameworkStores<SkyOSDbContext>()
             .AddDefaultTokenProviders();
+
+        services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
 
         services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();

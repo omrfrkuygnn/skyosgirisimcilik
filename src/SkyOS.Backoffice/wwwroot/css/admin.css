@@ -794,6 +794,11 @@ body.admin-shell {
   border: 1px solid #fecaca;
 }
 
+.admin-field-hint {
+  color: var(--admin-muted);
+  font-size: 0.82rem;
+}
+
 .admin-reply-panel {
   margin-top: 28px;
   padding-top: 24px;
@@ -839,6 +844,10 @@ body.admin-shell {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--admin-muted);
+}
+
+.text-danger {
+  color: #b91c1c !important;
 }
 
 .admin-field input:not([type="checkbox"]):not([type="radio"]),

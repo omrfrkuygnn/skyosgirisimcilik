@@ -6,22 +6,28 @@
   var nav = document.querySelector("[data-nav]");
 
   if (toggle && nav) {
-    toggle.addEventListener("click", function () {
-      var open = nav.classList.toggle("open");
+    var setNavOpen = function (open) {
+      nav.classList.toggle("open", open);
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      document.body.classList.toggle("nav-open", open);
+    };
+
+    toggle.addEventListener("click", function () {
+      setNavOpen(!nav.classList.contains("open"));
     });
 
     nav.addEventListener("click", function (e) {
-      if (e.target instanceof HTMLElement && e.target.classList.contains("nav-link")) {
-        nav.classList.remove("open");
-        toggle.setAttribute("aria-expanded", "false");
+      if (!(e.target instanceof HTMLElement)) {
+        return;
+      }
+      if (e.target.classList.contains("nav-link") || e.target.closest(".nav-menu-cta-btn")) {
+        setNavOpen(false);
       }
     });
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && nav.classList.contains("open")) {
-        nav.classList.remove("open");
-        toggle.setAttribute("aria-expanded", "false");
+        setNavOpen(false);
         toggle.focus();
       }
     });
@@ -82,19 +88,23 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  // Full-screen hero slider
+  // Full-screen hero slider — fixed 5s interval (no hover pause; it made timing inconsistent)
   var slider = document.querySelector("[data-hero-slider]");
-  if (slider) {
+  if (slider && slider.getAttribute("data-slider-ready") !== "1") {
+    slider.setAttribute("data-slider-ready", "1");
     var slides = Array.prototype.slice.call(slider.querySelectorAll("[data-slide]"));
     var dotsWrap = slider.querySelector("[data-slider-dots]");
     var progress = slider.querySelector("[data-slider-progress]");
     var prevBtn = slider.querySelector("[data-slider-prev]");
     var nextBtn = slider.querySelector("[data-slider-next]");
     var index = Math.max(0, slides.findIndex(function (s) { return s.classList.contains("is-active"); }));
-    var timer = null;
-    var startedAt = 0;
+    var autoTimer = null;
+    var progressRaf = null;
+    var deadline = 0;
     var duration = 5000;
     var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (index < 0) { index = 0; }
 
     if (dotsWrap) {
       var slideLabel = slider.getAttribute("data-slide-label") || "Slayt";
@@ -103,7 +113,7 @@
         dot.type = "button";
         dot.className = "hero-dot" + (i === index ? " is-active" : "");
         dot.setAttribute("aria-label", slideLabel + " " + (i + 1));
-        dot.addEventListener("click", function () { goTo(i, true); });
+        dot.addEventListener("click", function () { goTo(i); });
         dotsWrap.appendChild(dot);
       });
     }
@@ -122,59 +132,74 @@
       index = i;
     }
 
-    function goTo(i, user) {
-      if (!slides.length) { return; }
-      setActive((i + slides.length) % slides.length);
-      restart(user);
+    function clearTimers() {
+      if (autoTimer) {
+        window.clearTimeout(autoTimer);
+        autoTimer = null;
+      }
+      if (progressRaf) {
+        window.cancelAnimationFrame(progressRaf);
+        progressRaf = null;
+      }
     }
 
     function tickProgress() {
-      if (!progress || reduced) { return; }
-      var elapsed = Date.now() - startedAt;
-      var pct = Math.min(100, (elapsed / duration) * 100);
-      // Use data attribute instead of inline style to avoid CSP inline style violation
-      progress.setAttribute("data-pct", Math.round(pct));
-      if (pct < 100) {
-        timer = window.requestAnimationFrame(tickProgress);
+      if (!progress || reduced || !deadline) { return; }
+      var remaining = Math.max(0, deadline - Date.now());
+      var pct = Math.min(100, ((duration - remaining) / duration) * 100);
+      var stepped = Math.round(pct / 10) * 10;
+      progress.setAttribute("data-pct", String(stepped));
+      if (remaining > 0) {
+        progressRaf = window.requestAnimationFrame(tickProgress);
       } else {
-        goTo(index + 1, false);
+        progress.setAttribute("data-pct", "100");
       }
     }
 
-    function restart() {
-      if (timer) {
-        window.cancelAnimationFrame(timer);
-        timer = null;
-      }
+    function goTo(i) {
+      if (!slides.length) { return; }
+      setActive((i + slides.length) % slides.length);
+      armTimer();
+    }
+
+    function armTimer() {
+      clearTimers();
       if (progress) { progress.setAttribute("data-pct", "0"); }
-      if (reduced || slides.length < 2) { return; }
-      startedAt = Date.now();
-      timer = window.requestAnimationFrame(tickProgress);
+      if (slides.length < 2 || document.hidden) {
+        deadline = 0;
+        return;
+      }
+
+      deadline = Date.now() + duration;
+      autoTimer = window.setTimeout(function () {
+        autoTimer = null;
+        goTo(index + 1);
+      }, duration);
+
+      if (!reduced && progress) {
+        progressRaf = window.requestAnimationFrame(tickProgress);
+      }
     }
 
-    if (prevBtn) { prevBtn.addEventListener("click", function () { goTo(index - 1, true); }); }
-    if (nextBtn) { nextBtn.addEventListener("click", function () { goTo(index + 1, true); }); }
+    if (prevBtn) { prevBtn.addEventListener("click", function () { goTo(index - 1); }); }
+    if (nextBtn) { nextBtn.addEventListener("click", function () { goTo(index + 1); }); }
 
     slider.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowLeft") { goTo(index - 1, true); }
-      if (e.key === "ArrowRight") { goTo(index + 1, true); }
+      if (e.key === "ArrowLeft") { goTo(index - 1); }
+      if (e.key === "ArrowRight") { goTo(index + 1); }
     });
-
-    slider.addEventListener("mouseenter", function () {
-      if (timer) { window.cancelAnimationFrame(timer); timer = null; }
-    });
-    slider.addEventListener("mouseleave", function () { restart(); });
 
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) {
-        if (timer) { window.cancelAnimationFrame(timer); timer = null; }
+        clearTimers();
+        deadline = 0;
       } else {
-        restart();
+        armTimer();
       }
     });
 
     setActive(index);
-    restart();
+    armTimer();
   }
 
   // reCAPTCHA v3 (contact + feedback forms)
@@ -339,4 +364,101 @@
     }
     track.dataset.ready = "1";
   });
+
+  // Footer accordion (mobile compact sections)
+  document.querySelectorAll("[data-footer-accordion]").forEach(function (section) {
+    var trigger = section.querySelector("[data-footer-trigger]");
+    var panel = section.querySelector("[data-footer-panel]");
+    var icon = section.querySelector(".footer-accordion-icon");
+    if (!trigger || !panel) {
+      return;
+    }
+
+    trigger.addEventListener("click", function () {
+      if (window.matchMedia("(min-width: 992px)").matches) {
+        return;
+      }
+
+      var open = !section.classList.contains("is-open");
+      section.classList.toggle("is-open", open);
+      trigger.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) {
+        panel.removeAttribute("hidden");
+      } else {
+        panel.setAttribute("hidden", "");
+      }
+      if (icon) {
+        icon.textContent = open ? "−" : "+";
+      }
+    });
+  });
+
+  // Team member profile dialogs
+  (function initMemberDialogs() {
+    var openers = document.querySelectorAll("[data-member-open]");
+    if (!openers.length || typeof HTMLDialogElement === "undefined") {
+      return;
+    }
+
+    var lastOpener = null;
+
+    var closeDialog = function (dialog) {
+      if (!dialog || !dialog.open) {
+        return;
+      }
+      dialog.close();
+      document.body.classList.remove("member-dialog-open");
+      if (lastOpener && typeof lastOpener.focus === "function") {
+        lastOpener.focus();
+      }
+    };
+
+    var openByTarget = function (id, opener) {
+      var dialog = id ? document.getElementById(id) : null;
+      if (!(dialog instanceof HTMLDialogElement)) {
+        return;
+      }
+      lastOpener = opener || null;
+      document.body.classList.add("member-dialog-open");
+      dialog.showModal();
+      var closeBtn = dialog.querySelector("[data-member-close]");
+      if (closeBtn) {
+        closeBtn.focus();
+      }
+    };
+
+    openers.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        openByTarget(btn.getAttribute("data-member-target"), btn);
+      });
+    });
+
+    document.querySelectorAll(".member-card--interactive").forEach(function (card) {
+      card.addEventListener("click", function () {
+        var btn = card.querySelector("[data-member-open]");
+        if (btn) {
+          openByTarget(btn.getAttribute("data-member-target"), btn);
+        }
+      });
+    });
+
+    document.querySelectorAll(".member-dialog").forEach(function (dialog) {
+      dialog.addEventListener("click", function (e) {
+        if (e.target === dialog) {
+          closeDialog(dialog);
+        }
+      });
+
+      dialog.querySelectorAll("[data-member-close]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          closeDialog(dialog);
+        });
+      });
+
+      dialog.addEventListener("close", function () {
+        document.body.classList.remove("member-dialog-open");
+      });
+    });
+  })();
 })();

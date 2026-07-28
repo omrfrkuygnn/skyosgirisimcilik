@@ -8,6 +8,10 @@
         var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         return parts.Length == 0 ? "?" : string.Concat(parts.Take(2).Select(p => char.ToUpperInvariant(p[0])));
     }
+
+    var profileMembers = Model.Leaders.Concat(Model.Members)
+        .Where(m => !string.IsNullOrWhiteSpace(m.Bio))
+        .ToList();
 }
 
 <section class="page-intro page-banner">
@@ -26,24 +30,36 @@
         <div class="section-head" data-reveal>
             <h2>@L["Team.LeadersHeading"]</h2>
         </div>
-        <div class="sector-grid" style="margin-bottom:clamp(40px,5vw,56px);">
+        <div class="member-grid member-grid--leaders" style="margin-bottom:clamp(40px,5vw,56px);">
             @foreach (var leader in Model.Leaders)
             {
-                <article class="sector-tile member-card" data-reveal>
-                    @if (!string.IsNullOrWhiteSpace(leader.PhotoUrl))
-                    {
-                        <img class="member-photo" src="@leader.PhotoUrl" width="72" height="72" loading="lazy" decoding="async" alt="@leader.FullName" />
-                    }
-                    else
-                    {
-                        <div class="member-photo member-photo-fallback" aria-hidden="true">@Initials(leader.FullName)</div>
-                    }
-                    <h3 style="margin-bottom:2px;">@leader.FullName<span class="leader-tag">@L["Common.LeaderTag"]</span></h3>
-                    <div class="member-role">@leader.Role</div>
-                    @if (!string.IsNullOrWhiteSpace(leader.Bio))
-                    {
-                        <p style="margin-top:10px;">@leader.Bio</p>
-                    }
+                var hasBio = !string.IsNullOrWhiteSpace(leader.Bio);
+                <article class="member-card member-card--leader@(hasBio ? " member-card--interactive" : "")" data-reveal>
+                    <div class="member-card__media">
+                        @if (!string.IsNullOrWhiteSpace(leader.PhotoUrl))
+                        {
+                            <img class="member-photo" src="@leader.PhotoUrl" width="112" height="112" loading="lazy" decoding="async" alt="@leader.FullName" />
+                        }
+                        else
+                        {
+                            <div class="member-photo member-photo-fallback" aria-hidden="true">@Initials(leader.FullName)</div>
+                        }
+                    </div>
+                    <div class="member-card__body">
+                        <h3 class="member-card__name">@leader.FullName</h3>
+                        <div class="member-role">@leader.Role</div>
+                        <span class="leader-tag">@L["Common.LeaderTag"]</span>
+                        @if (hasBio)
+                        {
+                            <button type="button"
+                                    class="member-card__cta"
+                                    data-member-open
+                                    data-member-target="member-@leader.Id"
+                                    aria-haspopup="dialog">
+                                @L["Team.ViewProfile"]
+                            </button>
+                        }
+                    </div>
                 </article>
             }
         </div>
@@ -53,20 +69,35 @@
             <div class="section-head" data-reveal>
                 <h2>@L["Team.MembersHeading"]</h2>
             </div>
-            <div class="sector-grid">
+            <div class="member-grid">
                 @foreach (var member in Model.Members)
                 {
-                    <article class="sector-tile member-card" data-reveal>
-                        @if (!string.IsNullOrWhiteSpace(member.PhotoUrl))
-                        {
-                            <img class="member-photo" src="@member.PhotoUrl" width="72" height="72" loading="lazy" decoding="async" alt="@member.FullName" />
-                        }
-                        else
-                        {
-                            <div class="member-photo member-photo-fallback" aria-hidden="true">@Initials(member.FullName)</div>
-                        }
-                        <h3 style="margin-bottom:2px;">@member.FullName</h3>
-                        <div class="member-role">@member.Role</div>
+                    var hasBio = !string.IsNullOrWhiteSpace(member.Bio);
+                    <article class="member-card@(hasBio ? " member-card--interactive" : "")" data-reveal>
+                        <div class="member-card__media">
+                            @if (!string.IsNullOrWhiteSpace(member.PhotoUrl))
+                            {
+                                <img class="member-photo" src="@member.PhotoUrl" width="96" height="96" loading="lazy" decoding="async" alt="@member.FullName" />
+                            }
+                            else
+                            {
+                                <div class="member-photo member-photo-fallback" aria-hidden="true">@Initials(member.FullName)</div>
+                            }
+                        </div>
+                        <div class="member-card__body">
+                            <h3 class="member-card__name">@member.FullName</h3>
+                            <div class="member-role">@member.Role</div>
+                            @if (hasBio)
+                            {
+                                <button type="button"
+                                        class="member-card__cta"
+                                        data-member-open
+                                        data-member-target="member-@member.Id"
+                                        aria-haspopup="dialog">
+                                    @L["Team.ViewProfile"]
+                                </button>
+                            }
+                        </div>
                     </article>
                 }
             </div>
@@ -79,3 +110,35 @@
         }
     </div>
 </section>
+
+@foreach (var person in profileMembers)
+{
+    <dialog class="member-dialog" id="member-@person.Id" aria-labelledby="member-@person.Id-title">
+        <div class="member-dialog__panel">
+            <button type="button" class="member-dialog__close" data-member-close aria-label="@L["Team.CloseProfile"]">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="member-dialog__head">
+                @if (!string.IsNullOrWhiteSpace(person.PhotoUrl))
+                {
+                    <img class="member-dialog__photo" src="@person.PhotoUrl" width="120" height="120" alt="" />
+                }
+                else
+                {
+                    <div class="member-dialog__photo member-photo-fallback" aria-hidden="true">@Initials(person.FullName)</div>
+                }
+                <div class="member-dialog__identity">
+                    <h2 class="member-dialog__name" id="member-@person.Id-title">@person.FullName</h2>
+                    <div class="member-role">@person.Role</div>
+                    @if (person.IsLeader)
+                    {
+                        <span class="leader-tag">@L["Common.LeaderTag"]</span>
+                    }
+                </div>
+            </div>
+            <div class="member-dialog__bio">
+                <p>@person.Bio</p>
+            </div>
+        </div>
+    </dialog>
+}
